@@ -3,6 +3,7 @@ import 'package:expense_tracker/models/transaction_model.dart';
 import 'package:expense_tracker/screens/transactions/widgets/save_transaction_widget.dart';
 import 'package:expense_tracker/services/transactions_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class CategoriesPage extends StatefulWidget {
   const CategoriesPage({super.key});
@@ -79,12 +80,31 @@ class _CategoriesPageState extends State<CategoriesPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
-                      category.icon,
-                      color: category.color,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Icon(
+                        category.icon,
+                        color: category.color,
+                        size: 30,
+                        shadows: const [
+                          Shadow(
+                            blurRadius: 5,
+                            color: Colors.grey,
+                            offset: Offset(1, 1),
+                          ),
+                        ],
+                      ),
                     ),
-                    const SizedBox(height: 15),
-                    Text(category.name),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 5),
+                      child: Text(
+                        category.name,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),

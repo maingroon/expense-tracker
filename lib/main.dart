@@ -1,4 +1,5 @@
 import 'package:expense_tracker/constants/theme_constants.dart';
+import 'package:expense_tracker/screens/analytics/analytics_page.dart';
 import 'package:expense_tracker/services/theme_provider.dart';
 import 'package:expense_tracker/screens/categories/categories_page.dart';
 import 'package:expense_tracker/screens/transactions/transactions_page.dart';
@@ -35,6 +36,7 @@ class _PageContainerState extends State<PageContainer> {
   final List<Widget> _pages = const <Widget>[
     CategoriesPage(),
     TransactionsPage(),
+    AnalyticsPage(),
     SettingsPage(),
   ];
 
@@ -51,31 +53,35 @@ class _PageContainerState extends State<PageContainer> {
             darkTheme: kDarkTheme,
             themeMode: SettingsService.getThemeMode(),
             home: Scaffold(
-              bottomNavigationBar: BottomNavigationBar(
-                items: const [
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.label),
+              bottomNavigationBar: NavigationBar(
+                onDestinationSelected: (int index) {
+                  setState(() {
+                    _currentPageIndex = index;
+                  });
+                },
+                selectedIndex: _currentPageIndex,
+                destinations: const <Widget>[
+                  NavigationDestination(
+                    selectedIcon: Icon(Icons.category),
+                    icon: Icon(Icons.category_outlined),
                     label: 'Categories',
                   ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.format_list_bulleted),
+                  NavigationDestination(
+                    selectedIcon: Icon(Icons.format_list_bulleted),
+                    icon: Icon(Icons.format_list_bulleted_outlined),
                     label: 'Transactions',
                   ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.settings),
+                  NavigationDestination(
+                    selectedIcon: Icon(Icons.bar_chart),
+                    icon: Icon(Icons.bar_chart_outlined),
+                    label: 'Analytics',
+                  ),
+                  NavigationDestination(
+                    selectedIcon: Icon(Icons.settings),
+                    icon: Icon(Icons.settings_outlined),
                     label: 'Settings',
                   ),
                 ],
-                currentIndex: _currentPageIndex,
-                onTap: (value) {
-                  setState(() {
-                    _currentPageIndex = value;
-                  });
-                },
-                type: BottomNavigationBarType.fixed,
-                showSelectedLabels: true,
-                showUnselectedLabels: true,
-                enableFeedback: true,
               ),
               body: _pages[_currentPageIndex],
             ),
