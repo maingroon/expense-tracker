@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:expense_tracker/services/settings_service.dart';
+import 'package:flutter/scheduler.dart';
 
 class ThemeProvider extends ChangeNotifier {
   late ThemeMode _themeMode;
@@ -22,5 +23,15 @@ class ThemeProvider extends ChangeNotifier {
     _themeMode = themeMode;
     SettingsService.setThemeMode(themeMode);
     notifyListeners();
+  }
+
+  Brightness getCurrentBrightness() {
+    if (_themeMode == ThemeMode.light) {
+      return Brightness.light;
+    } else if (_themeMode == ThemeMode.dark) {
+      return Brightness.dark;
+    } else {
+      return SchedulerBinding.instance.platformDispatcher.platformBrightness;
+    }
   }
 }

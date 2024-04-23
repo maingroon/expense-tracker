@@ -20,14 +20,29 @@ class SaveTransactionWidget extends StatefulWidget {
 }
 
 class _SaveExpenseState extends State<SaveTransactionWidget> {
-  late DateTime _selectedDateTime;
+  static final MAX_AMOUNT_LENGTH_BEFORE_DOT = 8;
+  static final MAX_AMOUNT_LENGTH_AFTER_DOT = 2;
+
+  late String _amount;
   late Category _selectedCategory;
+  late TextEditingController _noteController;
+  late DateTime _selectedDateTime;
 
   @override
   void initState() {
     super.initState();
-    _selectedDateTime = widget.transaction.date;
+    _amount = (widget.transaction.amount ~/ 100).toString();
+    final remainder = widget.transaction.amount % 100;
+    if (remainder > 0) {
+      _amount += '.';
+      if (remainder < 10) {
+        _amount += '0';
+      }
+      _amount += remainder.toString();
+    }
     _selectedCategory = widget.transaction.category;
+    _noteController = TextEditingController(text: widget.transaction.note);
+    _selectedDateTime = widget.transaction.date;
   }
 
   void _showDateTimePicker() {
@@ -104,6 +119,35 @@ class _SaveExpenseState extends State<SaveTransactionWidget> {
     // Navigator.pop(context);
   }
 
+  void _processKeyboardKeyPressed(String key) {
+    print('key: $key');
+    if (key != '.' && _amount == '0') {
+      setState(() {
+        _amount = key;
+      });
+    } else if (key == '.' && !_amount.contains('.') && _amount.length < 10) {
+      setState(() {
+        _amount += key;
+      });
+    } else if (key != '.' && _amount != '0') {
+      setState(() {
+        _amount += key;
+      });
+    }
+  }
+
+  void _processBackspacePressed() {
+    if (_amount.length > 1) {
+      setState(() {
+        _amount = _amount.substring(0, _amount.length - 1);
+      });
+    } else {
+      setState(() {
+        _amount = '0';
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -123,12 +167,12 @@ class _SaveExpenseState extends State<SaveTransactionWidget> {
               child: IntrinsicHeight(
                 child: Stack(
                   children: [
-                    const Align(
+                    Align(
                       child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 30),
+                        padding: const EdgeInsets.symmetric(horizontal: 40),
                         child: Text(
-                          '0',
-                          style: TextStyle(
+                          _amount,
+                          style: const TextStyle(
                             fontSize: 50,
                             fontWeight: FontWeight.bold,
                           ),
@@ -139,7 +183,7 @@ class _SaveExpenseState extends State<SaveTransactionWidget> {
                       right: 5,
                       bottom: 10,
                       child: IconButton(
-                        onPressed: () => {print('pressed')},
+                        onPressed: _processBackspacePressed,
                         icon: const Icon(
                           Icons.backspace,
                           size: 25,
@@ -260,8 +304,8 @@ class _SaveExpenseState extends State<SaveTransactionWidget> {
             ),
             // keyboard part
             TransactionKeyboardWidget(
-              onKeyTap: (key) => print('pressed: ' + key),
-              onSave: () => print('save'),
+              onKeyPressed: _processKeyboardKeyPressed,
+              onSavePressed: _saveTransaction,
             ),
           ],
         ),

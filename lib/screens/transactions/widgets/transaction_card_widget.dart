@@ -13,7 +13,6 @@ class TransactionCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('Transaction card icon ${_transaction.category.name}');
     return Card(
       child: ListTile(
           leading: CircleAvatar(

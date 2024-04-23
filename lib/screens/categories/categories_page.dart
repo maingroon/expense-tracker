@@ -1,6 +1,7 @@
 import 'package:expense_tracker/models/category_model.dart';
 import 'package:expense_tracker/models/transaction_model.dart';
 import 'package:expense_tracker/screens/transactions/widgets/save_transaction_widget.dart';
+import 'package:expense_tracker/services/theme_provider.dart';
 import 'package:expense_tracker/services/transactions_service.dart';
 import 'package:flutter/material.dart';
 
@@ -79,13 +80,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                 category.icon,
                 color: category.color,
                 size: 30,
-                shadows: const [
-                  Shadow(
-                    blurRadius: 5,
-                    color: Colors.grey,
-                    offset: Offset(1, 1),
-                  ),
-                ],
+                shadows: _getCategoryIconShadows(),
               ),
             ),
             Padding(
@@ -102,6 +97,20 @@ class _CategoriesPageState extends State<CategoriesPage> {
         ),
       ),
     );
+  }
+
+  List<Shadow> _getCategoryIconShadows() {
+    if (ThemeProvider().getCurrentBrightness() == Brightness.light) {
+      return const [
+        Shadow(
+          blurRadius: 5,
+          color: Colors.grey,
+          offset: Offset(1, 1),
+        ),
+      ];
+    } else {
+      return [];
+    }
   }
 
   Card _buildAddCategoryCardWidget() {

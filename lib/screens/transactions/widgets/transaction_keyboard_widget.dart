@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class TransactionKeyboardWidget extends StatelessWidget {
   const TransactionKeyboardWidget({
-    required this.onKeyTap,
-    required this.onSave,
+    required this.onKeyPressed,
+    required this.onSavePressed,
     super.key,
   });
 
-  final void Function(String) onKeyTap;
-  final void Function() onSave;
+  final void Function(String) onKeyPressed;
+  final void Function() onSavePressed;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,6 @@ class TransactionKeyboardWidget extends StatelessWidget {
               _buildKeyboardButtonWidget('7'),
               _buildKeyboardButtonWidget('8'),
               _buildKeyboardButtonWidget('9'),
-              _buildKeyboardButtonWidget('/'),
             ],
           ),
           Row(
@@ -31,7 +30,6 @@ class TransactionKeyboardWidget extends StatelessWidget {
               _buildKeyboardButtonWidget('4'),
               _buildKeyboardButtonWidget('5'),
               _buildKeyboardButtonWidget('6'),
-              _buildKeyboardButtonWidget('*'),
             ],
           ),
           Row(
@@ -40,7 +38,6 @@ class TransactionKeyboardWidget extends StatelessWidget {
               _buildKeyboardButtonWidget('1'),
               _buildKeyboardButtonWidget('2'),
               _buildKeyboardButtonWidget('3'),
-              _buildKeyboardButtonWidget('-'),
             ],
           ),
           Row(
@@ -49,7 +46,6 @@ class TransactionKeyboardWidget extends StatelessWidget {
               _buildKeyboardButtonWidget('.'),
               _buildKeyboardButtonWidget('0'),
               _buildSaveButtonWidget(),
-              _buildKeyboardButtonWidget('+'),
             ],
           ),
         ],
@@ -59,13 +55,13 @@ class TransactionKeyboardWidget extends StatelessWidget {
 
   Widget _buildKeyboardButtonWidget(String key) {
     return TextButton(
-      onPressed: () => onKeyTap(key),
+      onPressed: () => onKeyPressed(key),
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(4.0),
         child: Text(
           key,
           style: const TextStyle(
-            fontSize: 25,
+            fontSize: 30,
           ),
         ),
       ),
@@ -74,7 +70,7 @@ class TransactionKeyboardWidget extends StatelessWidget {
 
   Widget _buildSaveButtonWidget() {
     return OutlinedButton(
-      onPressed: onSave,
+      onPressed: onSavePressed,
       style: OutlinedButton.styleFrom(
         shape: const CircleBorder(),
         padding: const EdgeInsets.all(15),
