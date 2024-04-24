@@ -1,6 +1,7 @@
 import 'package:expense_tracker/models/category_model.dart';
 import 'package:expense_tracker/models/transaction_model.dart';
-import 'package:expense_tracker/screens/transactions/widgets/transaction_keyboard_widget.dart';
+import 'package:expense_tracker/services/categories_service.dart';
+import 'package:expense_tracker/services/theme_provider.dart';
 import 'package:flutter/material.dart';
 
 class SaveTransactionWidget extends StatefulWidget {
@@ -20,8 +21,8 @@ class SaveTransactionWidget extends StatefulWidget {
 }
 
 class _SaveExpenseState extends State<SaveTransactionWidget> {
-  static const MAX_AMOUNT_LENGTH_BEFORE_DOT = 8;
-  static const MAX_AMOUNT_LENGTH_AFTER_DOT = 2;
+  static const maxAmountLengthBeforeDot = 8;
+  static const maxAmountLengthAfterDot = 2;
 
   late String _amount;
   late Category _selectedCategory;
@@ -82,42 +83,14 @@ class _SaveExpenseState extends State<SaveTransactionWidget> {
   }
 
   void _saveTransaction() {
-    print(_parseAmount());
-    // final enteredTitle = _noteController.text.trim();
-    // final enteredAmount = double.tryParse(_amountController.text);
-    // final errorField = enteredTitle.isEmpty
-    //     ? 'title'
-    //     : ((enteredAmount == null || enteredAmount <= 0) ? 'amount' : null);
-
-    // if (errorField != null) {
-    //   showDialog(
-    //     context: context,
-    //     builder: (ctx) => AlertDialog(
-    //       title: Text('Invalid $errorField'),
-    //       content: Text(
-    //         'Please check that $errorField not empty and has a valid value.',
-    //       ),
-    //       actions: [
-    //         OutlinedButton(
-    //           onPressed: () {
-    //             Navigator.pop(ctx);
-    //           },
-    //           child: const Text('Okey'),
-    //         ),
-    //       ],
-    //     ),
-    //   );
-    //   return;
-    // }
-
-    // final transaction = Transaction.create(
-    //   amount: (double.parse(_amountController.text) * 100).round(),
-    //   note: _noteController.text,
-    //   date: _selectedDateTime,
-    //   category: _selectedCategory,
-    // );
-    // widget.onSave(transaction);
-    // Navigator.pop(context);
+    final transaction = Transaction.create(
+      amount: _parseAmount(),
+      note: _noteController.text,
+      date: _selectedDateTime,
+      category: _selectedCategory,
+    );
+    widget.onSave(transaction);
+    Navigator.pop(context);
   }
 
   int _parseAmount() {
@@ -139,12 +112,12 @@ class _SaveExpenseState extends State<SaveTransactionWidget> {
       });
     } else if (key != '.' && _amount != '0') {
       final parts = _amount.split('.');
-      if (parts.length == 1 && _amount.length < MAX_AMOUNT_LENGTH_BEFORE_DOT) {
+      if (parts.length == 1 && _amount.length < maxAmountLengthBeforeDot) {
         setState(() {
           _amount += key;
         });
       } else if (parts.length == 2 &&
-          parts[1].length < MAX_AMOUNT_LENGTH_AFTER_DOT) {
+          parts[1].length < maxAmountLengthAfterDot) {
         setState(() {
           _amount += key;
         });
@@ -231,13 +204,26 @@ class _SaveExpenseState extends State<SaveTransactionWidget> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   OutlinedButton.icon(
-                    onPressed: () => {},
+                    onPressed: () => {
+                      showDialog(
+                        context: context,
+                        builder: (context) => TransactionCategoryDialodWidget(
+                          onCagegorySelected: (category) {
+                            setState(() {
+                              _selectedCategory = category;
+                            });
+                          },
+                        ),
+                      ),
+                    },
                     icon: Icon(
                       _selectedCategory.icon,
                       size: 30,
                     ),
                     label: Text(
                       _selectedCategory.name,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: const TextStyle(fontSize: 16),
                     ),
                     style: OutlinedButton.styleFrom(
@@ -248,55 +234,15 @@ class _SaveExpenseState extends State<SaveTransactionWidget> {
                         horizontal: 15,
                         vertical: 10,
                       ),
+                      maximumSize: const Size(175, 50),
                     ),
                   ),
                   OutlinedButton(
                     onPressed: () => {
                       showDialog(
                         context: context,
-                        builder: (context) => Dialog(
-                          insetPadding: const EdgeInsets.all(20),
-                          child: Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 20,
-                              vertical: 10,
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Container(
-                                  alignment: Alignment.topLeft,
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 15,
-                                  ),
-                                  child: const Text(
-                                    'Note',
-                                    style: TextStyle(fontSize: 20),
-                                  ),
-                                ),
-                                TextField(
-                                  controller: _noteController,
-                                  autofocus: true,
-                                  keyboardType: TextInputType.multiline,
-                                  maxLines: 5,
-                                  decoration: const InputDecoration(
-                                    border: OutlineInputBorder(),
-                                  ),
-                                ),
-                                const SizedBox(height: 10),
-                                FilledButton(
-                                  onPressed: () => {
-                                    Navigator.pop(context),
-                                  },
-                                  child: const Text('Ok'),
-                                )
-                              ],
-                            ),
-                          ),
+                        builder: (context) => TransactionNoteDialodWidget(
+                          noteController: _noteController,
                         ),
                       ),
                     },
@@ -334,13 +280,260 @@ class _SaveExpenseState extends State<SaveTransactionWidget> {
               ),
             ),
             // keyboard part
-            TransactionKeyboardWidget(
+            TransactionKeyboardPartWidget(
               onKeyPressed: _processKeyboardKeyPressed,
               onSavePressed: _saveTransaction,
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class TransactionCategoryDialodWidget extends StatelessWidget {
+  const TransactionCategoryDialodWidget({
+    super.key,
+    required this.onCagegorySelected,
+  });
+
+  final void Function(Category) onCagegorySelected;
+
+  List<Shadow> _getCategoryIconShadows() {
+    if (ThemeProvider().getCurrentBrightness() == Brightness.light) {
+      return const [
+        Shadow(
+          blurRadius: 5,
+          color: Colors.grey,
+          offset: Offset(1, 1),
+        ),
+      ];
+    } else {
+      return [];
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final categories = CategoriesService.categories;
+
+    return Dialog(
+      insetPadding: const EdgeInsets.all(20),
+      child: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        padding: const EdgeInsets.only(
+          top: 10,
+          bottom: 20,
+          right: 20,
+          left: 20,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              alignment: Alignment.topLeft,
+              padding: const EdgeInsets.symmetric(
+                vertical: 15,
+                horizontal: 10,
+              ),
+              child: const Text(
+                'Category',
+                style: TextStyle(fontSize: 20),
+              ),
+            ),
+            ListView.builder(
+              shrinkWrap: true,
+              itemCount: categories.length,
+              itemBuilder: (ctx, index) {
+                final category = categories[index];
+                return Card(
+                  child: ListTile(
+                    leading: Icon(
+                      category.icon,
+                      color: category.color,
+                      shadows: _getCategoryIconShadows(),
+                    ),
+                    title: Text(
+                      category.name,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    onTap: () => {
+                      onCagegorySelected(category),
+                      Navigator.pop(context),
+                    },
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class TransactionNoteDialodWidget extends StatelessWidget {
+  const TransactionNoteDialodWidget({super.key, required this.noteController});
+
+  final TextEditingController noteController;
+
+  @override
+  Widget build(BuildContext context) {
+    final noteBeforeUpdate = noteController.text;
+    return Dialog(
+      insetPadding: const EdgeInsets.all(20),
+      child: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              alignment: Alignment.topLeft,
+              padding: const EdgeInsets.only(
+                top: 25,
+                bottom: 15,
+                left: 25,
+                right: 25,
+              ),
+              child: const Text(
+                'Note',
+                style: TextStyle(fontSize: 20),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25),
+              child: TextField(
+                autofocus: true,
+                controller: noteController,
+                keyboardType: TextInputType.multiline,
+                maxLines: 5,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 5,
+                horizontal: 15,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: () => {
+                      noteController.text = noteBeforeUpdate,
+                      Navigator.pop(context),
+                    },
+                    child: const Text('Cancel'),
+                  ),
+                  TextButton(
+                    onPressed: () => {
+                      Navigator.pop(context),
+                    },
+                    child: const Text('OK'),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class TransactionKeyboardPartWidget extends StatelessWidget {
+  const TransactionKeyboardPartWidget({
+    required this.onKeyPressed,
+    required this.onSavePressed,
+    super.key,
+  });
+
+  final void Function(String) onKeyPressed;
+  final void Function() onSavePressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              _buildKeyboardButtonWidget('7'),
+              _buildKeyboardButtonWidget('8'),
+              _buildKeyboardButtonWidget('9'),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              _buildKeyboardButtonWidget('4'),
+              _buildKeyboardButtonWidget('5'),
+              _buildKeyboardButtonWidget('6'),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              _buildKeyboardButtonWidget('1'),
+              _buildKeyboardButtonWidget('2'),
+              _buildKeyboardButtonWidget('3'),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              _buildKeyboardButtonWidget('.'),
+              _buildKeyboardButtonWidget('0'),
+              _buildSaveButtonWidget(),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildKeyboardButtonWidget(String key) {
+    return TextButton(
+      onPressed: () => onKeyPressed(key),
+      child: Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: Text(
+          key,
+          style: const TextStyle(
+            fontSize: 30,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSaveButtonWidget() {
+    return OutlinedButton(
+      onPressed: onSavePressed,
+      style: OutlinedButton.styleFrom(
+        shape: const CircleBorder(),
+        padding: const EdgeInsets.all(15),
+      ),
+      child: const Icon(Icons.done),
     );
   }
 }

@@ -3,12 +3,11 @@ import 'package:expense_tracker/services/transactions_service.dart';
 import 'package:flutter/material.dart';
 
 class TransactionsListWidget extends StatelessWidget {
-
   const TransactionsListWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final transactions = TransactionService.transactions;
+    final transactions = TransactionsService.transactions;
     return ListView.builder(
       itemCount: transactions.length,
       itemBuilder: (ctx, index) {

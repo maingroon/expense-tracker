@@ -1,7 +1,7 @@
 import 'package:expense_tracker/models/transaction_model.dart';
 
-class TransactionService {
-  TransactionService._();
+class TransactionsService {
+  TransactionsService._();
 
   static final List<Transaction> _transactions = [];
 
