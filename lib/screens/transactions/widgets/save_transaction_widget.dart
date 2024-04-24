@@ -20,8 +20,8 @@ class SaveTransactionWidget extends StatefulWidget {
 }
 
 class _SaveExpenseState extends State<SaveTransactionWidget> {
-  static final MAX_AMOUNT_LENGTH_BEFORE_DOT = 8;
-  static final MAX_AMOUNT_LENGTH_AFTER_DOT = 2;
+  static const MAX_AMOUNT_LENGTH_BEFORE_DOT = 8;
+  static const MAX_AMOUNT_LENGTH_AFTER_DOT = 2;
 
   late String _amount;
   late Category _selectedCategory;
@@ -82,6 +82,7 @@ class _SaveExpenseState extends State<SaveTransactionWidget> {
   }
 
   void _saveTransaction() {
+    print(_parseAmount());
     // final enteredTitle = _noteController.text.trim();
     // final enteredAmount = double.tryParse(_amountController.text);
     // final errorField = enteredTitle.isEmpty
@@ -119,20 +120,35 @@ class _SaveExpenseState extends State<SaveTransactionWidget> {
     // Navigator.pop(context);
   }
 
+  int _parseAmount() {
+    final doubleAmount = double.tryParse(_amount);
+    if (doubleAmount == null || doubleAmount <= 0) {
+      return 0;
+    }
+    return (doubleAmount * 100).round();
+  }
+
   void _processKeyboardKeyPressed(String key) {
-    print('key: $key');
     if (key != '.' && _amount == '0') {
       setState(() {
         _amount = key;
       });
-    } else if (key == '.' && !_amount.contains('.') && _amount.length < 10) {
+    } else if (key == '.' && !_amount.contains('.')) {
       setState(() {
         _amount += key;
       });
     } else if (key != '.' && _amount != '0') {
-      setState(() {
-        _amount += key;
-      });
+      final parts = _amount.split('.');
+      if (parts.length == 1 && _amount.length < MAX_AMOUNT_LENGTH_BEFORE_DOT) {
+        setState(() {
+          _amount += key;
+        });
+      } else if (parts.length == 2 &&
+          parts[1].length < MAX_AMOUNT_LENGTH_AFTER_DOT) {
+        setState(() {
+          _amount += key;
+        });
+      }
     }
   }
 
@@ -169,12 +185,22 @@ class _SaveExpenseState extends State<SaveTransactionWidget> {
                   children: [
                     Align(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 40),
-                        child: Text(
-                          _amount,
-                          style: const TextStyle(
-                            fontSize: 50,
-                            fontWeight: FontWeight.bold,
+                        padding: const EdgeInsets.symmetric(horizontal: 50),
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          reverse: true,
+                          clipBehavior: Clip.antiAlias,
+                          physics: const NeverScrollableScrollPhysics(),
+                          child: Text(
+                            _amount,
+                            style: const TextStyle(
+                              fontSize: 50,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            softWrap: true,
+                            maxLines: 1,
+                            overflow: TextOverflow.fade,
+                            textAlign: TextAlign.start,
                           ),
                         ),
                       ),
@@ -252,16 +278,21 @@ class _SaveExpenseState extends State<SaveTransactionWidget> {
                                     style: TextStyle(fontSize: 20),
                                   ),
                                 ),
-                                const TextField(
+                                TextField(
+                                  controller: _noteController,
+                                  autofocus: true,
                                   keyboardType: TextInputType.multiline,
                                   maxLines: 5,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                   ),
                                 ),
+                                const SizedBox(height: 10),
                                 FilledButton(
-                                  onPressed: () => {Navigator.pop(context)},
-                                  child: const Text('Save'),
+                                  onPressed: () => {
+                                    Navigator.pop(context),
+                                  },
+                                  child: const Text('Ok'),
                                 )
                               ],
                             ),
