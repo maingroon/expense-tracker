@@ -47,7 +47,7 @@ class _PageContainerState extends State<PageContainer> {
       child: Consumer<ThemeProvider>(
         builder: (context, value, child) {
           return MaterialApp(
-            title: 'Money tracker',
+            title: 'Expense tracker',
             debugShowCheckedModeBanner: false,
             theme: kLightTheme,
             darkTheme: kDarkTheme,
