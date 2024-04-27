@@ -37,5 +37,32 @@ class Category {
 
 enum CategoryType {
   income,
-  expense,
+  expense;
+
+  static IconData getIcon(CategoryType type) {
+    switch (type) {
+      case CategoryType.income:
+        return Icons.arrow_upward;
+      case CategoryType.expense:
+        return Icons.arrow_downward;
+    }
+  }
+
+  static String getName(CategoryType type) {
+    switch (type) {
+      case CategoryType.income:
+        return 'Income';
+      case CategoryType.expense:
+        return 'Expense';
+    }
+  }
+
+  static Color getColor(CategoryType type) {
+    switch (type) {
+      case CategoryType.income:
+        return Colors.green;
+      case CategoryType.expense:
+        return Colors.red;
+    }
+  }
 }

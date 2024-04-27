@@ -82,6 +82,12 @@ class _SaveExpenseState extends State<SaveTransactionWidget> {
     });
   }
 
+  @override
+  void dispose() {
+    _noteController.dispose();
+    super.dispose();
+  }
+
   void _saveTransaction() {
     final transaction = Transaction.create(
       amount: _parseAmount(),
@@ -204,7 +210,7 @@ class _SaveExpenseState extends State<SaveTransactionWidget> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   OutlinedButton.icon(
-                    onPressed: () => {
+                    onPressed: () {
                       showDialog(
                         context: context,
                         builder: (context) => TransactionCategoryDialodWidget(
@@ -214,7 +220,7 @@ class _SaveExpenseState extends State<SaveTransactionWidget> {
                             });
                           },
                         ),
-                      ),
+                      );
                     },
                     icon: Icon(
                       _selectedCategory.icon,
@@ -238,13 +244,13 @@ class _SaveExpenseState extends State<SaveTransactionWidget> {
                     ),
                   ),
                   OutlinedButton(
-                    onPressed: () => {
+                    onPressed: () {
                       showDialog(
                         context: context,
                         builder: (context) => TransactionNoteDialodWidget(
                           noteController: _noteController,
                         ),
-                      ),
+                      );
                     },
                     style: OutlinedButton.styleFrom(
                       shape: RoundedRectangleBorder(
@@ -261,7 +267,7 @@ class _SaveExpenseState extends State<SaveTransactionWidget> {
                     ),
                   ),
                   OutlinedButton(
-                    onPressed: () => _showDateTimePicker(),
+                    onPressed: _showDateTimePicker,
                     style: OutlinedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -365,9 +371,9 @@ class TransactionCategoryDialodWidget extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    onTap: () => {
-                      onCagegorySelected(category),
-                      Navigator.pop(context),
+                    onTap: () {
+                      onCagegorySelected(category);
+                      Navigator.pop(context);
                     },
                   ),
                 );
@@ -436,15 +442,15 @@ class TransactionNoteDialodWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(
-                    onPressed: () => {
-                      noteController.text = noteBeforeUpdate,
-                      Navigator.pop(context),
+                    onPressed: () {
+                      noteController.text = noteBeforeUpdate;
+                      Navigator.pop(context);
                     },
                     child: const Text('Cancel'),
                   ),
                   TextButton(
-                    onPressed: () => {
-                      Navigator.pop(context),
+                    onPressed: () {
+                      Navigator.pop(context);
                     },
                     child: const Text('OK'),
                   ),

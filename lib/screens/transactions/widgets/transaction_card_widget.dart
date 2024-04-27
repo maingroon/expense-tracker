@@ -50,8 +50,8 @@ class _TransactionCardWidgetState extends State<TransactionCardWidget> {
         child: Dismissible(
           key: ValueKey(widget._transaction.id),
           direction: DismissDirection.endToStart,
-          onDismissed: (direction) => {
-            widget._onRemove(widget._transaction),
+          onDismissed: (direction) {
+            widget._onRemove(widget._transaction);
           },
           confirmDismiss: (direction) async => await showDialog(
             context: context,
@@ -122,10 +122,12 @@ class TransactionConfirmationDialogWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: const Text('Are you sure?'),
-      content: const Text('Do you want to remove the transaction?',
-          style: TextStyle(
-            fontSize: 15,
-          )),
+      content: const Text(
+        'Do you want to remove the transaction?',
+        style: TextStyle(
+          fontSize: 15,
+        ),
+      ),
       contentPadding: const EdgeInsets.all(22),
       actions: <Widget>[
         TextButton(

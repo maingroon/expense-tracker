@@ -8,20 +8,20 @@ class CategoriesService {
     Category.create(
       icon: Icons.payments,
       color: Colors.green,
-      name: 'Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+      name: 'Salary',
       type: CategoryType.income,
     ),
     Category.create(
-      icon: Icons.monetization_on,
-      color: Colors.yellow,
-      name: 'Bonus',
-      type: CategoryType.income,
+      icon: Icons.home,
+      color: Colors.blue,
+      name: 'House',
+      type: CategoryType.expense,
     ),
     Category.create(
-      icon: Icons.account_balance,
-      color: Colors.red,
-      name: 'Actives',
-      type: CategoryType.income,
+      icon: Icons.shopping_cart,
+      color: Colors.blueGrey,
+      name: 'Food',
+      type: CategoryType.expense,
     ),
   ];
 

@@ -1,5 +1,6 @@
 import 'package:expense_tracker/models/category_model.dart';
 import 'package:expense_tracker/models/transaction_model.dart';
+import 'package:expense_tracker/screens/categories/widgets/save_category_widget.dart';
 import 'package:expense_tracker/screens/transactions/widgets/save_transaction_widget.dart';
 import 'package:expense_tracker/services/categories_service.dart';
 import 'package:expense_tracker/services/theme_provider.dart';
@@ -21,14 +22,9 @@ class _CategoriesPageState extends State<CategoriesPage> {
     return CategoriesService.categories;
   }
 
-  void _addTransaction(Transaction transaction) {
-    TransactionsService.addTransaction(transaction);
-  }
-
   void _onAddTransaction(Category category) {
     showModalBottomSheet(
       context: context,
-      isScrollControlled: false,
       builder: (ctx) {
         return SaveTransactionWidget(
           transaction: Transaction.create(
@@ -37,14 +33,55 @@ class _CategoriesPageState extends State<CategoriesPage> {
             date: DateTime.now(),
             note: '',
           ),
-          onSave: _addTransaction,
+          onSave: (transaction) {
+            TransactionsService.addTransaction(transaction);
+          },
         );
       },
     );
   }
 
-  void _onEditCategory(Category category) {
-    print('Edit category: ${category.name}');
+  void _onSaveCategory(Category category) {
+    showModalBottomSheet(
+      context: context,
+      builder: (ctx) {
+        return SaveCategoryWidget(
+          category: category,
+          onSave: (updatedCategory) {
+            setState(() {
+              category.name = updatedCategory.name;
+              category.icon = updatedCategory.icon;
+              category.color = updatedCategory.color;
+              category.type = updatedCategory.type;
+            });
+            Navigator.of(context).pop();
+          },
+        );
+      },
+    );
+  }
+
+  void _onAddCategory() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: false,
+      builder: (ctx) {
+        return SaveCategoryWidget(
+          category: Category.create(
+            icon: Icons.category,
+            color: Colors.grey,
+            name: '',
+            type: CategoryType.expense,
+          ),
+          onSave: (category) {
+            setState(() {
+              CategoriesService.addCategory(category);
+            });
+            Navigator.of(context).pop();
+          },
+        );
+      },
+    );
   }
 
   Card _buildCategoryCardWidget(Category category) {
@@ -136,7 +173,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
           if (_pageEvent == CategoryPageEvent.addTransaction) {
             _onAddTransaction(category);
           } else {
-            _onEditCategory(category);
+            _onSaveCategory(category);
           }
         },
         child: _buildCategoryCardWidget(category),
@@ -145,9 +182,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
     if (_pageEvent == CategoryPageEvent.editCategory) {
       categoryWidgets.add(
         GestureDetector(
-          onTap: () {
-            print('Add category');
-          },
+          onTap: _onAddCategory,
           child: _buildAddCategoryCardWidget(),
         ),
       );
