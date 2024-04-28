@@ -44,6 +44,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
   void _onSaveCategory(Category category) {
     showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
       builder: (ctx) {
         return SaveCategoryWidget(
           category: category,
@@ -64,7 +65,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
   void _onAddCategory() {
     showModalBottomSheet(
       context: context,
-      isScrollControlled: false,
+      isScrollControlled: true,
       builder: (ctx) {
         return SaveCategoryWidget(
           category: Category.create(

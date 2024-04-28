@@ -1,4 +1,5 @@
 import 'package:expense_tracker/models/category_model.dart';
+import 'package:expense_tracker/screens/widgets/buttons_presets.dart';
 import 'package:expense_tracker/services/theme_provider.dart';
 import 'package:flutter/material.dart';
 
@@ -54,12 +55,12 @@ class _SaveCategoryWidgetState extends State<SaveCategoryWidget> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: TextField(
-              autofocus: true,
               controller: _nameController,
               keyboardType: TextInputType.text,
               maxLines: 1,
+              autofocus: true,
               decoration: const InputDecoration(
-                labelText: 'Category name',
+                labelText: 'Name',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(10),
@@ -69,12 +70,17 @@ class _SaveCategoryWidgetState extends State<SaveCategoryWidget> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
+            padding: const EdgeInsets.symmetric(
+              vertical: 10,
+              horizontal: 25,
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                OutlinedButton.icon(
+                GenericOutlinedIconWithLabelButton(
+                  icon: CategoryType.getIcon(_selectedType),
+                  label: CategoryType.getName(_selectedType),
                   onPressed: () {
                     showDialog(
                       context: context,
@@ -87,28 +93,9 @@ class _SaveCategoryWidgetState extends State<SaveCategoryWidget> {
                       ),
                     );
                   },
-                  icon: Icon(
-                    CategoryType.getIcon(_selectedType),
-                    size: 30,
-                  ),
-                  label: Text(
-                    CategoryType.getName(_selectedType),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                  style: OutlinedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 15,
-                      vertical: 10,
-                    ),
-                    maximumSize: const Size(175, 50),
-                  ),
                 ),
-                OutlinedButton(
+                GenericOutlinedIconButton(
+                  icon: Icons.apps_rounded,
                   onPressed: () {
                     showDialog(
                       context: context,
@@ -121,21 +108,9 @@ class _SaveCategoryWidgetState extends State<SaveCategoryWidget> {
                       ),
                     );
                   },
-                  style: OutlinedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 5,
-                      vertical: 10,
-                    ),
-                  ),
-                  child: const Icon(
-                    Icons.notes,
-                    size: 30,
-                  ),
                 ),
-                OutlinedButton(
+                GenericOutlinedIconButton(
+                  icon: Icons.palette,
                   onPressed: () {
                     showDialog(
                       context: context,
@@ -148,26 +123,13 @@ class _SaveCategoryWidgetState extends State<SaveCategoryWidget> {
                       ),
                     );
                   },
-                  style: OutlinedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 5,
-                      vertical: 10,
-                    ),
-                  ),
-                  child: const Icon(
-                    Icons.notes,
-                    size: 30,
-                  ),
                 ),
               ],
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
-            child: ElevatedButton(
+            child: FilledButton(
               onPressed: () {
                 widget.onSave(
                   Category(
@@ -179,16 +141,19 @@ class _SaveCategoryWidgetState extends State<SaveCategoryWidget> {
                   ),
                 );
               },
-              style: ElevatedButton.styleFrom(
+              style: FilledButton.styleFrom(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 15,
+                  horizontal: 20,
                   vertical: 10,
                 ),
               ),
-              child: const Text('Save'),
+              child: const Text(
+                'Save',
+                style: TextStyle(fontSize: 16),
+              ),
             ),
           ),
         ],

@@ -1,8 +1,10 @@
 import 'package:expense_tracker/models/category_model.dart';
 import 'package:expense_tracker/models/transaction_model.dart';
+import 'package:expense_tracker/screens/widgets/buttons_presets.dart';
 import 'package:expense_tracker/services/categories_service.dart';
 import 'package:expense_tracker/services/theme_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class SaveTransactionWidget extends StatefulWidget {
   const SaveTransactionWidget({
@@ -147,12 +149,7 @@ class _SaveExpenseState extends State<SaveTransactionWidget> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: EdgeInsets.only(
-          top: 15,
-          left: 15,
-          right: 15,
-          bottom: 15 + MediaQuery.of(context).viewInsets.bottom,
-        ),
+        padding: const EdgeInsets.all(15),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -209,41 +206,29 @@ class _SaveExpenseState extends State<SaveTransactionWidget> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  OutlinedButton.icon(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => TransactionCategoryDialodWidget(
-                          onCagegorySelected: (category) {
-                            setState(() {
-                              _selectedCategory = category;
-                            });
-                          },
-                        ),
-                      );
-                    },
-                    icon: Icon(
-                      _selectedCategory.icon,
-                      size: 30,
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(
+                      maxWidth: 180,
                     ),
-                    label: Text(
-                      _selectedCategory.name,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                    style: OutlinedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 15,
-                        vertical: 10,
-                      ),
-                      maximumSize: const Size(175, 50),
+                    child: GenericOutlinedIconWithLabelButton(
+                      icon: _selectedCategory.icon,
+                      label: _selectedCategory.name,
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => TransactionCategoryDialodWidget(
+                            onCagegorySelected: (category) {
+                              setState(() {
+                                _selectedCategory = category;
+                              });
+                            },
+                          ),
+                        );
+                      },
                     ),
                   ),
-                  OutlinedButton(
+                  GenericOutlinedIconButton(
+                    icon: Icons.notes,
                     onPressed: () {
                       showDialog(
                         context: context,
@@ -252,36 +237,11 @@ class _SaveExpenseState extends State<SaveTransactionWidget> {
                         ),
                       );
                     },
-                    style: OutlinedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 5,
-                        vertical: 10,
-                      ),
-                    ),
-                    child: const Icon(
-                      Icons.notes,
-                      size: 30,
-                    ),
                   ),
-                  OutlinedButton(
+                  GenericOutlinedIconButton(
+                    icon: Icons.calendar_month,
                     onPressed: _showDateTimePicker,
-                    style: OutlinedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 5,
-                        vertical: 10,
-                      ),
-                    ),
-                    child: const Icon(
-                      Icons.calendar_month,
-                      size: 30,
-                    ),
-                  ),
+                  )
                 ],
               ),
             ),
