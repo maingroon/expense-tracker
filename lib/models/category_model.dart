@@ -66,3 +66,8 @@ enum CategoryType {
     }
   }
 }
+
+enum CategorySaveMode {
+  create,
+  edit,
+}

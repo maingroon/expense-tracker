@@ -35,3 +35,8 @@ class Transaction {
   Category category;
   DateTime date;
 }
+
+enum TransactionSaveMode {
+  create,
+  edit,
+}

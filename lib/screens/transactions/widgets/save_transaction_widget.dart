@@ -4,7 +4,6 @@ import 'package:expense_tracker/screens/widgets/buttons_presets.dart';
 import 'package:expense_tracker/services/categories_service.dart';
 import 'package:expense_tracker/services/theme_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class SaveTransactionWidget extends StatefulWidget {
   const SaveTransactionWidget({
@@ -155,7 +154,7 @@ class _SaveExpenseState extends State<SaveTransactionWidget> {
           children: [
             // amount row
             Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.symmetric(vertical: 10),
               child: IntrinsicHeight(
                 child: Stack(
                   children: [
@@ -201,7 +200,7 @@ class _SaveExpenseState extends State<SaveTransactionWidget> {
             ),
             // settings row
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.end,

@@ -4,11 +4,15 @@ class GenericOutlinedIconButton extends StatelessWidget {
   const GenericOutlinedIconButton({
     required this.icon,
     required this.onPressed,
+    this.iconColor,
+    this.iconSize,
     super.key,
   });
 
   final IconData icon;
   final void Function() onPressed;
+  final Color? iconColor;
+  final double? iconSize;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +29,8 @@ class GenericOutlinedIconButton extends StatelessWidget {
       ),
       child: Icon(
         icon,
-        size: 30,
+        size: iconSize ?? 30,
+        color: iconColor,
       ),
     );
   }
@@ -36,12 +41,16 @@ class GenericOutlinedIconWithLabelButton extends StatelessWidget {
     required this.icon,
     required this.label,
     required this.onPressed,
+    this.iconColor,
+    this.iconSize,
     super.key,
   });
 
   final IconData icon;
   final String label;
   final void Function() onPressed;
+  final Color? iconColor;
+  final double? iconSize;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +58,8 @@ class GenericOutlinedIconWithLabelButton extends StatelessWidget {
       onPressed: onPressed,
       icon: Icon(
         icon,
-        size: 30,
+        size: iconSize ?? 30,
+        color: iconColor,
       ),
       label: Text(
         label,

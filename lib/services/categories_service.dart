@@ -27,11 +27,16 @@ class CategoriesService {
 
   static List<Category> get categories => _categories;
 
-  static void addCategory(Category transaction) {
-    _categories.add(transaction);
+  static void addCategory(Category category) {
+    _categories.add(category);
   }
 
-  static void removeCategory(Category transaction) {
-    _categories.remove(transaction);
+  static void removeCategory(Category category) {
+    _categories.removeWhere((listCategory) => listCategory.id == category.id);
+  }
+
+  static void reorderCategories(int oldIndex, int newIndex) {
+    final Category category = _categories.removeAt(oldIndex);
+    _categories.insert(newIndex, category);
   }
 }

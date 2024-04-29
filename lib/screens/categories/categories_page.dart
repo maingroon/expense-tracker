@@ -6,6 +6,7 @@ import 'package:expense_tracker/services/categories_service.dart';
 import 'package:expense_tracker/services/theme_provider.dart';
 import 'package:expense_tracker/services/transactions_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_draggable_gridview/flutter_draggable_gridview.dart';
 
 class CategoriesPage extends StatefulWidget {
   const CategoriesPage({super.key});
@@ -48,6 +49,12 @@ class _CategoriesPageState extends State<CategoriesPage> {
       builder: (ctx) {
         return SaveCategoryWidget(
           category: category,
+          onDelete: (category) {
+            setState(() {
+              CategoriesService.removeCategory(category);
+            });
+            Navigator.of(context).pop();
+          },
           onSave: (updatedCategory) {
             setState(() {
               category.name = updatedCategory.name;
@@ -57,6 +64,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
             });
             Navigator.of(context).pop();
           },
+          saveMode: CategorySaveMode.edit,
         );
       },
     );
@@ -74,12 +82,14 @@ class _CategoriesPageState extends State<CategoriesPage> {
             name: '',
             type: CategoryType.expense,
           ),
+          onDelete: (category) => {},
           onSave: (category) {
             setState(() {
               CategoriesService.addCategory(category);
             });
             Navigator.of(context).pop();
           },
+          saveMode: CategorySaveMode.create,
         );
       },
     );
@@ -87,8 +97,11 @@ class _CategoriesPageState extends State<CategoriesPage> {
 
   Card _buildCategoryCardWidget(Category category) {
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(10),
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(
+          minWidth: 100,
+          minHeight: 100,
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -152,7 +165,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
             const Padding(
               padding: EdgeInsets.all(5),
               child: Text(
-                'Add category',
+                'Add',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -167,27 +180,34 @@ class _CategoriesPageState extends State<CategoriesPage> {
     );
   }
 
-  List<Widget> _buildCategoriesWidgets() {
-    List<Widget> categoryWidgets = _getCategories().map((category) {
-      return GestureDetector(
-        onTap: () {
-          if (_pageEvent == CategoryPageEvent.addTransaction) {
-            _onAddTransaction(category);
-          } else {
-            _onSaveCategory(category);
-          }
-        },
-        child: _buildCategoryCardWidget(category),
+  List<DraggableGridItem> _buildCategoriesWidgets() {
+    final categoryWidgets = _getCategories().map((category) {
+      return DraggableGridItem(
+        isDraggable: _pageEvent == CategoryPageEvent.editCategory,
+        child: GestureDetector(
+          onTap: () {
+            if (_pageEvent == CategoryPageEvent.addTransaction) {
+              _onAddTransaction(category);
+            } else {
+              _onSaveCategory(category);
+            }
+          },
+          child: _buildCategoryCardWidget(category),
+        ),
       );
     }).toList();
+
     if (_pageEvent == CategoryPageEvent.editCategory) {
       categoryWidgets.add(
-        GestureDetector(
-          onTap: _onAddCategory,
-          child: _buildAddCategoryCardWidget(),
+        DraggableGridItem(
+          child: GestureDetector(
+            onTap: _onAddCategory,
+            child: _buildAddCategoryCardWidget(),
+          ),
         ),
       );
     }
+
     return categoryWidgets;
   }
 
@@ -213,9 +233,24 @@ class _CategoriesPageState extends State<CategoriesPage> {
           ),
         ],
       ),
-      body: GridView.count(
-        crossAxisCount: 3,
+      body: DraggableGridViewBuilder(
+        isOnlyLongPress: false,
         padding: const EdgeInsets.all(5),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+        ),
+        dragCompletion: (list, beforeIndex, afterIndex) {
+          setState(() {
+            CategoriesService.reorderCategories(beforeIndex, afterIndex);
+          });
+        },
+        dragPlaceHolder: (list, index) {
+          return PlaceHolderWidget(
+            child: Container(
+              color: Colors.transparent,
+            ),
+          );
+        },
         children: _buildCategoriesWidgets(),
       ),
     );
