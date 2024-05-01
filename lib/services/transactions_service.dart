@@ -14,4 +14,12 @@ class TransactionsService {
   static void removeTransaction(Transaction transaction) {
     _transactions.remove(transaction);
   }
+
+  static List<Transaction> getTransactionsByDate(
+      DateTime fromDate, DateTime toDate) {
+    return _transactions.where((transaction) {
+      return transaction.date.isAfter(fromDate) &&
+          transaction.date.isBefore(toDate);
+    }).toList();
+  }
 }
