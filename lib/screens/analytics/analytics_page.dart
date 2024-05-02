@@ -1,4 +1,3 @@
-import 'package:expense_tracker/models/category_model.dart';
 import 'package:expense_tracker/services/transactions_service.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
