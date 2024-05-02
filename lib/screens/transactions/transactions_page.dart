@@ -167,6 +167,39 @@ class _TransactionCardWidgetState extends State<TransactionCardWidget> {
     );
   }
 
+  Widget _buildSubtitle() {
+    List<Widget> children = [];
+    if (widget._transaction.note.isNotEmpty) {
+      children.add(
+        Padding(
+          padding: const EdgeInsets.only(
+            top: 4,
+            left: 8,
+            right: 8,
+          ),
+          child: Text(widget._transaction.note),
+        ),
+      );
+    }
+    children.add(
+      Padding(
+        padding: const EdgeInsets.only(
+          top: 4,
+          left: 8,
+          right: 8,
+          bottom: 8,
+        ),
+        child: Text(
+          DateFormat.yMMMd().format(widget._transaction.date),
+        ),
+      ),
+    );
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: children,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -204,32 +237,29 @@ class _TransactionCardWidgetState extends State<TransactionCardWidget> {
           ),
           child: ListTile(
             onTap: _onEditTransaction,
-            leading: CircleAvatar(
-              radius: 30,
-              backgroundColor:
-                  widget._transaction.category.color.withOpacity(0.1),
-              child: Padding(
-                padding: const EdgeInsets.all(6),
-                child: FittedBox(
-                  child: Icon(
-                    widget._transaction.category.icon,
-                    color: widget._transaction.category.color,
+            title: Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 6),
+                    child: Icon(
+                      widget._transaction.category.icon,
+                      color: widget._transaction.category.color,
+                    ),
                   ),
-                ),
+                  Text(
+                    widget._transaction.category.name,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
             ),
-            title: Text(
-              widget._transaction.note,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
-            ),
-            subtitle: Text(
-              DateFormat.yMMMd().format(widget._transaction.date),
-            ),
+            subtitle: _buildSubtitle(),
             trailing: Text(
               '${widget._transaction.amount / 100}',
               style: const TextStyle(
