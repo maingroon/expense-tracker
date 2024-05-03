@@ -1,5 +1,6 @@
 import 'package:expense_tracker/models/category_model.dart';
 import 'package:expense_tracker/models/transaction_model.dart';
+import 'package:expense_tracker/services/categories_service.dart';
 import 'package:expense_tracker/services/database_service.dart';
 
 class TransactionsService {
@@ -42,7 +43,9 @@ class TransactionsService {
   static int getIncomeByDate(DateTime fromDate, DateTime toDate) {
     return getTransactionsByDate(fromDate, toDate)
         .where((transaction) {
-          return transaction.category.type == CategoryType.income;
+          final category =
+              CategoriesService.getCategoryById(transaction.categoryId);
+          return category.type == CategoryType.income;
         })
         .map((transaction) => transaction.amount)
         .fold(0, (a, b) => a + b);
@@ -51,7 +54,9 @@ class TransactionsService {
   static int getExpenseByDate(DateTime fromDate, DateTime toDate) {
     return getTransactionsByDate(fromDate, toDate)
         .where((transaction) {
-          return transaction.category.type == CategoryType.expense;
+          final category =
+              CategoriesService.getCategoryById(transaction.categoryId);
+          return category.type == CategoryType.expense;
         })
         .map((transaction) => transaction.amount)
         .fold(0, (a, b) => a + b);
@@ -62,15 +67,15 @@ class TransactionsService {
         getExpenseByDate(fromDate, toDate);
   }
 
-  static List<MapEntry<Category, int>> getSortedCateogriesSum(
+  static List<MapEntry<String, int>> getSortedCateogriesSum(
       DateTime fromDate, DateTime toDate) {
-    Map<Category, int> categoriesSum = {};
+    Map<String, int> categoriesSum = {};
     getTransactionsByDate(fromDate, toDate).forEach((transaction) {
-      if (categoriesSum.containsKey(transaction.category)) {
-        categoriesSum[transaction.category] =
-            categoriesSum[transaction.category]! + transaction.amount;
+      if (categoriesSum.containsKey(transaction.categoryId)) {
+        categoriesSum[transaction.categoryId] =
+            categoriesSum[transaction.categoryId]! + transaction.amount;
       } else {
-        categoriesSum[transaction.category] = transaction.amount;
+        categoriesSum[transaction.categoryId] = transaction.amount;
       }
     });
     return categoriesSum.entries.toList()

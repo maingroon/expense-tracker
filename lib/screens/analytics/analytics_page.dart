@@ -1,3 +1,4 @@
+import 'package:expense_tracker/services/categories_service.dart';
 import 'package:expense_tracker/services/transactions_service.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -202,7 +203,7 @@ class AnalyticsChartWidget extends StatelessWidget {
         itemCount: categoriesSum.length,
         itemBuilder: (context, index) {
           final categorySum = categoriesSum[index];
-          final category = categorySum.key;
+          final category = CategoriesService.getCategoryById(categorySum.key);
           final sum = categorySum.value;
           return Padding(
             padding: const EdgeInsets.only(

@@ -29,8 +29,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
       builder: (ctx) {
         return SaveTransactionWidget(
           transaction: Transaction.create(
+            categoryId: category.id,
             amount: 0,
-            category: category,
             date: DateTime.now(),
             note: '',
           ),

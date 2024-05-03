@@ -98,7 +98,6 @@ class DatabaseService {
 
   Future<List<tm.Transaction>> getAllTransactions() async {
     final Database db = await database;
-    final List<cm.Category> categories = await getAllCategories();
     final List<Map<String, dynamic>> maps = await db.query('transactions');
 
     return List.generate(
@@ -106,10 +105,8 @@ class DatabaseService {
       (i) {
         return tm.Transaction(
           id: maps[i]['id'],
+          categoryId: maps[i]['categoryId'],
           amount: maps[i]['amount'],
-          category: categories.firstWhere(
-            (category) => category.id == maps[i]['categoryId'],
-          ),
           date: DateTime.parse(maps[i]['date']),
           note: maps[i]['note'],
         );

@@ -42,7 +42,8 @@ class _SaveExpenseState extends State<SaveTransactionWidget> {
       }
       _amount += remainder.toString();
     }
-    _selectedCategory = widget.transaction.category;
+    _selectedCategory =
+        CategoriesService.getCategoryById(widget.transaction.categoryId);
     _noteController = TextEditingController(text: widget.transaction.note);
     _selectedDateTime = widget.transaction.date;
   }
@@ -91,10 +92,10 @@ class _SaveExpenseState extends State<SaveTransactionWidget> {
 
   void _saveTransaction() {
     final transaction = Transaction.create(
+      categoryId: _selectedCategory.id,
       amount: _parseAmount(),
       note: _noteController.text,
       date: _selectedDateTime,
-      category: _selectedCategory,
     );
     widget.onSave(transaction);
     Navigator.pop(context);

@@ -44,7 +44,7 @@ class Category {
       'iconCode': icon.codePoint.toString(),
       'colorCode': color.value.toString(),
       'name': name,
-      'type': type.toString(),
+      'type': type.toString().split('.').last,
       'position': position,
     };
   }

@@ -1,5 +1,6 @@
 import 'package:expense_tracker/models/transaction_model.dart';
 import 'package:expense_tracker/screens/transactions/widgets/save_transaction_widget.dart';
+import 'package:expense_tracker/services/categories_service.dart';
 import 'package:expense_tracker/services/transactions_service.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -156,8 +157,8 @@ class _TransactionCardWidgetState extends State<TransactionCardWidget> {
           transaction: widget._transaction,
           onSave: (editedTransaction) {
             setState(() {
+              widget._transaction.categoryId = editedTransaction.categoryId;
               widget._transaction.amount = editedTransaction.amount;
-              widget._transaction.category = editedTransaction.category;
               widget._transaction.date = editedTransaction.date;
               widget._transaction.note = editedTransaction.note;
             });
@@ -203,6 +204,8 @@ class _TransactionCardWidgetState extends State<TransactionCardWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final category =
+        CategoriesService.getCategoryById(widget._transaction.categoryId);
     return Padding(
       padding: const EdgeInsets.only(
         top: 8,
@@ -246,12 +249,12 @@ class _TransactionCardWidgetState extends State<TransactionCardWidget> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 6),
                     child: Icon(
-                      widget._transaction.category.icon,
-                      color: widget._transaction.category.color,
+                      category.icon,
+                      color: category.color,
                     ),
                   ),
                   Text(
-                    widget._transaction.category.name,
+                    category.name,
                     style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,

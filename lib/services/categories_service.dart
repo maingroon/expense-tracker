@@ -14,6 +14,12 @@ class CategoriesService {
 
   static List<Category> get categories => _categories;
 
+  static Category getCategoryById(String id) {
+    return _categories.firstWhere((category) {
+      return category.id == id;
+    });
+  }
+
   static void addCategory(Category category) {
     _categories.add(category);
     _databaseService.insertCategory(category);
