@@ -1,42 +1,46 @@
 import 'package:expense_tracker/models/category_model.dart';
-import 'package:flutter/material.dart';
+import 'package:expense_tracker/services/database_service.dart';
 
 class CategoriesService {
   CategoriesService._();
 
-  static final List<Category> _categories = [
-    Category.create(
-      icon: Icons.payments,
-      color: Colors.green,
-      name: 'Salary',
-      type: CategoryType.income,
-    ),
-    Category.create(
-      icon: Icons.home,
-      color: Colors.blue,
-      name: 'House',
-      type: CategoryType.expense,
-    ),
-    Category.create(
-      icon: Icons.shopping_cart,
-      color: Colors.blueGrey,
-      name: 'Food',
-      type: CategoryType.expense,
-    ),
-  ];
+  static final DatabaseService _databaseService = DatabaseService();
+
+  static List<Category> _categories = [];
+
+  static Future<void> init() async {
+    _categories = await _databaseService.getAllCategories();
+  }
 
   static List<Category> get categories => _categories;
 
   static void addCategory(Category category) {
     _categories.add(category);
+    _databaseService.insertCategory(category);
+  }
+
+  static void updateCategory(Category category) {
+    _databaseService.updateCategory(category);
   }
 
   static void removeCategory(Category category) {
-    _categories.removeWhere((listCategory) => listCategory.id == category.id);
+    _categories.removeWhere((listCategory) {
+      return listCategory.id == category.id;
+    });
+    _databaseService.deleteCategory(category);
   }
 
   static void reorderCategories(int oldIndex, int newIndex) {
-    final Category category = _categories.removeAt(oldIndex);
-    _categories.insert(newIndex, category);
+    final Category oldIndexCategory = _categories[oldIndex];
+    final Category newIndexCategory = _categories[newIndex];
+
+    oldIndexCategory.position = newIndex;
+    newIndexCategory.position = oldIndex;
+
+    _categories.removeAt(oldIndex);
+    _categories.insert(oldIndex, newIndexCategory);
+
+    _databaseService.updateCategory(oldIndexCategory);
+    _databaseService.updateCategory(newIndexCategory);
   }
 }

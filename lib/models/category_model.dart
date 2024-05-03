@@ -10,6 +10,7 @@ class Category {
     required this.color,
     required this.name,
     required this.type,
+    required this.position,
   });
 
   static create({
@@ -17,6 +18,7 @@ class Category {
     required color,
     required name,
     required type,
+    required position,
   }) {
     return Category(
       id: _uuid.v4(),
@@ -24,6 +26,7 @@ class Category {
       color: color,
       name: name,
       type: type,
+      position: position,
     );
   }
 
@@ -33,6 +36,18 @@ class Category {
   Color color;
   String name;
   CategoryType type;
+  int position;
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'iconCode': icon.codePoint.toString(),
+      'colorCode': color.value.toString(),
+      'name': name,
+      'type': type.toString(),
+      'position': position,
+    };
+  }
 }
 
 enum CategoryType {

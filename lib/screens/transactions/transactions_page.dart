@@ -161,6 +161,7 @@ class _TransactionCardWidgetState extends State<TransactionCardWidget> {
               widget._transaction.date = editedTransaction.date;
               widget._transaction.note = editedTransaction.note;
             });
+            TransactionsService.updateTransaction(widget._transaction);
           },
         );
       },

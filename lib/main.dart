@@ -1,10 +1,12 @@
 import 'package:expense_tracker/constants/theme_constants.dart';
 import 'package:expense_tracker/screens/analytics/analytics_page.dart';
+import 'package:expense_tracker/services/categories_service.dart';
 import 'package:expense_tracker/services/theme_provider.dart';
 import 'package:expense_tracker/screens/categories/categories_page.dart';
 import 'package:expense_tracker/screens/transactions/transactions_page.dart';
 import 'package:expense_tracker/screens/settings/settings_page.dart';
 import 'package:expense_tracker/services/settings_service.dart';
+import 'package:expense_tracker/services/transactions_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +18,13 @@ void main() {
     DeviceOrientation.portraitDown,
   ]);
 
-  SettingsService.init().then((value) {
+  final futures = <Future>[
+    SettingsService.init(),
+    CategoriesService.init(),
+    TransactionsService.init(),
+  ];
+
+  Future.wait(futures).then((value) {
     runApp(const PageContainer());
   });
 }

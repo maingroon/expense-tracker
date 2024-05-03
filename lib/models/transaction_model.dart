@@ -34,6 +34,16 @@ class Transaction {
   String note;
   Category category;
   DateTime date;
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'amount': amount,
+      'categoryId': category.id,
+      'date': date.toIso8601String(),
+      'note': note,
+    };
+  }
 }
 
 enum TransactionSaveMode {

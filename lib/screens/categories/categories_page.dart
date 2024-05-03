@@ -62,6 +62,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
               category.color = updatedCategory.color;
               category.type = updatedCategory.type;
             });
+            CategoriesService.updateCategory(category);
             Navigator.of(context).pop();
           },
           saveMode: CategorySaveMode.edit,
@@ -81,6 +82,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
             color: Colors.grey,
             name: '',
             type: CategoryType.expense,
+            position: _getCategories().length,
           ),
           onDelete: (category) => {},
           onSave: (category) {
@@ -181,7 +183,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
   }
 
   List<DraggableGridItem> _buildCategoriesWidgets() {
-    final categoryWidgets = _getCategories().map((category) {
+    List<DraggableGridItem> categoryWidgets = _getCategories().map((category) {
       return DraggableGridItem(
         isDraggable: _pageEvent == CategoryPageEvent.editCategory,
         child: GestureDetector(
@@ -196,6 +198,13 @@ class _CategoriesPageState extends State<CategoriesPage> {
         ),
       );
     }).toList();
+
+    if (categoryWidgets.isEmpty) {
+      if (_pageEvent == CategoryPageEvent.addTransaction) {
+        _pageEvent = CategoryPageEvent.editCategory;
+        _actionIcon = const Icon(Icons.save);
+      }
+    }
 
     if (_pageEvent == CategoryPageEvent.editCategory) {
       categoryWidgets.add(

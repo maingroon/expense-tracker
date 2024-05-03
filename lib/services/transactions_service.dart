@@ -1,19 +1,34 @@
 import 'package:expense_tracker/models/category_model.dart';
 import 'package:expense_tracker/models/transaction_model.dart';
+import 'package:expense_tracker/services/database_service.dart';
 
 class TransactionsService {
   TransactionsService._();
 
-  static final List<Transaction> _transactions = [];
+  static final DatabaseService _databaseService = DatabaseService();
+
+  static List<Transaction> _transactions = [];
+
+  static Future<void> init() async {
+    _transactions = await _databaseService.getAllTransactions();
+  }
 
   static List<Transaction> get transactions => _transactions;
 
   static void addTransaction(Transaction transaction) {
     _transactions.add(transaction);
+    _databaseService.insertTransaction(transaction);
+  }
+
+  static void updateTransaction(Transaction transaction) {
+    _databaseService.updateTransaction(transaction);
   }
 
   static void removeTransaction(Transaction transaction) {
-    _transactions.remove(transaction);
+    _transactions.removeWhere((listTransaction) {
+      return listTransaction.id == transaction.id;
+    });
+    _databaseService.deleteTransaction(transaction);
   }
 
   static List<Transaction> getTransactionsByDate(

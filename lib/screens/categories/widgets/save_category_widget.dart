@@ -79,6 +79,7 @@ class _SaveCategoryWidgetState extends State<SaveCategoryWidget> {
               icon: _selectedIcon,
               color: _selectedColor,
               type: _selectedType,
+              position: widget.category.position,
             ),
           );
         },
