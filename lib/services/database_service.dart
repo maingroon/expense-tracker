@@ -10,7 +10,6 @@ class DatabaseService {
   Future<Database> get database async {
     if (_database != null) return _database!;
 
-    // if _database is null we instantiate it
     _database = await _initDB();
     return _database!;
   }

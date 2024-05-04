@@ -44,7 +44,7 @@ class CategoriesService {
     newIndexCategory.position = oldIndex;
 
     _categories.removeAt(oldIndex);
-    _categories.insert(oldIndex, newIndexCategory);
+    _categories.insert(newIndex, oldIndexCategory);
 
     _databaseService.updateCategory(oldIndexCategory);
     _databaseService.updateCategory(newIndexCategory);

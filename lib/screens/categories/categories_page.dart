@@ -199,11 +199,12 @@ class _CategoriesPageState extends State<CategoriesPage> {
       );
     }).toList();
 
-    if (categoryWidgets.isEmpty) {
-      if (_pageEvent == CategoryPageEvent.addTransaction) {
+    if (categoryWidgets.isEmpty &&
+        _pageEvent == CategoryPageEvent.addTransaction) {
+      setState(() {
         _pageEvent = CategoryPageEvent.editCategory;
         _actionIcon = const Icon(Icons.save);
-      }
+      });
     }
 
     if (_pageEvent == CategoryPageEvent.editCategory) {
@@ -229,7 +230,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
           IconButton(
             onPressed: () {
               setState(() {
-                if (_pageEvent == CategoryPageEvent.addTransaction) {
+                if (_pageEvent == CategoryPageEvent.addTransaction ||
+                    _getCategories().isEmpty) {
                   _pageEvent = CategoryPageEvent.editCategory;
                   _actionIcon = const Icon(Icons.save);
                 } else {
