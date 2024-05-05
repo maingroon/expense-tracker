@@ -219,20 +219,6 @@ class CategoryTypeDialodWidget extends StatelessWidget {
 
   final void Function(CategoryType type) onTypeSelected;
 
-  List<Shadow> _getCategoryIconShadows() {
-    if (ThemeProvider().getCurrentBrightness() == Brightness.light) {
-      return const [
-        Shadow(
-          blurRadius: 5,
-          color: Colors.grey,
-          offset: Offset(1, 1),
-        ),
-      ];
-    } else {
-      return [];
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -272,7 +258,7 @@ class CategoryTypeDialodWidget extends StatelessWidget {
                     leading: Icon(
                       CategoryType.getIcon(type),
                       color: CategoryType.getColor(type),
-                      shadows: _getCategoryIconShadows(),
+                      shadows: ThemeProvider().getIconsShadows(),
                     ),
                     title: Text(
                       CategoryType.getName(type),

@@ -113,7 +113,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                 category.icon,
                 color: category.color,
                 size: 30,
-                shadows: _getCategoryIconShadows(),
+                shadows: ThemeProvider().getIconsShadows(),
               ),
             ),
             Padding(
@@ -134,20 +134,6 @@ class _CategoriesPageState extends State<CategoriesPage> {
     );
   }
 
-  List<Shadow> _getCategoryIconShadows() {
-    if (ThemeProvider().getCurrentBrightness() == Brightness.light) {
-      return const [
-        Shadow(
-          blurRadius: 5,
-          color: Colors.grey,
-          offset: Offset(1, 1),
-        ),
-      ];
-    } else {
-      return [];
-    }
-  }
-
   Card _buildAddCategoryCardWidget() {
     return Card(
       child: Padding(
@@ -161,7 +147,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                 Icons.add,
                 color: Colors.grey,
                 size: 30,
-                shadows: _getCategoryIconShadows(),
+                shadows: ThemeProvider().getIconsShadows(),
               ),
             ),
             const Padding(

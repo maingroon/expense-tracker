@@ -265,20 +265,6 @@ class TransactionCategoryDialodWidget extends StatelessWidget {
 
   final void Function(Category) onCagegorySelected;
 
-  List<Shadow> _getCategoryIconShadows() {
-    if (ThemeProvider().getCurrentBrightness() == Brightness.light) {
-      return const [
-        Shadow(
-          blurRadius: 5,
-          color: Colors.grey,
-          offset: Offset(1, 1),
-        ),
-      ];
-    } else {
-      return [];
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final categories = CategoriesService.categories;
@@ -320,7 +306,7 @@ class TransactionCategoryDialodWidget extends StatelessWidget {
                     leading: Icon(
                       category.icon,
                       color: category.color,
-                      shadows: _getCategoryIconShadows(),
+                      shadows: ThemeProvider().getIconsShadows(),
                     ),
                     title: Text(
                       category.name,

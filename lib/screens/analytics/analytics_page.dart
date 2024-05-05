@@ -1,4 +1,5 @@
 import 'package:expense_tracker/services/categories_service.dart';
+import 'package:expense_tracker/services/theme_provider.dart';
 import 'package:expense_tracker/services/transactions_service.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -138,46 +139,49 @@ class AnalyticsSummaryWidget extends StatelessWidget {
       ),
       child: Card(
         margin: const EdgeInsets.all(0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            _buildSummaryItem(
-              title: 'Income',
-              value: TransactionsService.getIncomeByDate(
-                Jiffy.parseFromDateTime(selectedDate)
-                    .startOf(Unit.month)
-                    .dateTime,
-                Jiffy.parseFromDateTime(selectedDate)
-                    .endOf(Unit.month)
-                    .dateTime,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _buildSummaryItem(
+                title: 'Income',
+                value: TransactionsService.getIncomeByDate(
+                  Jiffy.parseFromDateTime(selectedDate)
+                      .startOf(Unit.month)
+                      .dateTime,
+                  Jiffy.parseFromDateTime(selectedDate)
+                      .endOf(Unit.month)
+                      .dateTime,
+                ),
+                color: Colors.green,
               ),
-              color: Colors.green,
-            ),
-            _buildSummaryItem(
-              title: 'Expenses',
-              value: TransactionsService.getExpenseByDate(
-                Jiffy.parseFromDateTime(selectedDate)
-                    .startOf(Unit.month)
-                    .dateTime,
-                Jiffy.parseFromDateTime(selectedDate)
-                    .endOf(Unit.month)
-                    .dateTime,
+              _buildSummaryItem(
+                title: 'Expenses',
+                value: TransactionsService.getExpenseByDate(
+                  Jiffy.parseFromDateTime(selectedDate)
+                      .startOf(Unit.month)
+                      .dateTime,
+                  Jiffy.parseFromDateTime(selectedDate)
+                      .endOf(Unit.month)
+                      .dateTime,
+                ),
+                color: Colors.red,
               ),
-              color: Colors.red,
-            ),
-            _buildSummaryItem(
-              title: 'Difference',
-              value: TransactionsService.getBalanceByDate(
-                Jiffy.parseFromDateTime(selectedDate)
-                    .startOf(Unit.month)
-                    .dateTime,
-                Jiffy.parseFromDateTime(selectedDate)
-                    .endOf(Unit.month)
-                    .dateTime,
+              _buildSummaryItem(
+                title: 'Difference',
+                value: TransactionsService.getBalanceByDate(
+                  Jiffy.parseFromDateTime(selectedDate)
+                      .startOf(Unit.month)
+                      .dateTime,
+                  Jiffy.parseFromDateTime(selectedDate)
+                      .endOf(Unit.month)
+                      .dateTime,
+                ),
+                color: Colors.blue,
               ),
-              color: Colors.blue,
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -223,6 +227,7 @@ class AnalyticsChartWidget extends StatelessWidget {
                       child: Icon(
                         category.icon,
                         color: category.color,
+                        shadows: ThemeProvider().getIconsShadows(),
                       ),
                     ),
                     Text(

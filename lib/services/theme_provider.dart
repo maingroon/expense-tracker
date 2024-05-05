@@ -34,4 +34,14 @@ class ThemeProvider extends ChangeNotifier {
       return SchedulerBinding.instance.platformDispatcher.platformBrightness;
     }
   }
+
+  List<Shadow> getIconsShadows() {
+    return [
+      Shadow(
+        blurRadius: 5,
+        color: _themeMode == ThemeMode.light ? Colors.grey : Colors.black,
+        offset: const Offset(1, 1),
+      ),
+    ];
+  }
 }

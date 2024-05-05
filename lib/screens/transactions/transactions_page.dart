@@ -1,6 +1,7 @@
 import 'package:expense_tracker/models/transaction_model.dart';
 import 'package:expense_tracker/screens/transactions/widgets/save_transaction_widget.dart';
 import 'package:expense_tracker/services/categories_service.dart';
+import 'package:expense_tracker/services/theme_provider.dart';
 import 'package:expense_tracker/services/transactions_service.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -251,6 +252,7 @@ class _TransactionCardWidgetState extends State<TransactionCardWidget> {
                     child: Icon(
                       category.icon,
                       color: category.color,
+                      shadows: ThemeProvider().getIconsShadows(),
                     ),
                   ),
                   Text(
