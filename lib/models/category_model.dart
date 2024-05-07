@@ -11,6 +11,7 @@ class Category {
     required this.name,
     required this.type,
     required this.position,
+    this.enabled = true,
   });
 
   static create({
@@ -19,9 +20,11 @@ class Category {
     required name,
     required type,
     required position,
+    enabled = true,
   }) {
     return Category(
       id: _uuid.v4(),
+      enabled: enabled,
       icon: icon,
       color: color,
       name: name,
@@ -32,6 +35,7 @@ class Category {
 
   final String id;
 
+  bool enabled;
   IconData icon;
   Color color;
   String name;
@@ -41,6 +45,7 @@ class Category {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
+      'enabled': enabled ? 1 : 0,
       'iconCode': icon.codePoint.toString(),
       'colorCode': color.value.toString(),
       'name': name,

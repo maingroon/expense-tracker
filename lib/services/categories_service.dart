@@ -1,5 +1,6 @@
 import 'package:expense_tracker/models/category_model.dart';
 import 'package:expense_tracker/services/database_service.dart';
+import 'package:expense_tracker/services/transactions_service.dart';
 
 class CategoriesService {
   CategoriesService._();
@@ -29,24 +30,39 @@ class CategoriesService {
     _databaseService.updateCategory(category);
   }
 
-  static void removeCategory(Category category) {
+  static void updateAllCategoriesPositions() {
+    for (int i = 0; i < _categories.length; i++) {
+      final Category category = _categories[i];
+      final int oldPosition = category.position;
+      if (oldPosition != i) {
+        category.position = i;
+        _databaseService.updateCategory(category);
+      }
+    }
+  }
+
+  static void deleteCategory(Category category) {
     _categories.removeWhere((listCategory) {
       return listCategory.id == category.id;
     });
+    TransactionsService.deleteTransactionsByCategoryId(category.id);
     _databaseService.deleteCategory(category);
+
+    updateAllCategoriesPositions();
+  }
+
+  static void disableCategory(Category category) {
+    category.enabled = false;
+    _databaseService.updateCategory(category);
+
+    updateAllCategoriesPositions();
   }
 
   static void reorderCategories(int oldIndex, int newIndex) {
     final Category oldIndexCategory = _categories[oldIndex];
-    final Category newIndexCategory = _categories[newIndex];
-
-    oldIndexCategory.position = newIndex;
-    newIndexCategory.position = oldIndex;
-
     _categories.removeAt(oldIndex);
     _categories.insert(newIndex, oldIndexCategory);
 
-    _databaseService.updateCategory(oldIndexCategory);
-    _databaseService.updateCategory(newIndexCategory);
+    updateAllCategoriesPositions();
   }
 }

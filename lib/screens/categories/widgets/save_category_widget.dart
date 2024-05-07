@@ -7,6 +7,7 @@ class SaveCategoryWidget extends StatefulWidget {
   const SaveCategoryWidget({
     required this.category,
     required this.onDelete,
+    required this.onArchive,
     required this.onSave,
     required this.saveMode,
     super.key,
@@ -14,6 +15,7 @@ class SaveCategoryWidget extends StatefulWidget {
 
   final Category category;
   final void Function(Category category) onDelete;
+  final void Function(Category category) onArchive;
   final void Function(Category category) onSave;
   final CategorySaveMode saveMode;
 
@@ -63,6 +65,26 @@ class _SaveCategoryWidgetState extends State<SaveCategoryWidget> {
           ),
           child: const Text(
             'Delete',
+            style: TextStyle(fontSize: 16),
+          ),
+        ),
+      );
+      actionButtons.add(
+        OutlinedButton(
+          onPressed: () {
+            widget.onArchive(widget.category);
+          },
+          style: OutlinedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 10,
+            ),
+          ),
+          child: const Text(
+            'Archive',
             style: TextStyle(fontSize: 16),
           ),
         ),

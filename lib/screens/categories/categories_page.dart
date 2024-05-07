@@ -16,11 +16,20 @@ class CategoriesPage extends StatefulWidget {
 }
 
 class _CategoriesPageState extends State<CategoriesPage> {
-  CategoryPageEvent _pageEvent = CategoryPageEvent.addTransaction;
-  Icon _actionIcon = const Icon(Icons.edit);
+  late CategoryPageEvent _pageEvent;
+  late Icon _actionIcon;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageEvent = _getInitialPageEvent();
+    _actionIcon = Icon(_getInitialActionIcon());
+  }
 
   List<Category> _getCategories() {
-    return CategoriesService.categories;
+    return CategoriesService.categories.where((category) {
+      return category.enabled;
+    }).toList();
   }
 
   void _onAddTransaction(Category category) {
@@ -51,7 +60,13 @@ class _CategoriesPageState extends State<CategoriesPage> {
           category: category,
           onDelete: (category) {
             setState(() {
-              CategoriesService.removeCategory(category);
+              CategoriesService.deleteCategory(category);
+            });
+            Navigator.of(context).pop();
+          },
+          onArchive: (category) {
+            setState(() {
+              CategoriesService.disableCategory(category);
             });
             Navigator.of(context).pop();
           },
@@ -85,6 +100,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
             position: _getCategories().length,
           ),
           onDelete: (category) => {},
+          onArchive: (category) {},
           onSave: (category) {
             setState(() {
               CategoriesService.addCategory(category);
@@ -95,6 +111,23 @@ class _CategoriesPageState extends State<CategoriesPage> {
         );
       },
     );
+  }
+
+  CategoryPageEvent _getInitialPageEvent() {
+    if (_getCategories().isEmpty) {
+      return CategoryPageEvent.editCategory;
+    } else {
+      return CategoryPageEvent.addTransaction;
+    }
+  }
+
+  IconData _getInitialActionIcon() {
+    if (_getCategories().isEmpty ||
+        _pageEvent == CategoryPageEvent.editCategory) {
+      return Icons.save;
+    } else {
+      return Icons.edit;
+    }
   }
 
   Card _buildCategoryCardWidget(Category category) {
@@ -169,7 +202,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
   }
 
   List<DraggableGridItem> _buildCategoriesWidgets() {
-    List<DraggableGridItem> categoryWidgets = _getCategories().map((category) {
+    List<Category> categories = _getCategories();
+    List<DraggableGridItem> categoryWidgets = categories.map((category) {
       return DraggableGridItem(
         isDraggable: _pageEvent == CategoryPageEvent.editCategory,
         child: GestureDetector(
@@ -184,14 +218,6 @@ class _CategoriesPageState extends State<CategoriesPage> {
         ),
       );
     }).toList();
-
-    if (categoryWidgets.isEmpty &&
-        _pageEvent == CategoryPageEvent.addTransaction) {
-      setState(() {
-        _pageEvent = CategoryPageEvent.editCategory;
-        _actionIcon = const Icon(Icons.save);
-      });
-    }
 
     if (_pageEvent == CategoryPageEvent.editCategory) {
       categoryWidgets.add(
@@ -216,8 +242,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
           IconButton(
             onPressed: () {
               setState(() {
-                if (_pageEvent == CategoryPageEvent.addTransaction ||
-                    _getCategories().isEmpty) {
+                if (_getCategories().isEmpty ||
+                    _pageEvent == CategoryPageEvent.addTransaction) {
                   _pageEvent = CategoryPageEvent.editCategory;
                   _actionIcon = const Icon(Icons.save);
                 } else {

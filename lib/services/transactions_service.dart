@@ -25,11 +25,18 @@ class TransactionsService {
     _databaseService.updateTransaction(transaction);
   }
 
-  static void removeTransaction(Transaction transaction) {
+  static void deleteTransaction(Transaction transaction) {
     _transactions.removeWhere((listTransaction) {
       return listTransaction.id == transaction.id;
     });
     _databaseService.deleteTransaction(transaction);
+  }
+
+  static void deleteTransactionsByCategoryId(String categoryId) {
+    _transactions.removeWhere((transaction) {
+      return transaction.categoryId == categoryId;
+    });
+    _databaseService.deleteTransactionsByCategoryId(categoryId);
   }
 
   static List<Transaction> getTransactionsByDate(
@@ -37,7 +44,8 @@ class TransactionsService {
     return _transactions.where((transaction) {
       return transaction.date.isAfter(fromDate) &&
           transaction.date.isBefore(toDate);
-    }).toList();
+    }).toList()
+      ..sort((a, b) => b.date.compareTo(a.date));
   }
 
   static int getIncomeByDate(DateTime fromDate, DateTime toDate) {

@@ -108,7 +108,7 @@ class TransactionsListWidget extends StatefulWidget {
 class _TransactionsListWidgetState extends State<TransactionsListWidget> {
   void _onRemoveTransaction(Transaction transaction) {
     setState(() {
-      TransactionsService.removeTransaction(transaction);
+      TransactionsService.deleteTransaction(transaction);
     });
   }
 

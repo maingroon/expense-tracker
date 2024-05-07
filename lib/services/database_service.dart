@@ -20,21 +20,22 @@ class DatabaseService {
       onCreate: (db, version) async {
         await db.execute('''
           CREATE TABLE IF NOT EXISTS categories (
-            id TEXT PRIMARY KEY,
-            iconCode INTEGER,
-            colorCode INTEGER,
-            name TEXT,
-            type TEXT,
-            position INTEGER
+            id TEXT PRIMARY KEY NOT NULL,
+            enabled INTEGER NOT NULL DEFAULT 1,
+            iconCode INTEGER NOT NULL,
+            colorCode INTEGER NOT NULL,
+            name TEXT NOT NULL,
+            type TEXT NOT NULL,
+            position INTEGER NOT NULL
           );
           ''');
         await db.execute(
           '''
           CREATE TABLE IF NOT EXISTS transactions (
-            id TEXT PRIMARY KEY,
-            amount INTEGER,
-            categoryId TEXT,
-            date TEXT,
+            id TEXT PRIMARY KEY NOT NULL,
+            amount INTEGER NOT NULL,
+            categoryId TEXT NOT NULL,
+            date TEXT NOT NULL,
             note TEXT,
             FOREIGN KEY (categoryId) REFERENCES categories (id)
           );
@@ -54,6 +55,7 @@ class DatabaseService {
       (i) {
         return cm.Category(
           id: maps[i]['id'],
+          enabled: maps[i]['enabled'] == 1,
           icon: IconData(maps[i]['iconCode'], fontFamily: 'MaterialIcons'),
           color: Color(maps[i]['colorCode']),
           name: maps[i]['name'],
@@ -138,6 +140,15 @@ class DatabaseService {
       'transactions',
       where: 'id = ?',
       whereArgs: [transaction.id],
+    );
+  }
+
+  Future<void> deleteTransactionsByCategoryId(String categoryId) async {
+    final Database db = await database;
+    await db.delete(
+      'transactions',
+      where: 'categoryId = ?',
+      whereArgs: [categoryId],
     );
   }
 }
