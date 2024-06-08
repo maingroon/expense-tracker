@@ -322,6 +322,7 @@ class CategoryIconDialodWidget extends StatelessWidget {
     Icons.storefront,
     Icons.trending_up,
     Icons.trending_down,
+    Icons.home,
     Icons.sell,
     Icons.account_balance,
     Icons.work,
@@ -392,7 +393,6 @@ class CategoryIconDialodWidget extends StatelessWidget {
     Icons.engineering,
     Icons.volunteer_activism,
     Icons.science,
-    Icons.sports,
     Icons.cake,
     Icons.self_improvement,
     Icons.sports_soccer,
@@ -404,6 +404,8 @@ class CategoryIconDialodWidget extends StatelessWidget {
     Icons.video_library,
     Icons.library_music,
     Icons.podcasts,
+    Icons.health_and_safety,
+    Icons.sports_esports,
   ];
 
   final void Function(IconData icon) onIconSelected;

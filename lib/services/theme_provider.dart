@@ -39,7 +39,7 @@ class ThemeProvider extends ChangeNotifier {
     return [
       Shadow(
         blurRadius: 5,
-        color: _themeMode == ThemeMode.light
+        color: getCurrentBrightness() == Brightness.light
             ? Colors.grey.withOpacity(0.7)
             : Colors.black.withOpacity(0.7),
         offset: const Offset(1, 1),
