@@ -47,7 +47,7 @@ class _ColorModeState extends State<ColorModeWidget> {
             horizontal: -3,
             vertical: -2,
           ),
-          iconSize: MaterialStatePropertyAll(22)),
+          iconSize: WidgetStatePropertyAll(22)),
     );
   }
 }

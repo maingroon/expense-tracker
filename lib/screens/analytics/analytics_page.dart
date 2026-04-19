@@ -4,6 +4,7 @@ import 'package:expense_tracker/services/transactions_service.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:provider/provider.dart';
 
 class AnalyticsPage extends StatefulWidget {
   const AnalyticsPage({super.key});
@@ -198,16 +199,22 @@ class AnalyticsChartWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final categoriesSum = TransactionsService.getSortedCateogriesSum(
+    final shadows = context.watch<ThemeProvider>().getIconsShadows();
+    final allCategoriesSum = TransactionsService.getSortedCategoriesSum(
       Jiffy.parseFromDateTime(selectedDate).startOf(Unit.month).dateTime,
       Jiffy.parseFromDateTime(selectedDate).endOf(Unit.month).dateTime,
     );
+    final categoriesSum = allCategoriesSum.where((entry) {
+      final category = CategoriesService.getCategoryById(entry.key);
+      return category != null && category.enabled;
+    }).toList();
+
     return Expanded(
       child: ListView.builder(
         itemCount: categoriesSum.length,
         itemBuilder: (context, index) {
           final categorySum = categoriesSum[index];
-          final category = CategoriesService.getCategoryById(categorySum.key);
+          final category = CategoriesService.getCategoryById(categorySum.key)!;
           final sum = categorySum.value;
           return Padding(
             padding: const EdgeInsets.only(
@@ -227,7 +234,7 @@ class AnalyticsChartWidget extends StatelessWidget {
                       child: Icon(
                         category.icon,
                         color: category.color,
-                        shadows: ThemeProvider().getIconsShadows(),
+                        shadows: shadows,
                       ),
                     ),
                     Text(

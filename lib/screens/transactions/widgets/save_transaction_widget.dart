@@ -4,6 +4,7 @@ import 'package:expense_tracker/screens/widgets/buttons_presets.dart';
 import 'package:expense_tracker/services/categories_service.dart';
 import 'package:expense_tracker/services/theme_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SaveTransactionWidget extends StatefulWidget {
   const SaveTransactionWidget({
@@ -25,62 +26,60 @@ class _SaveExpenseState extends State<SaveTransactionWidget> {
   static const maxAmountLengthBeforeDot = 8;
   static const maxAmountLengthAfterDot = 2;
 
-  late String _amount;
-  late Category _selectedCategory;
+  String _amount = '0';
+  Category? _selectedCategory;
   late TextEditingController _noteController;
   late DateTime _selectedDateTime;
 
   @override
   void initState() {
     super.initState();
-    _amount = (widget.transaction.amount ~/ 100).toString();
+    final whole = widget.transaction.amount ~/ 100;
     final remainder = widget.transaction.amount % 100;
+    _amount = whole.toString();
     if (remainder > 0) {
       _amount += '.';
-      if (remainder < 10) {
-        _amount += '0';
-      }
+      if (remainder < 10) _amount += '0';
       _amount += remainder.toString();
     }
     _selectedCategory =
-        CategoriesService.getCategoryById(widget.transaction.categoryId);
+        CategoriesService.getCategoryById(widget.transaction.categoryId) ??
+            CategoriesService.categories.firstWhere((c) => c.enabled);
     _noteController = TextEditingController(text: widget.transaction.note);
     _selectedDateTime = widget.transaction.date;
   }
 
-  void _showDateTimePicker() {
+  Future<void> _showDateTimePicker() async {
     final now = DateTime.now();
     final firstDate = DateTime(now.year - 1, now.month, now.day);
     final lastDate = DateTime(now.year + 1, now.month, now.day);
 
-    showDatePicker(
+    final selectedDate = await showDatePicker(
       context: context,
       initialDate: _selectedDateTime,
       currentDate: now,
       firstDate: firstDate,
       lastDate: lastDate,
-    ).then((selectedDate) {
-      if (selectedDate != null) {
-        showTimePicker(
-          context: context,
-          initialTime: TimeOfDay(
-            hour: now.hour,
-            minute: now.minute,
-          ),
-        ).then((selectedTime) {
-          if (selectedTime != null) {
-            setState(() {
-              _selectedDateTime = DateTime(
-                selectedDate.year,
-                selectedDate.month,
-                selectedDate.day,
-                selectedTime.hour,
-                selectedTime.minute,
-              );
-            });
-          }
-        });
-      }
+    );
+    if (selectedDate == null || !mounted) return;
+
+    final selectedTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay(
+        hour: _selectedDateTime.hour,
+        minute: _selectedDateTime.minute,
+      ),
+    );
+    if (selectedTime == null) return;
+
+    setState(() {
+      _selectedDateTime = DateTime(
+        selectedDate.year,
+        selectedDate.month,
+        selectedDate.day,
+        selectedTime.hour,
+        selectedTime.minute,
+      );
     });
   }
 
@@ -91,9 +90,16 @@ class _SaveExpenseState extends State<SaveTransactionWidget> {
   }
 
   void _saveTransaction() {
+    final amount = _parseAmount();
+    if (amount <= 0) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter a valid amount')),
+      );
+      return;
+    }
     final transaction = Transaction.create(
-      categoryId: _selectedCategory.id,
-      amount: _parseAmount(),
+      categoryId: _selectedCategory!.id,
+      amount: amount,
       note: _noteController.text,
       date: _selectedDateTime,
     );
@@ -147,6 +153,7 @@ class _SaveExpenseState extends State<SaveTransactionWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final category = _selectedCategory;
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(15),
@@ -211,13 +218,13 @@ class _SaveExpenseState extends State<SaveTransactionWidget> {
                       maxWidth: 180,
                     ),
                     child: GenericOutlinedIconWithLabelButton(
-                      icon: _selectedCategory.icon,
-                      label: _selectedCategory.name,
+                      icon: category?.icon ?? Icons.category,
+                      label: category?.name ?? '',
                       onPressed: () {
                         showDialog(
                           context: context,
-                          builder: (context) => TransactionCategoryDialodWidget(
-                            onCagegorySelected: (category) {
+                          builder: (context) => TransactionCategoryDialogWidget(
+                            onCategorySelected: (category) {
                               setState(() {
                                 _selectedCategory = category;
                               });
@@ -232,7 +239,7 @@ class _SaveExpenseState extends State<SaveTransactionWidget> {
                     onPressed: () {
                       showDialog(
                         context: context,
-                        builder: (context) => TransactionNoteDialodWidget(
+                        builder: (context) => TransactionNoteDialogWidget(
                           noteController: _noteController,
                         ),
                       );
@@ -257,83 +264,92 @@ class _SaveExpenseState extends State<SaveTransactionWidget> {
   }
 }
 
-class TransactionCategoryDialodWidget extends StatelessWidget {
-  const TransactionCategoryDialodWidget({
+class TransactionCategoryDialogWidget extends StatelessWidget {
+  const TransactionCategoryDialogWidget({
     super.key,
-    required this.onCagegorySelected,
+    required this.onCategorySelected,
   });
 
-  final void Function(Category) onCagegorySelected;
+  final void Function(Category) onCategorySelected;
 
   @override
   Widget build(BuildContext context) {
-    final categories = CategoriesService.categories;
+    final shadows = context.watch<ThemeProvider>().getIconsShadows();
+    final categories =
+        CategoriesService.categories.where((c) => c.enabled).toList();
 
     return Dialog(
       insetPadding: const EdgeInsets.all(20),
-      child: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          maxHeight: MediaQuery.of(context).size.height * 0.7,
         ),
-        padding: const EdgeInsets.only(
-          top: 10,
-          bottom: 20,
-          right: 20,
-          left: 20,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              alignment: Alignment.topLeft,
-              padding: const EdgeInsets.symmetric(
-                vertical: 15,
-                horizontal: 10,
+        child: Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          padding: const EdgeInsets.only(
+            top: 10,
+            bottom: 20,
+            right: 20,
+            left: 20,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                alignment: Alignment.topLeft,
+                padding: const EdgeInsets.symmetric(
+                  vertical: 15,
+                  horizontal: 10,
+                ),
+                child: const Text(
+                  'Category',
+                  style: TextStyle(fontSize: 20),
+                ),
               ),
-              child: const Text(
-                'Category',
-                style: TextStyle(fontSize: 20),
-              ),
-            ),
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: categories.length,
-              itemBuilder: (ctx, index) {
-                final category = categories[index];
-                return Card(
-                  child: ListTile(
-                    leading: Icon(
-                      category.icon,
-                      color: category.color,
-                      shadows: ThemeProvider().getIconsShadows(),
-                    ),
-                    title: Text(
-                      category.name,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+              Flexible(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: categories.length,
+                  itemBuilder: (ctx, index) {
+                    final category = categories[index];
+                    return Card(
+                      child: ListTile(
+                        leading: Icon(
+                          category.icon,
+                          color: category.color,
+                          shadows: shadows,
+                        ),
+                        title: Text(
+                          category.name,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        onTap: () {
+                          onCategorySelected(category);
+                          Navigator.pop(context);
+                        },
                       ),
-                    ),
-                    onTap: () {
-                      onCagegorySelected(category);
-                      Navigator.pop(context);
-                    },
-                  ),
-                );
-              },
-            ),
-          ],
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-class TransactionNoteDialodWidget extends StatelessWidget {
-  const TransactionNoteDialodWidget({super.key, required this.noteController});
+class TransactionNoteDialogWidget extends StatelessWidget {
+  const TransactionNoteDialogWidget({super.key, required this.noteController});
 
   final TextEditingController noteController;
 

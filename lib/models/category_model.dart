@@ -47,7 +47,7 @@ class Category {
       'id': id,
       'enabled': enabled ? 1 : 0,
       'iconCode': icon.codePoint.toString(),
-      'colorCode': color.value.toString(),
+      'colorCode': color.toARGB32().toString(),
       'name': name,
       'type': type.toString().split('.').last,
       'position': position,

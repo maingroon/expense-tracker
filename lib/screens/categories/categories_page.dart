@@ -7,6 +7,7 @@ import 'package:expense_tracker/services/theme_provider.dart';
 import 'package:expense_tracker/services/transactions_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_draggable_gridview/flutter_draggable_gridview.dart';
+import 'package:provider/provider.dart';
 
 class CategoriesPage extends StatefulWidget {
   const CategoriesPage({super.key});
@@ -43,8 +44,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
             date: DateTime.now(),
             note: '',
           ),
-          onSave: (transaction) {
-            TransactionsService.addTransaction(transaction);
+          onSave: (transaction) async {
+            await TransactionsService.addTransaction(transaction);
           },
         );
       },
@@ -58,27 +59,30 @@ class _CategoriesPageState extends State<CategoriesPage> {
       builder: (ctx) {
         return SaveCategoryWidget(
           category: category,
-          onDelete: (category) {
-            setState(() {
-              CategoriesService.deleteCategory(category);
-            });
-            Navigator.of(context).pop();
+          onDelete: (category) async {
+            await CategoriesService.deleteCategory(category);
+            if (mounted) {
+              setState(() {});
+              Navigator.of(context).pop();
+            }
           },
-          onArchive: (category) {
-            setState(() {
-              CategoriesService.disableCategory(category);
-            });
-            Navigator.of(context).pop();
+          onArchive: (category) async {
+            await CategoriesService.disableCategory(category);
+            if (mounted) {
+              setState(() {});
+              Navigator.of(context).pop();
+            }
           },
-          onSave: (updatedCategory) {
-            setState(() {
-              category.name = updatedCategory.name;
-              category.icon = updatedCategory.icon;
-              category.color = updatedCategory.color;
-              category.type = updatedCategory.type;
-            });
-            CategoriesService.updateCategory(category);
-            Navigator.of(context).pop();
+          onSave: (updatedCategory) async {
+            category.name = updatedCategory.name;
+            category.icon = updatedCategory.icon;
+            category.color = updatedCategory.color;
+            category.type = updatedCategory.type;
+            await CategoriesService.updateCategory(category);
+            if (mounted) {
+              setState(() {});
+              Navigator.of(context).pop();
+            }
           },
           saveMode: CategorySaveMode.edit,
         );
@@ -101,11 +105,12 @@ class _CategoriesPageState extends State<CategoriesPage> {
           ),
           onDelete: (category) => {},
           onArchive: (category) {},
-          onSave: (category) {
-            setState(() {
-              CategoriesService.addCategory(category);
-            });
-            Navigator.of(context).pop();
+          onSave: (category) async {
+            await CategoriesService.addCategory(category);
+            if (mounted) {
+              setState(() {});
+              Navigator.of(context).pop();
+            }
           },
           saveMode: CategorySaveMode.create,
         );
@@ -130,7 +135,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
     }
   }
 
-  Card _buildCategoryCardWidget(Category category) {
+  Card _buildCategoryCardWidget(Category category, List<Shadow> shadows) {
     return Card(
       child: ConstrainedBox(
         constraints: const BoxConstraints(
@@ -146,7 +151,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                 category.icon,
                 color: category.color,
                 size: 30,
-                shadows: ThemeProvider().getIconsShadows(),
+                shadows: shadows,
               ),
             ),
             Padding(
@@ -167,7 +172,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
     );
   }
 
-  Card _buildAddCategoryCardWidget() {
+  Card _buildAddCategoryCardWidget(List<Shadow> shadows) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(10),
@@ -180,7 +185,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                 Icons.add,
                 color: Colors.grey,
                 size: 30,
-                shadows: ThemeProvider().getIconsShadows(),
+                shadows: shadows,
               ),
             ),
             const Padding(
@@ -201,7 +206,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
     );
   }
 
-  List<DraggableGridItem> _buildCategoriesWidgets() {
+  List<DraggableGridItem> _buildCategoriesWidgets(List<Shadow> shadows) {
     List<Category> categories = _getCategories();
     List<DraggableGridItem> categoryWidgets = categories.map((category) {
       return DraggableGridItem(
@@ -214,7 +219,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
               _onSaveCategory(category);
             }
           },
-          child: _buildCategoryCardWidget(category),
+          child: _buildCategoryCardWidget(category, shadows),
         ),
       );
     }).toList();
@@ -224,7 +229,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
         DraggableGridItem(
           child: GestureDetector(
             onTap: _onAddCategory,
-            child: _buildAddCategoryCardWidget(),
+            child: _buildAddCategoryCardWidget(shadows),
           ),
         ),
       );
@@ -235,6 +240,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
 
   @override
   Widget build(BuildContext context) {
+    final shadows = context.watch<ThemeProvider>().getIconsShadows();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Categories'),
@@ -262,10 +268,9 @@ class _CategoriesPageState extends State<CategoriesPage> {
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
         ),
-        dragCompletion: (list, beforeIndex, afterIndex) {
-          setState(() {
-            CategoriesService.reorderCategories(beforeIndex, afterIndex);
-          });
+        dragCompletion: (list, beforeIndex, afterIndex) async {
+          await CategoriesService.reorderCategories(beforeIndex, afterIndex);
+          if (mounted) setState(() {});
         },
         dragPlaceHolder: (list, index) {
           return PlaceHolderWidget(
@@ -274,7 +279,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
             ),
           );
         },
-        children: _buildCategoriesWidgets(),
+        children: _buildCategoriesWidgets(shadows),
       ),
     );
   }

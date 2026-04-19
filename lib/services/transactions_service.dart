@@ -16,34 +16,32 @@ class TransactionsService {
 
   static List<Transaction> get transactions => _transactions;
 
-  static void addTransaction(Transaction transaction) {
+  static Future<void> addTransaction(Transaction transaction) async {
+    await _databaseService.insertTransaction(transaction);
     _transactions.add(transaction);
-    _databaseService.insertTransaction(transaction);
   }
 
-  static void updateTransaction(Transaction transaction) {
-    _databaseService.updateTransaction(transaction);
+  static Future<void> updateTransaction(Transaction transaction) async {
+    await _databaseService.updateTransaction(transaction);
   }
 
-  static void deleteTransaction(Transaction transaction) {
-    _transactions.removeWhere((listTransaction) {
-      return listTransaction.id == transaction.id;
-    });
-    _databaseService.deleteTransaction(transaction);
+  static Future<void> deleteTransaction(Transaction transaction) async {
+    await _databaseService.deleteTransaction(transaction);
+    _transactions.removeWhere((t) => t.id == transaction.id);
   }
 
-  static void deleteTransactionsByCategoryId(String categoryId) {
-    _transactions.removeWhere((transaction) {
-      return transaction.categoryId == categoryId;
-    });
-    _databaseService.deleteTransactionsByCategoryId(categoryId);
+  static Future<void> deleteTransactionsByCategoryId(String categoryId) async {
+    await _databaseService.deleteTransactionsByCategoryId(categoryId);
+    _transactions.removeWhere((t) => t.categoryId == categoryId);
   }
 
   static List<Transaction> getTransactionsByDate(
       DateTime fromDate, DateTime toDate) {
     return _transactions.where((transaction) {
-      return transaction.date.isAfter(fromDate) &&
-          transaction.date.isBefore(toDate);
+      return transaction.date.millisecondsSinceEpoch >=
+              fromDate.millisecondsSinceEpoch &&
+          transaction.date.millisecondsSinceEpoch <=
+              toDate.millisecondsSinceEpoch;
     }).toList()
       ..sort((a, b) => b.date.compareTo(a.date));
   }
@@ -53,7 +51,7 @@ class TransactionsService {
         .where((transaction) {
           final category =
               CategoriesService.getCategoryById(transaction.categoryId);
-          return category.type == CategoryType.income;
+          return category != null && category.type == CategoryType.income;
         })
         .map((transaction) => transaction.amount)
         .fold(0, (a, b) => a + b);
@@ -64,7 +62,7 @@ class TransactionsService {
         .where((transaction) {
           final category =
               CategoriesService.getCategoryById(transaction.categoryId);
-          return category.type == CategoryType.expense;
+          return category != null && category.type == CategoryType.expense;
         })
         .map((transaction) => transaction.amount)
         .fold(0, (a, b) => a + b);
@@ -75,7 +73,7 @@ class TransactionsService {
         getExpenseByDate(fromDate, toDate);
   }
 
-  static List<MapEntry<String, int>> getSortedCateogriesSum(
+  static List<MapEntry<String, int>> getSortedCategoriesSum(
       DateTime fromDate, DateTime toDate) {
     Map<String, int> categoriesSum = {};
     getTransactionsByDate(fromDate, toDate).forEach((transaction) {

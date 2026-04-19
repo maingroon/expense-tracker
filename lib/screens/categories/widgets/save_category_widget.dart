@@ -2,6 +2,7 @@ import 'package:expense_tracker/models/category_model.dart';
 import 'package:expense_tracker/screens/widgets/buttons_presets.dart';
 import 'package:expense_tracker/services/theme_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SaveCategoryWidget extends StatefulWidget {
   const SaveCategoryWidget({
@@ -30,6 +31,7 @@ class _SaveCategoryWidgetState extends State<SaveCategoryWidget> {
   late CategoryType _selectedType;
   late IconData _selectedIcon;
   late Color _selectedColor;
+  late bool _nameIsValid;
 
   @override
   void initState() {
@@ -38,6 +40,7 @@ class _SaveCategoryWidgetState extends State<SaveCategoryWidget> {
     _selectedType = widget.category.type;
     _selectedIcon = widget.category.icon;
     _selectedColor = widget.category.color;
+    _nameIsValid = widget.category.name.trim().isNotEmpty;
   }
 
   @override
@@ -93,18 +96,20 @@ class _SaveCategoryWidgetState extends State<SaveCategoryWidget> {
 
     actionButtons.add(
       FilledButton(
-        onPressed: () {
-          widget.onSave(
-            Category(
-              id: widget.category.id,
-              name: _nameController.text,
-              icon: _selectedIcon,
-              color: _selectedColor,
-              type: _selectedType,
-              position: widget.category.position,
-            ),
-          );
-        },
+        onPressed: _nameIsValid
+            ? () {
+                widget.onSave(
+                  Category(
+                    id: widget.category.id,
+                    name: _nameController.text.trim(),
+                    icon: _selectedIcon,
+                    color: _selectedColor,
+                    type: _selectedType,
+                    position: widget.category.position,
+                  ),
+                );
+              }
+            : null,
         style: FilledButton.styleFrom(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
@@ -146,9 +151,15 @@ class _SaveCategoryWidgetState extends State<SaveCategoryWidget> {
               keyboardType: TextInputType.text,
               maxLines: 1,
               autofocus: true,
-              decoration: const InputDecoration(
+              onChanged: (value) {
+                setState(() {
+                  _nameIsValid = value.trim().isNotEmpty;
+                });
+              },
+              decoration: InputDecoration(
                 labelText: 'Name',
-                border: OutlineInputBorder(
+                errorText: _nameIsValid ? null : 'Name cannot be empty',
+                border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(10),
                   ),
@@ -171,7 +182,7 @@ class _SaveCategoryWidgetState extends State<SaveCategoryWidget> {
                   onPressed: () {
                     showDialog(
                       context: context,
-                      builder: (context) => CategoryTypeDialodWidget(
+                      builder: (context) => CategoryTypeDialogWidget(
                         onTypeSelected: (type) {
                           setState(() {
                             _selectedType = type;
@@ -186,7 +197,7 @@ class _SaveCategoryWidgetState extends State<SaveCategoryWidget> {
                   onPressed: () {
                     showDialog(
                       context: context,
-                      builder: (context) => CategoryIconDialodWidget(
+                      builder: (context) => CategoryIconDialogWidget(
                         onIconSelected: (icon) {
                           setState(() {
                             _selectedIcon = icon;
@@ -202,7 +213,7 @@ class _SaveCategoryWidgetState extends State<SaveCategoryWidget> {
                   onPressed: () {
                     showDialog(
                       context: context,
-                      builder: (context) => CategoryColorDialodWidget(
+                      builder: (context) => CategoryColorDialogWidget(
                         onColorSelected: (color) {
                           setState(() {
                             _selectedColor = color;
@@ -233,8 +244,8 @@ class _SaveCategoryWidgetState extends State<SaveCategoryWidget> {
   }
 }
 
-class CategoryTypeDialodWidget extends StatelessWidget {
-  const CategoryTypeDialodWidget({
+class CategoryTypeDialogWidget extends StatelessWidget {
+  const CategoryTypeDialogWidget({
     required this.onTypeSelected,
     super.key,
   });
@@ -243,6 +254,7 @@ class CategoryTypeDialodWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final shadows = context.watch<ThemeProvider>().getIconsShadows();
     return Dialog(
       insetPadding: const EdgeInsets.all(20),
       child: Container(
@@ -280,7 +292,7 @@ class CategoryTypeDialodWidget extends StatelessWidget {
                     leading: Icon(
                       CategoryType.getIcon(type),
                       color: CategoryType.getColor(type),
-                      shadows: ThemeProvider().getIconsShadows(),
+                      shadows: shadows,
                     ),
                     title: Text(
                       CategoryType.getName(type),
@@ -306,8 +318,8 @@ class CategoryTypeDialodWidget extends StatelessWidget {
   }
 }
 
-class CategoryIconDialodWidget extends StatelessWidget {
-  const CategoryIconDialodWidget({
+class CategoryIconDialogWidget extends StatelessWidget {
+  const CategoryIconDialogWidget({
     required this.onIconSelected,
     super.key,
   });
@@ -467,8 +479,8 @@ class CategoryIconDialodWidget extends StatelessWidget {
   }
 }
 
-class CategoryColorDialodWidget extends StatelessWidget {
-  const CategoryColorDialodWidget({
+class CategoryColorDialogWidget extends StatelessWidget {
+  const CategoryColorDialogWidget({
     required this.onColorSelected,
     super.key,
   });

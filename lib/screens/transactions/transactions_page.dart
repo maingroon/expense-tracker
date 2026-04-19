@@ -1,3 +1,4 @@
+import 'package:expense_tracker/models/category_model.dart';
 import 'package:expense_tracker/models/transaction_model.dart';
 import 'package:expense_tracker/screens/transactions/widgets/save_transaction_widget.dart';
 import 'package:expense_tracker/services/categories_service.dart';
@@ -6,6 +7,7 @@ import 'package:expense_tracker/services/transactions_service.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:provider/provider.dart';
 
 class TransactionsPage extends StatefulWidget {
   const TransactionsPage({super.key});
@@ -106,10 +108,9 @@ class TransactionsListWidget extends StatefulWidget {
 }
 
 class _TransactionsListWidgetState extends State<TransactionsListWidget> {
-  void _onRemoveTransaction(Transaction transaction) {
-    setState(() {
-      TransactionsService.deleteTransaction(transaction);
-    });
+  void _onRemoveTransaction(Transaction transaction) async {
+    await TransactionsService.deleteTransaction(transaction);
+    if (mounted) setState(() {});
   }
 
   @override
@@ -137,12 +138,11 @@ class TransactionCardWidget extends StatefulWidget {
   final void Function(Transaction transaction) _onRemove;
 
   const TransactionCardWidget({
-    Key? key,
+    super.key,
     required Transaction transaction,
     required void Function(Transaction transaction) onRemove,
   })  : _transaction = transaction,
-        _onRemove = onRemove,
-        super(key: key);
+        _onRemove = onRemove;
 
   @override
   State<TransactionCardWidget> createState() => _TransactionCardWidgetState();
@@ -156,14 +156,13 @@ class _TransactionCardWidgetState extends State<TransactionCardWidget> {
       builder: (ctx) {
         return SaveTransactionWidget(
           transaction: widget._transaction,
-          onSave: (editedTransaction) {
-            setState(() {
-              widget._transaction.categoryId = editedTransaction.categoryId;
-              widget._transaction.amount = editedTransaction.amount;
-              widget._transaction.date = editedTransaction.date;
-              widget._transaction.note = editedTransaction.note;
-            });
-            TransactionsService.updateTransaction(widget._transaction);
+          onSave: (editedTransaction) async {
+            widget._transaction.categoryId = editedTransaction.categoryId;
+            widget._transaction.amount = editedTransaction.amount;
+            widget._transaction.date = editedTransaction.date;
+            widget._transaction.note = editedTransaction.note;
+            await TransactionsService.updateTransaction(widget._transaction);
+            if (mounted) setState(() {});
           },
         );
       },
@@ -205,8 +204,14 @@ class _TransactionCardWidgetState extends State<TransactionCardWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final category =
+    final shadows = context.watch<ThemeProvider>().getIconsShadows();
+    final Category? category =
         CategoriesService.getCategoryById(widget._transaction.categoryId);
+
+    if (category == null) {
+      return const SizedBox.shrink();
+    }
+
     return Padding(
       padding: const EdgeInsets.only(
         top: 8,
@@ -230,7 +235,7 @@ class _TransactionCardWidgetState extends State<TransactionCardWidget> {
           ),
           background: Card(
             margin: EdgeInsets.zero,
-            color: Theme.of(context).colorScheme.error.withOpacity(0.75),
+            color: Theme.of(context).colorScheme.error.withValues(alpha: 0.75),
             child: Container(
               padding: const EdgeInsets.only(right: 16),
               alignment: Alignment.centerRight,
@@ -252,7 +257,7 @@ class _TransactionCardWidgetState extends State<TransactionCardWidget> {
                     child: Icon(
                       category.icon,
                       color: category.color,
-                      shadows: ThemeProvider().getIconsShadows(),
+                      shadows: shadows,
                     ),
                   ),
                   Text(

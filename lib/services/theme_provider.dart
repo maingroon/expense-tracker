@@ -1,19 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:expense_tracker/services/settings_service.dart';
-import 'package:flutter/scheduler.dart';
 
 class ThemeProvider extends ChangeNotifier {
-  late ThemeMode _themeMode;
+  ThemeMode _themeMode;
 
-  ThemeProvider() {
-    _themeMode = ThemeMode.system;
-    setPersistentTheme();
-  }
-
-  setPersistentTheme() async {
-    _themeMode = SettingsService.getThemeMode();
-    notifyListeners();
-  }
+  ThemeProvider() : _themeMode = SettingsService.getThemeMode();
 
   ThemeMode getThemeMode() {
     return _themeMode;
@@ -31,7 +22,7 @@ class ThemeProvider extends ChangeNotifier {
     } else if (_themeMode == ThemeMode.dark) {
       return Brightness.dark;
     } else {
-      return SchedulerBinding.instance.platformDispatcher.platformBrightness;
+      return WidgetsBinding.instance.platformDispatcher.platformBrightness;
     }
   }
 
@@ -40,8 +31,8 @@ class ThemeProvider extends ChangeNotifier {
       Shadow(
         blurRadius: 5,
         color: getCurrentBrightness() == Brightness.light
-            ? Colors.grey.withOpacity(0.7)
-            : Colors.black.withOpacity(0.7),
+            ? Colors.grey.withValues(alpha: 0.7)
+            : Colors.black.withValues(alpha: 0.7),
         offset: const Offset(1, 1),
       ),
     ];

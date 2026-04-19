@@ -11,22 +11,64 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
 
-  final futures = <Future>[
-    SettingsService.init(),
-    CategoriesService.init(),
-    TransactionsService.init(),
-  ];
-
-  Future.wait(futures).then((value) {
+  try {
+    await SettingsService.init();
+    await CategoriesService.init();
+    await TransactionsService.init();
     runApp(const PageContainer());
-  });
+  } catch (e) {
+    runApp(InitErrorApp(error: e));
+  }
+}
+
+class InitErrorApp extends StatelessWidget {
+  const InitErrorApp({required this.error, super.key});
+
+  final Object error;
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.error_outline, size: 64, color: Colors.red),
+                const SizedBox(height: 16),
+                const Text(
+                  'Failed to initialize app',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 8),
+                Text(error.toString()),
+                const SizedBox(height: 24),
+                FilledButton(
+                  onPressed: () async {
+                    try {
+                      await SettingsService.init();
+                      await CategoriesService.init();
+                      await TransactionsService.init();
+                    } catch (_) {}
+                  },
+                  child: const Text('Retry'),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class PageContainer extends StatefulWidget {
@@ -53,13 +95,13 @@ class _PageContainerState extends State<PageContainer> {
     return ChangeNotifierProvider<ThemeProvider>(
       create: (_) => ThemeProvider(),
       child: Consumer<ThemeProvider>(
-        builder: (context, value, child) {
+        builder: (context, themeProvider, child) {
           return MaterialApp(
             title: 'Expense tracker',
             debugShowCheckedModeBanner: false,
             theme: kLightTheme,
             darkTheme: kDarkTheme,
-            themeMode: SettingsService.getThemeMode(),
+            themeMode: themeProvider.getThemeMode(),
             home: Scaffold(
               bottomNavigationBar: NavigationBar(
                 onDestinationSelected: (int index) {
