@@ -73,6 +73,23 @@ class TransactionsService {
         getExpenseByDate(fromDate, toDate);
   }
 
+  static int getBalanceUpToDate(DateTime endDate) {
+    final cutoff = endDate.millisecondsSinceEpoch;
+    int balance = 0;
+    for (final transaction in _transactions) {
+      if (transaction.date.millisecondsSinceEpoch > cutoff) continue;
+      final category =
+          CategoriesService.getCategoryById(transaction.categoryId);
+      if (category == null) continue;
+      if (category.type == CategoryType.income) {
+        balance += transaction.amount;
+      } else {
+        balance -= transaction.amount;
+      }
+    }
+    return balance;
+  }
+
   static List<MapEntry<String, int>> getSortedCategoriesSum(
       DateTime fromDate, DateTime toDate) {
     Map<String, int> categoriesSum = {};

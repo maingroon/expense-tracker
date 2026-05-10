@@ -210,7 +210,7 @@ class _SaveExpenseState extends State<SaveTransactionWidget> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   ConstrainedBox(
@@ -234,6 +234,7 @@ class _SaveExpenseState extends State<SaveTransactionWidget> {
                       },
                     ),
                   ),
+                  const SizedBox(width: 8),
                   GenericOutlinedIconButton(
                     icon: Icons.notes,
                     onPressed: () {
@@ -245,6 +246,7 @@ class _SaveExpenseState extends State<SaveTransactionWidget> {
                       );
                     },
                   ),
+                  const SizedBox(width: 8),
                   GenericOutlinedIconButton(
                     icon: Icons.calendar_month,
                     onPressed: _showDateTimePicker,

@@ -1,0 +1,94 @@
+{
+  "model_name": "ridge",
+  "model_version": "v1",
+  "intercept": 14728.94630894741,
+  "coefficients": [
+    {
+      "name": "dow_0",
+      "weight": 132.2396644145214
+    },
+    {
+      "name": "dow_1",
+      "weight": -64.70201147563813
+    },
+    {
+      "name": "dow_2",
+      "weight": -34.53653605156019
+    },
+    {
+      "name": "dow_3",
+      "weight": -83.40920003713332
+    },
+    {
+      "name": "dow_4",
+      "weight": -1.5037844787193382
+    },
+    {
+      "name": "dow_5",
+      "weight": 2.2778990658782834
+    },
+    {
+      "name": "dow_6",
+      "weight": 49.19116002558301
+    },
+    {
+      "name": "dom",
+      "weight": -103.58820856179537
+    },
+    {
+      "name": "is_weekend",
+      "weight": 39.8695185393743
+    },
+    {
+      "name": "is_month_start",
+      "weight": -57.512730340371284
+    },
+    {
+      "name": "is_month_end",
+      "weight": 84.42306141012784
+    },
+    {
+      "name": "lag_1",
+      "weight": 36.78067133050511
+    },
+    {
+      "name": "lag_7",
+      "weight": 83.58465071980888
+    },
+    {
+      "name": "lag_14",
+      "weight": 273.39885369875424
+    },
+    {
+      "name": "lag_28",
+      "weight": 216.46841692100472
+    },
+    {
+      "name": "roll_mean_7",
+      "weight": 955.919531262395
+    },
+    {
+      "name": "roll_std_7",
+      "weight": 159.87897299751586
+    },
+    {
+      "name": "roll_mean_28",
+      "weight": 8039.534185684133
+    },
+    {
+      "name": "roll_std_28",
+      "weight": -1697.1998420462705
+    },
+    {
+      "name": "days_since_payday",
+      "weight": 327.08368030413925
+    }
+  ],
+  "output_horizon_days": 30,
+  "output_unit": "cents",
+  "post_scale": {
+    "mean": 0.0,
+    "std": 1.0
+  },
+  "residual_std": 15664.43132368637
+}

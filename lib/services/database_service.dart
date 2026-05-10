@@ -33,18 +33,20 @@ class DatabaseService {
         await db.execute('''
           INSERT INTO categories (id, iconCode, colorCode, name, type, position)
           VALUES
-            ('fa4c83ce-a112-4e63-9fb9-e04aeb5f7124', 0xe482, 0x99319B00, 'Salary', 'income', 0),
-            ('43690238-488a-449e-86fc-8fe069299ca8', 0xe67f, 0x990CC100, 'Stocks', 'income', 1),
-            ('57fd6c50-2fc3-466d-8781-228019612f2c', 0xe040, 0x99EAEE00, 'Investments', 'income', 2),
-            ('fefc2994-cbf3-48a5-b18c-15481025f714', 0xe59c, 0x99007CC2, 'Food', 'expense', 3),
-            ('280ba54e-d106-485c-af46-010235887369', 0xe1d5, 0x994700D5, 'Transport', 'expense', 4),
-            ('0488e1a1-af67-4b71-994f-e8dd6b722fc3', 0xe318, 0x99D57E00, 'House', 'expense', 5),
-            ('4c26bc18-14ce-494c-be44-93e2f98a83fe', 0xe559, 0x991A9D00, 'Education', 'expense', 6),
-            ('ecafc3f1-2be4-4710-b2ba-e5dadf08dfe2', 0xe1d2, 0x99009D9D, 'Sport', 'expense', 7),
-            ('7f200cc4-e09d-444f-ae2b-4082f8078b74', 0xe305, 0x9996B000, 'Health', 'expense', 8),
-            ('6118e480-473e-4d18-82eb-1b9a9d1be07f', 0xe5e8, 0x99DCD200, 'Entertainment', 'expense', 9),
-            ('58e85735-faf5-4047-8884-8ed9237cf0d1', 0xe39a, 0x99DC006B, 'Shopping', 'expense', 10),
-            ('7631f605-444b-416a-8427-8ee94c827408', 0xf0555, 0x99B9B9B9, 'Other', 'expense', 11);
+            ('a864fb77-c575-4fda-ab3e-20f724660243', 0xe482, 0x99319B00, 'Salary', 'income', 0),
+            ('f7ec8fc8-7fbd-4dcc-bf21-4a5a66166825', 0xe6f2, 0x990CC100, 'Freelance', 'income', 1),
+            ('48f7a130-311e-447c-84f3-c78c2c9bd5ef', 0xe13e, 0x99E91E63, 'Gifts', 'income', 2),
+            ('5eb25f89-7118-42d0-bcaf-2d4dadb7ecef', 0xe040, 0x99EAEE00, 'Investments', 'income', 3),
+            ('69d04efc-39f0-46ad-a859-202fe0609074', 0xe395, 0x99007CC2, 'Groceries', 'expense', 4),
+            ('9af72884-1b66-445a-8f2f-aed8d2707637', 0xe532, 0x99FF6F00, 'Dining', 'expense', 5),
+            ('d95d3aa9-a8ed-4b68-a4c5-3be549cc0484', 0xe1d5, 0x994700D5, 'Transport', 'expense', 6),
+            ('c38fb8c2-c92f-4188-888e-9a2549e129c0', 0xe318, 0x99D57E00, 'Housing', 'expense', 7),
+            ('190fa3fa-a29b-4873-bf66-f19cf97fca0c', 0xe50d, 0x99009D9D, 'Bills', 'expense', 8),
+            ('40231457-9c81-41d8-983d-12f094177940', 0xe305, 0x9996B000, 'Health', 'expense', 9),
+            ('c999c52e-7379-4b2f-81cd-ca13f0a130a6', 0xe39a, 0x99DC006B, 'Shopping', 'expense', 10),
+            ('3b8a9e3b-bc20-4ead-8e92-8e4ccd11fb0a', 0xe40d, 0x99DCD200, 'Entertainment', 'expense', 11),
+            ('7ddd138c-2709-4715-932c-9c821f91a871', 0xe297, 0x991A9D00, 'Travel', 'expense', 12),
+            ('4913205f-4482-4d2c-8889-999dc46a594a', 0xf0555, 0x99B9B9B9, 'Other', 'expense', 13);
         ''');
 
         await db.execute(
@@ -59,8 +61,68 @@ class DatabaseService {
           );
           ''',
         );
+
+        await _createForecastingTables(db);
       },
-      version: 1,
+      onUpgrade: (db, oldVersion, newVersion) async {
+        if (oldVersion < 2) {
+          await _createForecastingTables(db);
+        }
+      },
+      version: 2,
+    );
+  }
+
+  static Future<void> _createForecastingTables(Database db) async {
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS forecasts (
+        id TEXT PRIMARY KEY,
+        generated_at INTEGER NOT NULL,
+        target TEXT NOT NULL,
+        category_id TEXT,
+        horizon_days INTEGER NOT NULL,
+        model_name TEXT NOT NULL,
+        model_version TEXT NOT NULL
+      );
+    ''');
+
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS forecast_points (
+        forecast_id TEXT NOT NULL,
+        date INTEGER NOT NULL,
+        predicted_cents INTEGER NOT NULL,
+        lower_cents INTEGER,
+        upper_cents INTEGER,
+        PRIMARY KEY (forecast_id, date),
+        FOREIGN KEY (forecast_id) REFERENCES forecasts(id) ON DELETE CASCADE
+      );
+    ''');
+
+    await db.execute(
+      'CREATE INDEX IF NOT EXISTS idx_forecasts_target '
+      'ON forecasts(target, generated_at DESC);',
+    );
+
+    await db.execute(
+      'CREATE INDEX IF NOT EXISTS idx_forecasts_category '
+      'ON forecasts(category_id, generated_at DESC);',
+    );
+
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS model_metadata (
+        name TEXT NOT NULL,
+        version TEXT NOT NULL,
+        trained_at INTEGER NOT NULL,
+        metrics_json TEXT,
+        artefact_path TEXT NOT NULL,
+        is_active INTEGER NOT NULL DEFAULT 0,
+        PRIMARY KEY (name, version)
+      );
+    ''');
+
+    await db.execute(
+      'CREATE INDEX IF NOT EXISTS idx_model_active '
+      'ON model_metadata(is_active);',
     );
   }
 
@@ -168,5 +230,11 @@ class DatabaseService {
       where: 'categoryId = ?',
       whereArgs: [categoryId],
     );
+  }
+
+  /// Resets the shared database connection. For use in tests only.
+  @visibleForTesting
+  static void resetForTesting() {
+    _database = null;
   }
 }

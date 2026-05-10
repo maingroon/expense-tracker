@@ -20,4 +20,16 @@ class SettingsService {
         _settingsStorage.getInt('themeMode') ?? ThemeMode.system.index;
     return ThemeMode.values[themeModeIndex];
   }
+
+  static bool getForecastShowTab() =>
+      _settingsStorage.getBool('forecast.show_tab') ?? true;
+
+  static Future<bool> setForecastShowTab(bool value) =>
+      _settingsStorage.setBool('forecast.show_tab', value);
+
+  static int getForecastHorizonDays() =>
+      _settingsStorage.getInt('forecast.horizon_days') ?? 30;
+
+  static Future<bool> setForecastHorizonDays(int value) =>
+      _settingsStorage.setInt('forecast.horizon_days', value);
 }

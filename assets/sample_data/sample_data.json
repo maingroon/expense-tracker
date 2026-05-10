@@ -1,0 +1,2283 @@
+{
+  "version": 1,
+  "exportedAt": "2026-05-09T23:00:00+00:00",
+  "categories": [
+    {
+      "id": "a864fb77-c575-4fda-ab3e-20f724660243",
+      "enabled": true,
+      "iconCode": 58498,
+      "colorCode": 2570164992,
+      "name": "Salary",
+      "type": "income",
+      "position": 0
+    },
+    {
+      "id": "f7ec8fc8-7fbd-4dcc-bf21-4a5a66166825",
+      "enabled": true,
+      "iconCode": 59122,
+      "colorCode": 2567749888,
+      "name": "Freelance",
+      "type": "income",
+      "position": 1
+    },
+    {
+      "id": "48f7a130-311e-447c-84f3-c78c2c9bd5ef",
+      "enabled": true,
+      "iconCode": 57662,
+      "colorCode": 2582191715,
+      "name": "Gifts",
+      "type": "income",
+      "position": 2
+    },
+    {
+      "id": "5eb25f89-7118-42d0-bcaf-2d4dadb7ecef",
+      "enabled": true,
+      "iconCode": 57408,
+      "colorCode": 2582310400,
+      "name": "Investments",
+      "type": "income",
+      "position": 3
+    },
+    {
+      "id": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "enabled": true,
+      "iconCode": 58261,
+      "colorCode": 2566945986,
+      "name": "Groceries",
+      "type": "expense",
+      "position": 4
+    },
+    {
+      "id": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "enabled": true,
+      "iconCode": 58674,
+      "colorCode": 2583654144,
+      "name": "Dining",
+      "type": "expense",
+      "position": 5
+    },
+    {
+      "id": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "enabled": true,
+      "iconCode": 57813,
+      "colorCode": 2571567317,
+      "name": "Transport",
+      "type": "expense",
+      "position": 6
+    },
+    {
+      "id": "c38fb8c2-c92f-4188-888e-9a2549e129c0",
+      "enabled": true,
+      "iconCode": 58136,
+      "colorCode": 2580905472,
+      "name": "Housing",
+      "type": "expense",
+      "position": 7
+    },
+    {
+      "id": "190fa3fa-a29b-4873-bf66-f19cf97fca0c",
+      "enabled": true,
+      "iconCode": 58637,
+      "colorCode": 2566954397,
+      "name": "Bills",
+      "type": "expense",
+      "position": 8
+    },
+    {
+      "id": "40231457-9c81-41d8-983d-12f094177940",
+      "enabled": true,
+      "iconCode": 58117,
+      "colorCode": 2576789504,
+      "name": "Health",
+      "type": "expense",
+      "position": 9
+    },
+    {
+      "id": "c999c52e-7379-4b2f-81cd-ca13f0a130a6",
+      "enabled": true,
+      "iconCode": 58266,
+      "colorCode": 2581332075,
+      "name": "Shopping",
+      "type": "expense",
+      "position": 10
+    },
+    {
+      "id": "3b8a9e3b-bc20-4ead-8e92-8e4ccd11fb0a",
+      "enabled": true,
+      "iconCode": 58381,
+      "colorCode": 2581385728,
+      "name": "Entertainment",
+      "type": "expense",
+      "position": 11
+    },
+    {
+      "id": "7ddd138c-2709-4715-932c-9c821f91a871",
+      "enabled": true,
+      "iconCode": 58007,
+      "colorCode": 2568658176,
+      "name": "Travel",
+      "type": "expense",
+      "position": 12
+    },
+    {
+      "id": "4913205f-4482-4d2c-8889-999dc46a594a",
+      "enabled": true,
+      "iconCode": 984405,
+      "colorCode": 2579085753,
+      "name": "Other",
+      "type": "expense",
+      "position": 13
+    }
+  ],
+  "transactions": [
+    {
+      "id": "bd9c66b3-ad3c-4d6d-9a3d-1fa7bc8960a9",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 3228,
+      "date": "2025-12-31T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "3b8faa18-37f8-488b-97fc-695a07a0ca6e",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 933,
+      "date": "2025-12-31T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "6b65a6a4-8b81-48f6-b38a-088ca65ed389",
+      "categoryId": "c999c52e-7379-4b2f-81cd-ca13f0a130a6",
+      "amount": 5582,
+      "date": "2025-12-31T12:00:00",
+      "note": "Online order"
+    },
+    {
+      "id": "6c307511-b2b9-437a-a8df-6ec4ce4a2bbd",
+      "categoryId": "a864fb77-c575-4fda-ab3e-20f724660243",
+      "amount": 215065,
+      "date": "2026-01-01T12:00:00",
+      "note": "Paycheck"
+    },
+    {
+      "id": "1a2a73ed-562b-4f79-8374-59eef50bea63",
+      "categoryId": "c38fb8c2-c92f-4188-888e-9a2549e129c0",
+      "amount": 125000,
+      "date": "2026-01-01T12:00:00",
+      "note": "Rent"
+    },
+    {
+      "id": "580d7b71-d8f5-4413-9be6-128e18c26797",
+      "categoryId": "190fa3fa-a29b-4873-bf66-f19cf97fca0c",
+      "amount": 12556,
+      "date": "2026-01-01T12:00:00",
+      "note": "Utilities"
+    },
+    {
+      "id": "142c3fe8-60e7-4113-ac1b-8ca1f91e1d4c",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1104,
+      "date": "2026-01-01T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "ddd1dfb2-3b98-4ef8-9af6-1a26146d3f31",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 3592,
+      "date": "2026-01-02T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "29a3b2e9-5d65-4441-9588-42dea2bc372f",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 3106,
+      "date": "2026-01-02T12:00:00",
+      "note": "Restaurant"
+    },
+    {
+      "id": "aefcfad8-efc8-4849-b3aa-7efe4458a885",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 614,
+      "date": "2026-01-02T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "0e51f30d-c6a7-4e39-84b0-32ccd7c524a5",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 5018,
+      "date": "2026-01-03T12:00:00",
+      "note": "Restaurant"
+    },
+    {
+      "id": "10f1bc81-448a-4a9e-a6b2-bc5b50c187fc",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 855,
+      "date": "2026-01-03T12:00:00",
+      "note": "Rideshare"
+    },
+    {
+      "id": "89fa6a68-8fb5-427b-beb7-99193f22faf8",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 5487,
+      "date": "2026-01-04T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "5cabcc97-663f-4c97-9562-69f0e5d7b875",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 4548,
+      "date": "2026-01-04T12:00:00",
+      "note": "Restaurant"
+    },
+    {
+      "id": "c17af08a-1745-46d8-be57-0ddf827050a8",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 2496,
+      "date": "2026-01-04T12:00:00",
+      "note": "Rideshare"
+    },
+    {
+      "id": "ae340454-cac5-468c-a8f4-9481a0a04dc4",
+      "categoryId": "40231457-9c81-41d8-983d-12f094177940",
+      "amount": 3096,
+      "date": "2026-01-04T12:00:00",
+      "note": "Pharmacy"
+    },
+    {
+      "id": "405cacec-8774-49a9-b7d2-1e02ff01cf99",
+      "categoryId": "3b8a9e3b-bc20-4ead-8e92-8e4ccd11fb0a",
+      "amount": 3599,
+      "date": "2026-01-04T12:00:00",
+      "note": "Movie/streaming"
+    },
+    {
+      "id": "c0398710-8976-4334-a281-7efdae849217",
+      "categoryId": "f7ec8fc8-7fbd-4dcc-bf21-4a5a66166825",
+      "amount": 46595,
+      "date": "2026-01-05T12:00:00",
+      "note": "Freelance gig"
+    },
+    {
+      "id": "287d06ca-6f4c-469a-8b22-d3081c8eaee9",
+      "categoryId": "190fa3fa-a29b-4873-bf66-f19cf97fca0c",
+      "amount": 6423,
+      "date": "2026-01-05T12:00:00",
+      "note": "Internet"
+    },
+    {
+      "id": "ec24a3c5-c754-408f-b418-8f3f8a14be62",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 2144,
+      "date": "2026-01-06T12:00:00",
+      "note": "Lunch out"
+    },
+    {
+      "id": "1ca35cfb-04fc-4d82-bd15-438552fbe43b",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 301,
+      "date": "2026-01-06T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "885f6e66-c2b6-42c5-ba5d-310011b7e948",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 4673,
+      "date": "2026-01-07T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "8715a103-43da-4043-aa45-c2ab8cbfedb0",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1013,
+      "date": "2026-01-07T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "1064005c-3985-43cf-bf76-be1d1efa2197",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1076,
+      "date": "2026-01-08T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "8a0b3c33-36d8-493a-bc44-1fe7ab4220a7",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 657,
+      "date": "2026-01-09T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "dd2467ac-778e-4db3-a93d-ffbc6c6fa611",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 6733,
+      "date": "2026-01-10T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "1bf90e27-dc96-425e-8cf3-a17156dc8907",
+      "categoryId": "c999c52e-7379-4b2f-81cd-ca13f0a130a6",
+      "amount": 8741,
+      "date": "2026-01-10T12:00:00",
+      "note": "Online order"
+    },
+    {
+      "id": "2ef91276-6c00-4f61-a3e2-fcb472d8567d",
+      "categoryId": "3b8a9e3b-bc20-4ead-8e92-8e4ccd11fb0a",
+      "amount": 2546,
+      "date": "2026-01-10T12:00:00",
+      "note": "Movie/streaming"
+    },
+    {
+      "id": "03c72ba8-d605-4770-8a63-f881ffd0f9d5",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 2038,
+      "date": "2026-01-11T12:00:00",
+      "note": "Restaurant"
+    },
+    {
+      "id": "e7067ef4-66aa-4385-9d59-ba7136b82481",
+      "categoryId": "3b8a9e3b-bc20-4ead-8e92-8e4ccd11fb0a",
+      "amount": 4171,
+      "date": "2026-01-11T12:00:00",
+      "note": "Movie/streaming"
+    },
+    {
+      "id": "b253d218-6c4a-47ea-8906-17f2747b6dba",
+      "categoryId": "190fa3fa-a29b-4873-bf66-f19cf97fca0c",
+      "amount": 5068,
+      "date": "2026-01-12T12:00:00",
+      "note": "Phone"
+    },
+    {
+      "id": "37bb3eec-4bf5-4b52-b09d-258c27a0c3d7",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1378,
+      "date": "2026-01-12T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "118a9d29-2f92-4996-99f1-95d014822f53",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 2441,
+      "date": "2026-01-13T12:00:00",
+      "note": "Lunch out"
+    },
+    {
+      "id": "f10c718b-1eb0-438a-a75d-d5af3c365296",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1313,
+      "date": "2026-01-13T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "21813d25-6552-48a6-83ff-50113d1a85dd",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 2074,
+      "date": "2026-01-14T12:00:00",
+      "note": "Lunch out"
+    },
+    {
+      "id": "ef8c485b-c07a-40f2-add4-253b50f0fd0a",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 750,
+      "date": "2026-01-14T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "5958a499-eeea-463e-a1e8-ac6843e42caf",
+      "categoryId": "a864fb77-c575-4fda-ab3e-20f724660243",
+      "amount": 217132,
+      "date": "2026-01-15T12:00:00",
+      "note": "Paycheck"
+    },
+    {
+      "id": "fbddcf7c-9c96-49ec-8d71-c366b41b3143",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 2251,
+      "date": "2026-01-15T12:00:00",
+      "note": "Lunch out"
+    },
+    {
+      "id": "1a84a51a-a9d3-47c7-ae87-905e4ca415ea",
+      "categoryId": "c999c52e-7379-4b2f-81cd-ca13f0a130a6",
+      "amount": 15165,
+      "date": "2026-01-15T12:00:00",
+      "note": "Online order"
+    },
+    {
+      "id": "afffcfd2-341e-440b-97c7-00aab7b56ea7",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 5327,
+      "date": "2026-01-16T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "e87d1c78-e7c4-41c7-8049-7b717d106c60",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 3041,
+      "date": "2026-01-16T12:00:00",
+      "note": "Restaurant"
+    },
+    {
+      "id": "0b49452d-46d4-43f3-9450-281c6c6f7633",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 438,
+      "date": "2026-01-16T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "295d6fbf-430f-401d-bad4-09e2a319dcb4",
+      "categoryId": "40231457-9c81-41d8-983d-12f094177940",
+      "amount": 9711,
+      "date": "2026-01-16T12:00:00",
+      "note": "Pharmacy"
+    },
+    {
+      "id": "26286bfb-e767-4cea-b0e6-a969e21342b0",
+      "categoryId": "4913205f-4482-4d2c-8889-999dc46a594a",
+      "amount": 763,
+      "date": "2026-01-16T12:00:00",
+      "note": "Misc"
+    },
+    {
+      "id": "eededb07-e623-4689-9d59-cd2a4eea04e7",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 2399,
+      "date": "2026-01-17T12:00:00",
+      "note": "Restaurant"
+    },
+    {
+      "id": "8f5486b7-c7b5-42bc-9a8a-aeca1a50aec3",
+      "categoryId": "3b8a9e3b-bc20-4ead-8e92-8e4ccd11fb0a",
+      "amount": 2872,
+      "date": "2026-01-17T12:00:00",
+      "note": "Movie/streaming"
+    },
+    {
+      "id": "696608aa-ee49-4329-884a-7b28550a1b46",
+      "categoryId": "3b8a9e3b-bc20-4ead-8e92-8e4ccd11fb0a",
+      "amount": 5551,
+      "date": "2026-01-18T12:00:00",
+      "note": "Movie/streaming"
+    },
+    {
+      "id": "33173470-38f1-4a81-b87f-2425dbccc477",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 2308,
+      "date": "2026-01-19T12:00:00",
+      "note": "Lunch out"
+    },
+    {
+      "id": "df0f06cb-cb9b-4326-920e-ac174e20fd1a",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 990,
+      "date": "2026-01-19T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "11c58ef0-dd46-4c09-8752-87aa5408f9ac",
+      "categoryId": "c999c52e-7379-4b2f-81cd-ca13f0a130a6",
+      "amount": 5494,
+      "date": "2026-01-19T12:00:00",
+      "note": "Online order"
+    },
+    {
+      "id": "0710d430-f071-4879-94c6-3cd889456f27",
+      "categoryId": "5eb25f89-7118-42d0-bcaf-2d4dadb7ecef",
+      "amount": 8906,
+      "date": "2026-01-20T12:00:00",
+      "note": "Dividend"
+    },
+    {
+      "id": "98b8e4cc-1bc0-44fc-89cb-394243f59a85",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 2444,
+      "date": "2026-01-20T12:00:00",
+      "note": "Lunch out"
+    },
+    {
+      "id": "fbf6e16f-9b30-40d5-afb7-8271504d281f",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1393,
+      "date": "2026-01-20T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "f0b5156b-b82c-4074-afd5-dea589d7fd6c",
+      "categoryId": "f7ec8fc8-7fbd-4dcc-bf21-4a5a66166825",
+      "amount": 56428,
+      "date": "2026-01-21T12:00:00",
+      "note": "Freelance gig"
+    },
+    {
+      "id": "a9d3c2e6-505c-4686-9f87-1ce75487fd4f",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1296,
+      "date": "2026-01-21T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "bf85bf0e-ad64-456c-a10f-aa3ff0bbac67",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 4312,
+      "date": "2026-01-22T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "4dcabfb7-001a-4a8b-956f-03508c459ce2",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 751,
+      "date": "2026-01-22T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "a9f25336-83f4-49a9-88a6-39d015b52908",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 555,
+      "date": "2026-01-23T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "c4bbb7a9-d988-48dd-9c7c-737779a28903",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 5336,
+      "date": "2026-01-24T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "b7e58481-31c6-41ec-935f-2b0aa1384ddc",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 3748,
+      "date": "2026-01-24T12:00:00",
+      "note": "Restaurant"
+    },
+    {
+      "id": "dc45d539-c03f-4538-a485-5aa1016b6287",
+      "categoryId": "c999c52e-7379-4b2f-81cd-ca13f0a130a6",
+      "amount": 12669,
+      "date": "2026-01-24T12:00:00",
+      "note": "Online order"
+    },
+    {
+      "id": "1f115b76-d92c-4227-aadf-50853fcb7546",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 3877,
+      "date": "2026-01-25T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "8f15ba58-fce6-4504-87f8-424daae65fc1",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 5567,
+      "date": "2026-01-25T12:00:00",
+      "note": "Restaurant"
+    },
+    {
+      "id": "46fde062-a33d-47af-9701-410d3f4b1a70",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 689,
+      "date": "2026-01-26T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "36c59dac-b4d7-428e-a71e-3ee2b1a6b1f1",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 647,
+      "date": "2026-01-27T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "e4429ebb-da7b-4095-a3d6-2a39c0e3befd",
+      "categoryId": "3b8a9e3b-bc20-4ead-8e92-8e4ccd11fb0a",
+      "amount": 3435,
+      "date": "2026-01-28T12:00:00",
+      "note": "Movie/streaming"
+    },
+    {
+      "id": "638c254c-076e-4bba-bc53-08bf6f92f25e",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 1329,
+      "date": "2026-01-29T12:00:00",
+      "note": "Lunch out"
+    },
+    {
+      "id": "d72b6108-2a40-4f12-b963-f37f67814c1f",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1319,
+      "date": "2026-01-29T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "53cd6268-610c-4373-8299-9aa40cdf742b",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 3970,
+      "date": "2026-01-30T12:00:00",
+      "note": "Restaurant"
+    },
+    {
+      "id": "473bd358-610e-4a64-a130-1617c2dff335",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 790,
+      "date": "2026-01-30T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "39669fa7-5997-4043-b3b1-025bfff9f585",
+      "categoryId": "4913205f-4482-4d2c-8889-999dc46a594a",
+      "amount": 2388,
+      "date": "2026-01-30T12:00:00",
+      "note": "Misc"
+    },
+    {
+      "id": "1d48a071-ab61-47b1-b93b-4c3220500494",
+      "categoryId": "c999c52e-7379-4b2f-81cd-ca13f0a130a6",
+      "amount": 4862,
+      "date": "2026-01-31T12:00:00",
+      "note": "Online order"
+    },
+    {
+      "id": "f6b751f7-9b74-4245-9b1b-c8952af43ab7",
+      "categoryId": "a864fb77-c575-4fda-ab3e-20f724660243",
+      "amount": 222669,
+      "date": "2026-02-01T12:00:00",
+      "note": "Paycheck"
+    },
+    {
+      "id": "4fa03f26-f6f7-40cc-a9ec-8e49d1bdb8c0",
+      "categoryId": "c38fb8c2-c92f-4188-888e-9a2549e129c0",
+      "amount": 125000,
+      "date": "2026-02-01T12:00:00",
+      "note": "Rent"
+    },
+    {
+      "id": "93676a02-4fdc-4e1b-adcb-8cb60692dc63",
+      "categoryId": "190fa3fa-a29b-4873-bf66-f19cf97fca0c",
+      "amount": 12649,
+      "date": "2026-02-01T12:00:00",
+      "note": "Utilities"
+    },
+    {
+      "id": "b27b3d90-1a16-442c-be2b-6091a092f52a",
+      "categoryId": "c999c52e-7379-4b2f-81cd-ca13f0a130a6",
+      "amount": 13205,
+      "date": "2026-02-01T12:00:00",
+      "note": "Online order"
+    },
+    {
+      "id": "a5c5650c-8186-4576-91a7-26095eddbbbf",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 1643,
+      "date": "2026-02-02T12:00:00",
+      "note": "Lunch out"
+    },
+    {
+      "id": "6efb63b1-1b04-4863-bd7d-dbedd284476c",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1574,
+      "date": "2026-02-02T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "7701f7bb-7bc6-4e1f-864e-e6e389c5b31a",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 6445,
+      "date": "2026-02-03T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "ef43613c-d4aa-49a3-bed8-c56cda09dfa0",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 703,
+      "date": "2026-02-03T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "4797b2c9-5720-4246-8223-623bcc3ebdde",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 1318,
+      "date": "2026-02-04T12:00:00",
+      "note": "Lunch out"
+    },
+    {
+      "id": "680bac63-b856-4035-bdc9-829015eabb27",
+      "categoryId": "3b8a9e3b-bc20-4ead-8e92-8e4ccd11fb0a",
+      "amount": 6714,
+      "date": "2026-02-04T12:00:00",
+      "note": "Movie/streaming"
+    },
+    {
+      "id": "4b5305e5-17d2-482e-846a-0df5cafda613",
+      "categoryId": "190fa3fa-a29b-4873-bf66-f19cf97fca0c",
+      "amount": 5972,
+      "date": "2026-02-05T12:00:00",
+      "note": "Internet"
+    },
+    {
+      "id": "5e781fd7-94e0-43ba-a9f9-48b24e6384bb",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 5805,
+      "date": "2026-02-05T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "5a104129-54ae-4d1b-8ce6-424dbef59fe6",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 938,
+      "date": "2026-02-05T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "96ef2ad6-b97e-4703-86c8-adfe7bf47042",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 2817,
+      "date": "2026-02-06T12:00:00",
+      "note": "Restaurant"
+    },
+    {
+      "id": "4ac9778d-8da8-4ee4-8df5-6ac6f96b648a",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 5557,
+      "date": "2026-02-07T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "0323d342-df6a-4f93-9a43-2f0a7daa39f0",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 2276,
+      "date": "2026-02-07T12:00:00",
+      "note": "Rideshare"
+    },
+    {
+      "id": "26d794d3-0db9-4301-afbb-411aa1235a8c",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 2148,
+      "date": "2026-02-08T12:00:00",
+      "note": "Restaurant"
+    },
+    {
+      "id": "3f897142-fe71-4b14-95ce-6a664dc82a1e",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1757,
+      "date": "2026-02-08T12:00:00",
+      "note": "Rideshare"
+    },
+    {
+      "id": "68949b8d-00af-4b3a-a812-859a1337739e",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 1261,
+      "date": "2026-02-10T12:00:00",
+      "note": "Lunch out"
+    },
+    {
+      "id": "49c13de7-3b42-46c5-885b-15fb4a8ff810",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1191,
+      "date": "2026-02-10T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "44007d5a-e88d-4719-a624-2b40a5cb63a2",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1117,
+      "date": "2026-02-11T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "d3016989-bfbb-417f-9854-ce4e4ebfa5c3",
+      "categoryId": "c999c52e-7379-4b2f-81cd-ca13f0a130a6",
+      "amount": 5072,
+      "date": "2026-02-11T12:00:00",
+      "note": "Online order"
+    },
+    {
+      "id": "7010f719-7e69-4d0d-8a3c-3b5e801ef1da",
+      "categoryId": "190fa3fa-a29b-4873-bf66-f19cf97fca0c",
+      "amount": 5385,
+      "date": "2026-02-12T12:00:00",
+      "note": "Phone"
+    },
+    {
+      "id": "9a8cfa3c-5283-4ac7-bc0a-6a5d6e996e3e",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 2219,
+      "date": "2026-02-12T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "dc4ad56b-d601-4237-ac9e-d156f63fce41",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 1137,
+      "date": "2026-02-12T12:00:00",
+      "note": "Lunch out"
+    },
+    {
+      "id": "d248a9a7-ac1a-4554-83c7-5611ffe3fa49",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1726,
+      "date": "2026-02-12T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "7135f221-a6c9-437f-84da-d06a7872bdeb",
+      "categoryId": "c999c52e-7379-4b2f-81cd-ca13f0a130a6",
+      "amount": 14222,
+      "date": "2026-02-12T12:00:00",
+      "note": "Online order"
+    },
+    {
+      "id": "1ac70ec0-ab8d-4eb4-9230-dfbd5553b2fe",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 3914,
+      "date": "2026-02-13T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "668409e3-f1f8-443e-a99f-131849c8a43f",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1341,
+      "date": "2026-02-13T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "764414fd-8ae7-49ed-9e8e-de0ba85c6e4a",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 10911,
+      "date": "2026-02-14T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "7f9d3e64-c1a6-423b-9f64-eeed5c9d927d",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 2682,
+      "date": "2026-02-14T12:00:00",
+      "note": "Restaurant"
+    },
+    {
+      "id": "e17f29e1-7028-4046-89bc-473fed7bf656",
+      "categoryId": "c999c52e-7379-4b2f-81cd-ca13f0a130a6",
+      "amount": 11013,
+      "date": "2026-02-14T12:00:00",
+      "note": "Online order"
+    },
+    {
+      "id": "4f8d5238-288b-48b5-b5b4-53ca3d42993c",
+      "categoryId": "a864fb77-c575-4fda-ab3e-20f724660243",
+      "amount": 221089,
+      "date": "2026-02-15T12:00:00",
+      "note": "Paycheck"
+    },
+    {
+      "id": "f27292b6-7621-42ed-9d0b-c9bde9b5c5cf",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 10942,
+      "date": "2026-02-15T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "4ab7706e-b773-40ca-aec2-59dc7f95897c",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 5711,
+      "date": "2026-02-15T12:00:00",
+      "note": "Restaurant"
+    },
+    {
+      "id": "dd81b7f5-7d59-41c6-a8f1-e091ffb8102d",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 5228,
+      "date": "2026-02-17T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "c34b9fbb-8d4a-45b8-951a-c8ea585a0afa",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 1808,
+      "date": "2026-02-17T12:00:00",
+      "note": "Lunch out"
+    },
+    {
+      "id": "fb140bc3-304b-4590-9e9e-37575260001e",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 983,
+      "date": "2026-02-17T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "f6febc0e-7ecd-4baf-a6f0-5fcffb16e5db",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1531,
+      "date": "2026-02-18T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "19b17e80-dea4-4e17-94fd-9ad39716108e",
+      "categoryId": "40231457-9c81-41d8-983d-12f094177940",
+      "amount": 7023,
+      "date": "2026-02-18T12:00:00",
+      "note": "Pharmacy"
+    },
+    {
+      "id": "9f8ded97-56ab-42f1-83d8-8870f81dbaa1",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 1704,
+      "date": "2026-02-19T12:00:00",
+      "note": "Lunch out"
+    },
+    {
+      "id": "aca2b148-da33-4aa1-941c-dfcdda0d4a5f",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1275,
+      "date": "2026-02-19T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "af34cf65-a193-44b2-bc19-e71d118405ad",
+      "categoryId": "5eb25f89-7118-42d0-bcaf-2d4dadb7ecef",
+      "amount": 4179,
+      "date": "2026-02-20T12:00:00",
+      "note": "Dividend"
+    },
+    {
+      "id": "19bad7ae-df61-4a5c-b432-3070a23d4c2f",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 448,
+      "date": "2026-02-20T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "2e183554-cae2-4e66-ae8a-781390e0a95b",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 7484,
+      "date": "2026-02-21T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "aee1e86b-9ea5-46aa-a1ee-6c5bdeef580f",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 2171,
+      "date": "2026-02-21T12:00:00",
+      "note": "Restaurant"
+    },
+    {
+      "id": "a34db7c5-760d-4bbb-bb70-b3a124a35cf2",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 2352,
+      "date": "2026-02-21T12:00:00",
+      "note": "Rideshare"
+    },
+    {
+      "id": "49a23a89-e6b5-492c-b71a-d655cdfc6ee0",
+      "categoryId": "c999c52e-7379-4b2f-81cd-ca13f0a130a6",
+      "amount": 2646,
+      "date": "2026-02-21T12:00:00",
+      "note": "Online order"
+    },
+    {
+      "id": "ffd6f232-32ff-4294-8d57-d880d865d69a",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 2975,
+      "date": "2026-02-22T12:00:00",
+      "note": "Restaurant"
+    },
+    {
+      "id": "b303f438-fe21-40d0-8bbe-4aff9326dffd",
+      "categoryId": "c999c52e-7379-4b2f-81cd-ca13f0a130a6",
+      "amount": 11365,
+      "date": "2026-02-22T12:00:00",
+      "note": "Online order"
+    },
+    {
+      "id": "0212b554-4644-48b4-a553-867da881bfd3",
+      "categoryId": "3b8a9e3b-bc20-4ead-8e92-8e4ccd11fb0a",
+      "amount": 6879,
+      "date": "2026-02-22T12:00:00",
+      "note": "Movie/streaming"
+    },
+    {
+      "id": "0a17991e-a576-4411-a0a1-1839e7457704",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1242,
+      "date": "2026-02-24T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "5da8d6d2-f8b3-4a8b-a05f-b8bc8a16a06c",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 2727,
+      "date": "2026-02-25T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "39c1e262-f76c-4ede-8110-12662408a6dc",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 7296,
+      "date": "2026-02-26T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "8eac0a33-cdf9-44a7-9882-b5c1f79efd70",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1770,
+      "date": "2026-02-26T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "bfbf397b-ac3e-4b0d-9e5b-a13d746cdb77",
+      "categoryId": "3b8a9e3b-bc20-4ead-8e92-8e4ccd11fb0a",
+      "amount": 4451,
+      "date": "2026-02-26T12:00:00",
+      "note": "Movie/streaming"
+    },
+    {
+      "id": "f1738856-e25d-46eb-9e9a-9f83066803ee",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 3286,
+      "date": "2026-02-27T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "a2a9d4d8-102e-4de5-a5cc-8bf738ab854c",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 6102,
+      "date": "2026-02-27T12:00:00",
+      "note": "Restaurant"
+    },
+    {
+      "id": "1dde7969-6886-43db-a634-8e784d5c55c7",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1664,
+      "date": "2026-02-27T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "8a4a0e2d-f22b-4b98-b24c-c64fbe3e6e57",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 8529,
+      "date": "2026-02-28T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "a7a8f636-6a35-4f59-a2aa-7a5d278ed00d",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 5289,
+      "date": "2026-02-28T12:00:00",
+      "note": "Restaurant"
+    },
+    {
+      "id": "479d0cda-f396-4a37-b065-c817687a4850",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1632,
+      "date": "2026-02-28T12:00:00",
+      "note": "Rideshare"
+    },
+    {
+      "id": "3c71e0be-f357-4560-b1d7-966571818dcf",
+      "categoryId": "40231457-9c81-41d8-983d-12f094177940",
+      "amount": 5705,
+      "date": "2026-02-28T12:00:00",
+      "note": "Pharmacy"
+    },
+    {
+      "id": "a5135ea0-fa53-434d-a6d5-901d8b621d41",
+      "categoryId": "3b8a9e3b-bc20-4ead-8e92-8e4ccd11fb0a",
+      "amount": 5271,
+      "date": "2026-02-28T12:00:00",
+      "note": "Movie/streaming"
+    },
+    {
+      "id": "d2fe2fde-d918-43e5-b2f2-5eef1f45dbfd",
+      "categoryId": "a864fb77-c575-4fda-ab3e-20f724660243",
+      "amount": 216898,
+      "date": "2026-03-01T12:00:00",
+      "note": "Paycheck"
+    },
+    {
+      "id": "f8999246-98de-4ebb-a3b5-cecea446be72",
+      "categoryId": "c38fb8c2-c92f-4188-888e-9a2549e129c0",
+      "amount": 125000,
+      "date": "2026-03-01T12:00:00",
+      "note": "Rent"
+    },
+    {
+      "id": "fd235def-3e5a-47e3-9560-db22c96b5edb",
+      "categoryId": "190fa3fa-a29b-4873-bf66-f19cf97fca0c",
+      "amount": 12128,
+      "date": "2026-03-01T12:00:00",
+      "note": "Utilities"
+    },
+    {
+      "id": "8de08fc2-c3e1-4a85-946e-f10411906f50",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 7734,
+      "date": "2026-03-01T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "c63d04ee-541c-4a86-bba5-cd2fdea45c19",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 2815,
+      "date": "2026-03-01T12:00:00",
+      "note": "Restaurant"
+    },
+    {
+      "id": "fbe94499-dbc0-40fd-86fb-7bf300b9d4a3",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 2331,
+      "date": "2026-03-01T12:00:00",
+      "note": "Rideshare"
+    },
+    {
+      "id": "ddcf8766-a93b-42cd-9c24-220e2cabd7e7",
+      "categoryId": "c999c52e-7379-4b2f-81cd-ca13f0a130a6",
+      "amount": 6385,
+      "date": "2026-03-01T12:00:00",
+      "note": "Online order"
+    },
+    {
+      "id": "96bf10ab-3ce9-45e7-89d6-a63bca3c6f5f",
+      "categoryId": "3b8a9e3b-bc20-4ead-8e92-8e4ccd11fb0a",
+      "amount": 1582,
+      "date": "2026-03-01T12:00:00",
+      "note": "Movie/streaming"
+    },
+    {
+      "id": "104556e5-bee3-4b79-9d18-1ee986ad8a8c",
+      "categoryId": "f7ec8fc8-7fbd-4dcc-bf21-4a5a66166825",
+      "amount": 47602,
+      "date": "2026-03-02T12:00:00",
+      "note": "Freelance gig"
+    },
+    {
+      "id": "ba2c98ce-0b19-488e-9d77-a45ef206c269",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1056,
+      "date": "2026-03-02T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "1ba362e7-afa4-45e5-ad20-449666d06371",
+      "categoryId": "f7ec8fc8-7fbd-4dcc-bf21-4a5a66166825",
+      "amount": 34991,
+      "date": "2026-03-03T12:00:00",
+      "note": "Freelance gig"
+    },
+    {
+      "id": "204e178c-10d0-4d11-a5f9-34bf9bb96155",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 1121,
+      "date": "2026-03-03T12:00:00",
+      "note": "Lunch out"
+    },
+    {
+      "id": "6182f347-533f-4a72-b64f-a54a8c611654",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1250,
+      "date": "2026-03-03T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "69efafb1-3a7e-4e14-a359-eee173991a47",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 623,
+      "date": "2026-03-04T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "175a81ec-112f-4612-b969-9ed2ec48bf55",
+      "categoryId": "190fa3fa-a29b-4873-bf66-f19cf97fca0c",
+      "amount": 4958,
+      "date": "2026-03-05T12:00:00",
+      "note": "Internet"
+    },
+    {
+      "id": "214f3f12-cfd0-4cbd-9f65-c8cebd21bc11",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 1145,
+      "date": "2026-03-05T12:00:00",
+      "note": "Lunch out"
+    },
+    {
+      "id": "ab85fd59-5463-4dc7-8fca-7b6a8fc42092",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1180,
+      "date": "2026-03-05T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "7b70c3b8-a81f-4ec3-a79c-658a36760ce5",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 4516,
+      "date": "2026-03-06T12:00:00",
+      "note": "Restaurant"
+    },
+    {
+      "id": "1d691fba-5e18-4b24-8e67-6a01d86a6460",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 462,
+      "date": "2026-03-06T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "076979d6-4477-4442-b187-53e6d4578ad9",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 6167,
+      "date": "2026-03-07T12:00:00",
+      "note": "Restaurant"
+    },
+    {
+      "id": "59dcabd0-56fe-4fb9-abe9-e2074f199ec0",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1995,
+      "date": "2026-03-07T12:00:00",
+      "note": "Rideshare"
+    },
+    {
+      "id": "11d059b2-6699-4d99-a847-bce790fa6b57",
+      "categoryId": "40231457-9c81-41d8-983d-12f094177940",
+      "amount": 10699,
+      "date": "2026-03-07T12:00:00",
+      "note": "Pharmacy"
+    },
+    {
+      "id": "87cdb6a1-bf01-4e32-977d-6e7e07d924ce",
+      "categoryId": "c999c52e-7379-4b2f-81cd-ca13f0a130a6",
+      "amount": 12314,
+      "date": "2026-03-07T12:00:00",
+      "note": "Online order"
+    },
+    {
+      "id": "4fc77768-5ebb-4ca5-a84b-f9625744f596",
+      "categoryId": "3b8a9e3b-bc20-4ead-8e92-8e4ccd11fb0a",
+      "amount": 3809,
+      "date": "2026-03-07T12:00:00",
+      "note": "Movie/streaming"
+    },
+    {
+      "id": "14e286e5-ac89-46bc-8cbd-3c039e2aa4ac",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 4681,
+      "date": "2026-03-08T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "6a07f213-7129-4ec7-9b69-554d7c54535f",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 4911,
+      "date": "2026-03-08T12:00:00",
+      "note": "Restaurant"
+    },
+    {
+      "id": "1c6345ab-6e0e-41e8-985d-3f861d2324e6",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 2083,
+      "date": "2026-03-08T12:00:00",
+      "note": "Rideshare"
+    },
+    {
+      "id": "c3a00c6f-2321-41e1-8471-04c036136e15",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 3658,
+      "date": "2026-03-09T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "6e3f683a-bf3c-4140-bf54-a51101fa964e",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 1492,
+      "date": "2026-03-09T12:00:00",
+      "note": "Lunch out"
+    },
+    {
+      "id": "8f0881ee-8011-416b-bae8-8926b423ccde",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 870,
+      "date": "2026-03-09T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "6de59332-9364-43d0-9024-bdc6dcb33df3",
+      "categoryId": "f7ec8fc8-7fbd-4dcc-bf21-4a5a66166825",
+      "amount": 56216,
+      "date": "2026-03-10T12:00:00",
+      "note": "Freelance gig"
+    },
+    {
+      "id": "f296d9f0-cd23-42c2-abff-e17b532401fc",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 331,
+      "date": "2026-03-10T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "138d994c-2b0a-4edd-8774-44cb5543fc3c",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 809,
+      "date": "2026-03-11T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "4187222b-257d-4e52-9a51-65ca3c7c1d85",
+      "categoryId": "190fa3fa-a29b-4873-bf66-f19cf97fca0c",
+      "amount": 5130,
+      "date": "2026-03-12T12:00:00",
+      "note": "Phone"
+    },
+    {
+      "id": "134a5a2f-a7cf-405c-8257-cf73c29d782b",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 5313,
+      "date": "2026-03-12T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "9050f7ef-c123-4c91-b6c5-a0dc7e7e7419",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 2159,
+      "date": "2026-03-12T12:00:00",
+      "note": "Lunch out"
+    },
+    {
+      "id": "a49b1cd9-9082-489b-a1cd-e87fec955f87",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 973,
+      "date": "2026-03-12T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "97674900-4651-4367-8bdc-43184d85a3d2",
+      "categoryId": "f7ec8fc8-7fbd-4dcc-bf21-4a5a66166825",
+      "amount": 33226,
+      "date": "2026-03-13T12:00:00",
+      "note": "Freelance gig"
+    },
+    {
+      "id": "497de16d-d4ea-420a-9e65-96540e9058b6",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 3924,
+      "date": "2026-03-13T12:00:00",
+      "note": "Restaurant"
+    },
+    {
+      "id": "98159d6c-9d71-4084-971d-abf9daf481a7",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1596,
+      "date": "2026-03-13T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "73557b9d-0fd6-447e-b52d-4af2269ed4c9",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 4035,
+      "date": "2026-03-14T12:00:00",
+      "note": "Restaurant"
+    },
+    {
+      "id": "15969802-b6dd-4257-bb7d-9f1c57eb89b1",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 2329,
+      "date": "2026-03-14T12:00:00",
+      "note": "Rideshare"
+    },
+    {
+      "id": "86295b5d-707d-4251-bdb1-429e7010ed13",
+      "categoryId": "c999c52e-7379-4b2f-81cd-ca13f0a130a6",
+      "amount": 6340,
+      "date": "2026-03-14T12:00:00",
+      "note": "Online order"
+    },
+    {
+      "id": "adcc3daf-569f-4ab3-8643-530068a51c68",
+      "categoryId": "a864fb77-c575-4fda-ab3e-20f724660243",
+      "amount": 217829,
+      "date": "2026-03-15T12:00:00",
+      "note": "Paycheck"
+    },
+    {
+      "id": "4082cbb9-48bd-4b3e-a2f5-df2badaa44ca",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 2244,
+      "date": "2026-03-15T12:00:00",
+      "note": "Restaurant"
+    },
+    {
+      "id": "8f158449-4f40-422f-95b0-2530f020e992",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1193,
+      "date": "2026-03-16T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "f37fd50d-2e25-45ee-8f11-d8dc5cd33369",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 843,
+      "date": "2026-03-17T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "8a2e6a93-c558-4bb2-81f7-f3fb19e45c6a",
+      "categoryId": "f7ec8fc8-7fbd-4dcc-bf21-4a5a66166825",
+      "amount": 52533,
+      "date": "2026-03-18T12:00:00",
+      "note": "Freelance gig"
+    },
+    {
+      "id": "98e52499-218c-4e1c-9e37-4f7ac42cbc39",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 1505,
+      "date": "2026-03-18T12:00:00",
+      "note": "Lunch out"
+    },
+    {
+      "id": "9feefdff-c566-4a81-b15e-54f6d4d30795",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 543,
+      "date": "2026-03-18T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "3d3a2582-88b4-4474-bbe7-9df472ecf16e",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 6117,
+      "date": "2026-03-19T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "31ab0b56-d5c9-4dc7-a76a-dca978116802",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 2213,
+      "date": "2026-03-19T12:00:00",
+      "note": "Lunch out"
+    },
+    {
+      "id": "c4f9eccd-7630-48a7-b0ca-fdd8fc043f08",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1721,
+      "date": "2026-03-19T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "7b07fd31-a424-4f23-8d5b-a7cd400035f0",
+      "categoryId": "5eb25f89-7118-42d0-bcaf-2d4dadb7ecef",
+      "amount": 4692,
+      "date": "2026-03-20T12:00:00",
+      "note": "Dividend"
+    },
+    {
+      "id": "1578d709-48f9-43d0-9fea-e1e0d9e604b3",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 5776,
+      "date": "2026-03-20T12:00:00",
+      "note": "Restaurant"
+    },
+    {
+      "id": "d4bf7a4b-25b8-442f-836b-15c7e7c225da",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 709,
+      "date": "2026-03-20T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "62dbc850-3c5b-43a7-9fbb-f0b1808389c8",
+      "categoryId": "f7ec8fc8-7fbd-4dcc-bf21-4a5a66166825",
+      "amount": 14556,
+      "date": "2026-03-21T12:00:00",
+      "note": "Freelance gig"
+    },
+    {
+      "id": "b6f6dbf1-d6d4-41cc-995d-82f8ee4a9b5d",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 3711,
+      "date": "2026-03-21T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "eada79a3-4970-4d9a-89ce-3cfb2339ba19",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 5519,
+      "date": "2026-03-21T12:00:00",
+      "note": "Restaurant"
+    },
+    {
+      "id": "e7e646c7-0158-4463-9d87-76a072d78bdd",
+      "categoryId": "c999c52e-7379-4b2f-81cd-ca13f0a130a6",
+      "amount": 13436,
+      "date": "2026-03-21T12:00:00",
+      "note": "Online order"
+    },
+    {
+      "id": "f0b2a5d1-8c7e-4f42-a646-eaf9d5c0244d",
+      "categoryId": "3b8a9e3b-bc20-4ead-8e92-8e4ccd11fb0a",
+      "amount": 2908,
+      "date": "2026-03-21T12:00:00",
+      "note": "Movie/streaming"
+    },
+    {
+      "id": "9f708368-cb3c-48ca-a392-57316b79afcc",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 3858,
+      "date": "2026-03-22T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "893ad232-98c3-43ca-bff4-cec6e7b7b4c6",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 2321,
+      "date": "2026-03-22T12:00:00",
+      "note": "Restaurant"
+    },
+    {
+      "id": "4a90cd0c-24c1-43b9-b7f2-85723defa849",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1676,
+      "date": "2026-03-22T12:00:00",
+      "note": "Rideshare"
+    },
+    {
+      "id": "8603156a-15ea-4bcf-ab10-21ceaa143cd8",
+      "categoryId": "3b8a9e3b-bc20-4ead-8e92-8e4ccd11fb0a",
+      "amount": 3791,
+      "date": "2026-03-22T12:00:00",
+      "note": "Movie/streaming"
+    },
+    {
+      "id": "5f90bed6-fb25-464d-a30a-a767a2bb522b",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1005,
+      "date": "2026-03-23T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "a837fe68-bba2-45ca-bdba-6da85844f9fc",
+      "categoryId": "c999c52e-7379-4b2f-81cd-ca13f0a130a6",
+      "amount": 14722,
+      "date": "2026-03-23T12:00:00",
+      "note": "Online order"
+    },
+    {
+      "id": "7a8104de-b205-47bb-bb16-f75776f186ab",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1469,
+      "date": "2026-03-24T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "339b77a8-4b1f-4d7b-8977-c513752a7d25",
+      "categoryId": "3b8a9e3b-bc20-4ead-8e92-8e4ccd11fb0a",
+      "amount": 5769,
+      "date": "2026-03-24T12:00:00",
+      "note": "Movie/streaming"
+    },
+    {
+      "id": "d0be73ee-fd37-4539-a5f2-02f983f02dc7",
+      "categoryId": "f7ec8fc8-7fbd-4dcc-bf21-4a5a66166825",
+      "amount": 56802,
+      "date": "2026-03-25T12:00:00",
+      "note": "Freelance gig"
+    },
+    {
+      "id": "dcb51c53-5b62-48df-893e-904d30ec2796",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 6143,
+      "date": "2026-03-25T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "15260718-cd18-4a82-8447-ceab84ef4324",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1686,
+      "date": "2026-03-26T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "4b3446bc-8ba4-45cc-ae32-6567d284f54e",
+      "categoryId": "c999c52e-7379-4b2f-81cd-ca13f0a130a6",
+      "amount": 11838,
+      "date": "2026-03-26T12:00:00",
+      "note": "Online order"
+    },
+    {
+      "id": "9d66e815-5a41-43b3-a95f-176cdebac186",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 364,
+      "date": "2026-03-27T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "732e2016-add7-42c9-a747-b93c9ae77eab",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 7754,
+      "date": "2026-03-29T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "b43bd27f-42a2-49a6-8664-12854303cbc1",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1143,
+      "date": "2026-03-30T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "fc902838-d874-4408-b7b2-17c7ae92ea71",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 432,
+      "date": "2026-03-31T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "28524385-d9f2-4d0d-8cc9-f5f2e42e5037",
+      "categoryId": "3b8a9e3b-bc20-4ead-8e92-8e4ccd11fb0a",
+      "amount": 4482,
+      "date": "2026-03-31T12:00:00",
+      "note": "Movie/streaming"
+    },
+    {
+      "id": "3967e60a-823d-4107-9c8a-c066cb2fafa3",
+      "categoryId": "a864fb77-c575-4fda-ab3e-20f724660243",
+      "amount": 221377,
+      "date": "2026-04-01T12:00:00",
+      "note": "Paycheck"
+    },
+    {
+      "id": "7e7838c9-ca55-438b-bc9a-be10238d6f44",
+      "categoryId": "c38fb8c2-c92f-4188-888e-9a2549e129c0",
+      "amount": 125000,
+      "date": "2026-04-01T12:00:00",
+      "note": "Rent"
+    },
+    {
+      "id": "77a7e8b7-5e70-465f-9280-c5aa8dd4595b",
+      "categoryId": "190fa3fa-a29b-4873-bf66-f19cf97fca0c",
+      "amount": 12158,
+      "date": "2026-04-01T12:00:00",
+      "note": "Utilities"
+    },
+    {
+      "id": "b788f5d1-ffe5-45f6-a5ed-cfe34f2dad3f",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 429,
+      "date": "2026-04-01T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "96792482-a3c9-48e4-8d22-38e6c7bf4fbc",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1617,
+      "date": "2026-04-02T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "f28e4122-5894-47f1-b9b8-6bb2b596ca7c",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 3775,
+      "date": "2026-04-03T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "2bd3cdcd-2779-4685-94a5-3fdef10d27c8",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 4765,
+      "date": "2026-04-04T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "43c07d43-93a7-4792-8561-b8dca4364fcd",
+      "categoryId": "4913205f-4482-4d2c-8889-999dc46a594a",
+      "amount": 659,
+      "date": "2026-04-04T12:00:00",
+      "note": "Misc"
+    },
+    {
+      "id": "e3954cb1-7f7f-4c0a-87c0-d116a394ed54",
+      "categoryId": "190fa3fa-a29b-4873-bf66-f19cf97fca0c",
+      "amount": 5750,
+      "date": "2026-04-05T12:00:00",
+      "note": "Internet"
+    },
+    {
+      "id": "ceae71cf-ce00-4af0-beb0-51817ba24588",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 6296,
+      "date": "2026-04-05T12:00:00",
+      "note": "Restaurant"
+    },
+    {
+      "id": "76e5ae78-7bf7-41d3-aa66-2fce7089fc6d",
+      "categoryId": "c999c52e-7379-4b2f-81cd-ca13f0a130a6",
+      "amount": 3429,
+      "date": "2026-04-05T12:00:00",
+      "note": "Online order"
+    },
+    {
+      "id": "51beb80e-b7e6-414c-9c8a-49225005680f",
+      "categoryId": "3b8a9e3b-bc20-4ead-8e92-8e4ccd11fb0a",
+      "amount": 4837,
+      "date": "2026-04-05T12:00:00",
+      "note": "Movie/streaming"
+    },
+    {
+      "id": "24108e9a-3f77-4cae-b318-b96d44790612",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1000,
+      "date": "2026-04-06T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "7781321e-83c5-41cb-bef7-d9ea7f8e5483",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1445,
+      "date": "2026-04-07T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "3da06476-f778-4676-b50d-112e8164ceec",
+      "categoryId": "3b8a9e3b-bc20-4ead-8e92-8e4ccd11fb0a",
+      "amount": 6699,
+      "date": "2026-04-07T12:00:00",
+      "note": "Movie/streaming"
+    },
+    {
+      "id": "ac2a4f71-a77d-45f1-97c4-fe9ce1e0fffc",
+      "categoryId": "f7ec8fc8-7fbd-4dcc-bf21-4a5a66166825",
+      "amount": 35755,
+      "date": "2026-04-08T12:00:00",
+      "note": "Freelance gig"
+    },
+    {
+      "id": "673ba8bd-c38c-4dec-9da3-9a73ba3df7ff",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1624,
+      "date": "2026-04-08T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "d3479a3b-479b-4637-8cc3-6f3bc3affcfe",
+      "categoryId": "f7ec8fc8-7fbd-4dcc-bf21-4a5a66166825",
+      "amount": 36204,
+      "date": "2026-04-09T12:00:00",
+      "note": "Freelance gig"
+    },
+    {
+      "id": "fc9e1dcb-cb7e-4268-9f89-ed1264d6dfbf",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 2463,
+      "date": "2026-04-09T12:00:00",
+      "note": "Lunch out"
+    },
+    {
+      "id": "9a3b0319-32f5-4510-a4ee-b4a6c14565c7",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1708,
+      "date": "2026-04-09T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "84f2fd0f-7947-4bfa-8dd0-b4d4554227de",
+      "categoryId": "3b8a9e3b-bc20-4ead-8e92-8e4ccd11fb0a",
+      "amount": 2254,
+      "date": "2026-04-09T12:00:00",
+      "note": "Movie/streaming"
+    },
+    {
+      "id": "97fe56c5-4c9a-4f24-97b4-c294bd44089d",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 6456,
+      "date": "2026-04-10T12:00:00",
+      "note": "Restaurant"
+    },
+    {
+      "id": "901bcdef-b56f-48ce-bd66-971e88476c56",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1542,
+      "date": "2026-04-10T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "f8d8b7f1-c86c-4544-a7d4-cf50f791f1e5",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1607,
+      "date": "2026-04-11T12:00:00",
+      "note": "Rideshare"
+    },
+    {
+      "id": "3e00980e-ae44-4e21-9258-64f225d4a0fc",
+      "categoryId": "190fa3fa-a29b-4873-bf66-f19cf97fca0c",
+      "amount": 5182,
+      "date": "2026-04-12T12:00:00",
+      "note": "Phone"
+    },
+    {
+      "id": "70e7e756-04d9-445e-b0d7-3df71c221cea",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 10612,
+      "date": "2026-04-12T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "80773e33-690e-4e62-b432-3ec6b0c4a01c",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 2512,
+      "date": "2026-04-12T12:00:00",
+      "note": "Restaurant"
+    },
+    {
+      "id": "8bd88fcd-57a2-4e4e-887b-03e5e980f808",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 560,
+      "date": "2026-04-13T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "fb756923-f910-4bb3-b105-32523990e2c9",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 5069,
+      "date": "2026-04-14T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "7d2f4e58-b47a-4c5b-b0b3-901535102852",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 1434,
+      "date": "2026-04-14T12:00:00",
+      "note": "Lunch out"
+    },
+    {
+      "id": "b8beff3d-cb9f-4f6d-af3a-6f27ef06fccb",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 823,
+      "date": "2026-04-14T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "257f7595-cdfb-4db9-85e7-8b23f4613f09",
+      "categoryId": "a864fb77-c575-4fda-ab3e-20f724660243",
+      "amount": 223184,
+      "date": "2026-04-15T12:00:00",
+      "note": "Paycheck"
+    },
+    {
+      "id": "36c7d6fa-7aa4-4052-bf51-936241a64fed",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 1664,
+      "date": "2026-04-15T12:00:00",
+      "note": "Lunch out"
+    },
+    {
+      "id": "4588fc1b-b238-4849-8fe0-69b6eedaa802",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1108,
+      "date": "2026-04-15T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "ae62990c-19bd-4f93-b8ef-7666b7a4c719",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 4273,
+      "date": "2026-04-16T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "a723fb72-682b-463a-a86e-d390edd97a1a",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1126,
+      "date": "2026-04-16T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "d9af6e09-b91e-4d6e-bd1a-8f4b88ffbd40",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 4498,
+      "date": "2026-04-17T12:00:00",
+      "note": "Restaurant"
+    },
+    {
+      "id": "4a1a81f5-ed10-4004-9f4e-713ef64e3dfc",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 10525,
+      "date": "2026-04-18T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "55c551fc-fba5-4cc8-adaf-37661b780ede",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1766,
+      "date": "2026-04-18T12:00:00",
+      "note": "Rideshare"
+    },
+    {
+      "id": "a5f60735-757b-4b29-bb2a-a1462999394c",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 4345,
+      "date": "2026-04-19T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "4b86b5a1-ca6f-4ff8-964c-fbd2bc92fd81",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 2675,
+      "date": "2026-04-19T12:00:00",
+      "note": "Restaurant"
+    },
+    {
+      "id": "6d7df5d0-d3b5-4af7-a7ce-378fe5a4983b",
+      "categoryId": "c999c52e-7379-4b2f-81cd-ca13f0a130a6",
+      "amount": 15770,
+      "date": "2026-04-19T12:00:00",
+      "note": "Online order"
+    },
+    {
+      "id": "01bf9e73-3f80-4385-af92-40b652d78f10",
+      "categoryId": "5eb25f89-7118-42d0-bcaf-2d4dadb7ecef",
+      "amount": 4703,
+      "date": "2026-04-20T12:00:00",
+      "note": "Dividend"
+    },
+    {
+      "id": "951c25d5-4d4c-4280-9462-52e7f43ba052",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 6146,
+      "date": "2026-04-20T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "aaf407f7-0fe7-4149-bc7e-5368b1594847",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1281,
+      "date": "2026-04-20T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "3889936a-9d58-47e8-9e17-5b664b87959f",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 7039,
+      "date": "2026-04-21T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "fd247c11-bf6b-4cdf-b479-7b6127372b52",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 1200,
+      "date": "2026-04-21T12:00:00",
+      "note": "Lunch out"
+    },
+    {
+      "id": "c1e1b94a-7888-4058-a9ad-0e9b8c9aa1e9",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 924,
+      "date": "2026-04-21T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "e723ada3-8c32-4db2-942a-895e0fcf601f",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1146,
+      "date": "2026-04-22T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "21c71aa3-7414-43b5-8e3e-25f2cf0671c7",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 1766,
+      "date": "2026-04-23T12:00:00",
+      "note": "Lunch out"
+    },
+    {
+      "id": "ac3a812f-765e-4cb5-8f0d-55400ec7d662",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 985,
+      "date": "2026-04-23T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "fc737d92-11ab-4d11-a4eb-8000ef40d162",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 6472,
+      "date": "2026-04-24T12:00:00",
+      "note": "Restaurant"
+    },
+    {
+      "id": "a43afb7a-c40d-4874-a2ab-7752c4db5a62",
+      "categoryId": "40231457-9c81-41d8-983d-12f094177940",
+      "amount": 6089,
+      "date": "2026-04-24T12:00:00",
+      "note": "Pharmacy"
+    },
+    {
+      "id": "220b9ea9-8a0f-4508-9fe2-c0a0a96b3c42",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 5009,
+      "date": "2026-04-25T12:00:00",
+      "note": "Restaurant"
+    },
+    {
+      "id": "fa8dae42-ba54-4920-a099-d18087623997",
+      "categoryId": "c999c52e-7379-4b2f-81cd-ca13f0a130a6",
+      "amount": 10828,
+      "date": "2026-04-25T12:00:00",
+      "note": "Online order"
+    },
+    {
+      "id": "76876c62-4c61-445e-ba7e-5d9405d1fb63",
+      "categoryId": "3b8a9e3b-bc20-4ead-8e92-8e4ccd11fb0a",
+      "amount": 1519,
+      "date": "2026-04-25T12:00:00",
+      "note": "Movie/streaming"
+    },
+    {
+      "id": "e00da49d-effa-4002-b040-413c4690fb15",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 6096,
+      "date": "2026-04-26T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "efad49e9-c41c-447e-9d6b-9b626b535a19",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 2176,
+      "date": "2026-04-26T12:00:00",
+      "note": "Rideshare"
+    },
+    {
+      "id": "7249f62c-0898-4462-980c-b95c19d45deb",
+      "categoryId": "c999c52e-7379-4b2f-81cd-ca13f0a130a6",
+      "amount": 5694,
+      "date": "2026-04-26T12:00:00",
+      "note": "Online order"
+    },
+    {
+      "id": "23dfecd7-0e73-4dd7-86ac-1b04dd1d6cd1",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 3195,
+      "date": "2026-04-27T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "93d563ae-51a3-4c26-937b-f79bbb44badc",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1524,
+      "date": "2026-04-27T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "2cd58759-e95d-4761-bc36-dc59e134edfc",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 2423,
+      "date": "2026-04-28T12:00:00",
+      "note": "Lunch out"
+    },
+    {
+      "id": "582b91ee-f8e8-435b-8c00-988a7ee1011a",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 941,
+      "date": "2026-04-28T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "7688d11f-ce47-48be-a4f4-3c62b523c0de",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 751,
+      "date": "2026-04-29T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "0d31812e-30c3-4756-9453-f867b97e6224",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 439,
+      "date": "2026-04-30T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "378e6510-8f10-433e-abe4-2e7db96c1163",
+      "categoryId": "a864fb77-c575-4fda-ab3e-20f724660243",
+      "amount": 222617,
+      "date": "2026-05-01T12:00:00",
+      "note": "Paycheck"
+    },
+    {
+      "id": "e8b3d763-f4ff-4f3a-8d9d-baeb553d2625",
+      "categoryId": "c38fb8c2-c92f-4188-888e-9a2549e129c0",
+      "amount": 125000,
+      "date": "2026-05-01T12:00:00",
+      "note": "Rent"
+    },
+    {
+      "id": "bdd151b0-f64a-46ec-b0a5-648eefe9b3d0",
+      "categoryId": "190fa3fa-a29b-4873-bf66-f19cf97fca0c",
+      "amount": 12092,
+      "date": "2026-05-01T12:00:00",
+      "note": "Utilities"
+    },
+    {
+      "id": "b2149062-3e1a-463e-aa18-d32c7a9a8ef5",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 7498,
+      "date": "2026-05-01T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "52555c75-8d55-419e-bd44-cb2cea45ba41",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 2761,
+      "date": "2026-05-01T12:00:00",
+      "note": "Restaurant"
+    },
+    {
+      "id": "4ef4c34d-5bf8-4f3c-a612-9a1c889d4b76",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 871,
+      "date": "2026-05-01T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "bdc2b74b-38a5-4b49-9d34-aa1890019ed4",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 3745,
+      "date": "2026-05-02T12:00:00",
+      "note": "Restaurant"
+    },
+    {
+      "id": "b852b3cd-9442-45e6-9583-1d58ef4c5119",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1243,
+      "date": "2026-05-02T12:00:00",
+      "note": "Rideshare"
+    },
+    {
+      "id": "3ee82983-d557-4241-91dd-b9bf613d2de9",
+      "categoryId": "c999c52e-7379-4b2f-81cd-ca13f0a130a6",
+      "amount": 7613,
+      "date": "2026-05-02T12:00:00",
+      "note": "Online order"
+    },
+    {
+      "id": "5a2837b2-cb83-43f2-bb96-f6022b115c36",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 4106,
+      "date": "2026-05-03T12:00:00",
+      "note": "Restaurant"
+    },
+    {
+      "id": "e3ad64d4-eab9-4b02-af1d-c1217d024c6d",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 2025,
+      "date": "2026-05-03T12:00:00",
+      "note": "Rideshare"
+    },
+    {
+      "id": "d1682e09-f1f7-4904-9307-5157d8c128e7",
+      "categoryId": "3b8a9e3b-bc20-4ead-8e92-8e4ccd11fb0a",
+      "amount": 1686,
+      "date": "2026-05-03T12:00:00",
+      "note": "Movie/streaming"
+    },
+    {
+      "id": "74bd0c93-8177-4661-b7fe-032c02571851",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 5889,
+      "date": "2026-05-04T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "a8c6dbc0-7bb3-447b-a9aa-144b9dd43675",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1300,
+      "date": "2026-05-04T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "b8e19f56-8787-4a21-8448-2a220308aa5e",
+      "categoryId": "c999c52e-7379-4b2f-81cd-ca13f0a130a6",
+      "amount": 11050,
+      "date": "2026-05-04T12:00:00",
+      "note": "Online order"
+    },
+    {
+      "id": "f090f5a0-ce61-4199-ae3a-0ba8ac8d6c7d",
+      "categoryId": "4913205f-4482-4d2c-8889-999dc46a594a",
+      "amount": 3346,
+      "date": "2026-05-04T12:00:00",
+      "note": "Misc"
+    },
+    {
+      "id": "9ea9f508-3122-4592-bdb0-2235261e2555",
+      "categoryId": "190fa3fa-a29b-4873-bf66-f19cf97fca0c",
+      "amount": 4789,
+      "date": "2026-05-05T12:00:00",
+      "note": "Internet"
+    },
+    {
+      "id": "7580e050-67f1-498c-b594-8a545f804eeb",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 895,
+      "date": "2026-05-05T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "a301ec03-0e5d-4c6a-b9db-78628d7dd772",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 1569,
+      "date": "2026-05-06T12:00:00",
+      "note": "Lunch out"
+    },
+    {
+      "id": "a518a418-6f14-43f6-9867-888b7ff6b824",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 557,
+      "date": "2026-05-06T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "9118c400-e336-4243-b139-c476de3ce88b",
+      "categoryId": "f7ec8fc8-7fbd-4dcc-bf21-4a5a66166825",
+      "amount": 22148,
+      "date": "2026-05-07T12:00:00",
+      "note": "Freelance gig"
+    },
+    {
+      "id": "8b040f53-e639-49d4-87c6-8688ecf32053",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 2409,
+      "date": "2026-05-07T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "3508507a-f622-4842-8402-2b3c508211a5",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1693,
+      "date": "2026-05-07T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "bd5ff093-c16f-4bcc-a243-bed754ec3f33",
+      "categoryId": "9af72884-1b66-445a-8f2f-aed8d2707637",
+      "amount": 6014,
+      "date": "2026-05-08T12:00:00",
+      "note": "Restaurant"
+    },
+    {
+      "id": "bed63da0-8033-45c2-9413-d64db962c8a7",
+      "categoryId": "d95d3aa9-a8ed-4b68-a4c5-3be549cc0484",
+      "amount": 1783,
+      "date": "2026-05-08T12:00:00",
+      "note": "Commute"
+    },
+    {
+      "id": "9aec56a8-5731-4609-9375-ee90d6b361e4",
+      "categoryId": "c999c52e-7379-4b2f-81cd-ca13f0a130a6",
+      "amount": 9275,
+      "date": "2026-05-08T12:00:00",
+      "note": "Online order"
+    },
+    {
+      "id": "8d93e14a-5b16-4158-ba67-470c7d98302f",
+      "categoryId": "69d04efc-39f0-46ad-a859-202fe0609074",
+      "amount": 10944,
+      "date": "2026-05-09T12:00:00",
+      "note": "Grocery run"
+    },
+    {
+      "id": "12d15585-b68e-47fa-bf17-5534cc4d5819",
+      "categoryId": "3b8a9e3b-bc20-4ead-8e92-8e4ccd11fb0a",
+      "amount": 4902,
+      "date": "2026-05-09T12:00:00",
+      "note": "Movie/streaming"
+    }
+  ]
+}

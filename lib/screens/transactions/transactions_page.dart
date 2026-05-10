@@ -1,6 +1,7 @@
 import 'package:expense_tracker/models/category_model.dart';
 import 'package:expense_tracker/models/transaction_model.dart';
 import 'package:expense_tracker/screens/transactions/widgets/save_transaction_widget.dart';
+import 'package:expense_tracker/screens/widgets/month_navigator.dart';
 import 'package:expense_tracker/services/categories_service.dart';
 import 'package:expense_tracker/services/theme_provider.dart';
 import 'package:expense_tracker/services/transactions_service.dart';
@@ -22,72 +23,32 @@ class _TransactionsPageState extends State<TransactionsPage> {
     DateTime.now().month,
   );
 
-  String _buildPeriodText() {
-    String text = DateFormat.MMMM().format(_selectedDate);
-    text += ' ';
-    text += DateFormat.y().format(_selectedDate);
-    return text;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Transactions'),
+        bottom: MonthNavigator(
+          date: _selectedDate,
+          onPrev: () => setState(() {
+            _selectedDate = Jiffy.parseFromDateTime(_selectedDate)
+                .subtract(months: 1)
+                .dateTime;
+          }),
+          onNext: () => setState(() {
+            _selectedDate = Jiffy.parseFromDateTime(_selectedDate)
+                .add(months: 1)
+                .dateTime;
+          }),
+        ),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 8,
-              left: 8,
-              right: 8,
-            ),
-            child: Card(
-              margin: const EdgeInsets.all(0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        _selectedDate = Jiffy.parseFromDateTime(_selectedDate)
-                            .subtract(months: 1)
-                            .dateTime;
-                      });
-                    },
-                    icon: const Icon(Icons.arrow_back),
-                  ),
-                  Text(
-                    _buildPeriodText(),
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        _selectedDate = Jiffy.parseFromDateTime(_selectedDate)
-                            .add(months: 1)
-                            .dateTime;
-                      });
-                    },
-                    icon: const Icon(Icons.arrow_forward),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          TransactionsListWidget(
-            fromDate: Jiffy.parseFromDateTime(_selectedDate)
-                .startOf(Unit.month)
-                .dateTime,
-            toDate: Jiffy.parseFromDateTime(_selectedDate)
-                .endOf(Unit.month)
-                .dateTime,
-          ),
-        ],
+      body: TransactionsListWidget(
+        fromDate: Jiffy.parseFromDateTime(_selectedDate)
+            .startOf(Unit.month)
+            .dateTime,
+        toDate: Jiffy.parseFromDateTime(_selectedDate)
+            .endOf(Unit.month)
+            .dateTime,
       ),
     );
   }
@@ -119,16 +80,14 @@ class _TransactionsListWidgetState extends State<TransactionsListWidget> {
       widget.fromDate,
       widget.toDate,
     );
-    return Expanded(
-      child: ListView.builder(
-        itemCount: transactions.length,
-        itemBuilder: (ctx, index) {
-          return TransactionCardWidget(
-            transaction: transactions[index],
-            onRemove: _onRemoveTransaction,
-          );
-        },
-      ),
+    return ListView.builder(
+      itemCount: transactions.length,
+      itemBuilder: (ctx, index) {
+        return TransactionCardWidget(
+          transaction: transactions[index],
+          onRemove: _onRemoveTransaction,
+        );
+      },
     );
   }
 }

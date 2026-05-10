@@ -1,6 +1,13 @@
 import 'package:expense_tracker/constants/theme_constants.dart';
 import 'package:expense_tracker/screens/analytics/analytics_page.dart';
+import 'package:expense_tracker/screens/forecast/forecast_screen.dart';
+import 'package:expense_tracker/services/aggregation_service.dart';
 import 'package:expense_tracker/services/categories_service.dart';
+import 'package:expense_tracker/services/database_service.dart';
+import 'package:expense_tracker/services/forecast_repository.dart';
+import 'package:expense_tracker/services/forecast_settings_notifier.dart';
+import 'package:expense_tracker/services/forecasting_service.dart';
+import 'package:expense_tracker/services/ridge_forecasting_service.dart';
 import 'package:expense_tracker/services/theme_provider.dart';
 import 'package:expense_tracker/screens/categories/categories_page.dart';
 import 'package:expense_tracker/screens/transactions/transactions_page.dart';
@@ -75,27 +82,49 @@ class PageContainer extends StatefulWidget {
   const PageContainer({super.key});
 
   @override
-  State<PageContainer> createState() {
-    return _PageContainerState();
-  }
+  State<PageContainer> createState() => _PageContainerState();
 }
 
 class _PageContainerState extends State<PageContainer> {
   int _currentPageIndex = 0;
 
-  final List<Widget> _pages = const <Widget>[
-    CategoriesPage(),
-    TransactionsPage(),
-    AnalyticsPage(),
-    SettingsPage(),
-  ];
-
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<ThemeProvider>(
-      create: (_) => ThemeProvider(),
-      child: Consumer<ThemeProvider>(
-        builder: (context, themeProvider, child) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<ThemeProvider>(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider<ForecastSettingsNotifier>(
+          create: (_) => ForecastSettingsNotifier(),
+        ),
+        Provider<DatabaseService>(create: (_) => DatabaseService()),
+        ProxyProvider<DatabaseService, AggregationService>(
+          update: (_, db, __) => AggregationService(db),
+        ),
+        ProxyProvider<DatabaseService, ForecastRepository>(
+          update: (_, db, __) => ForecastRepository(db),
+        ),
+        ProxyProvider2<AggregationService, ForecastRepository, ForecastingService>(
+          update: (_, agg, repo, __) => RidgeForecastingService(
+            agg,
+            repo,
+            fallback: NaiveForecastingService(agg, repo),
+          ),
+        ),
+      ],
+      child: Consumer2<ThemeProvider, ForecastSettingsNotifier>(
+        builder: (context, themeProvider, forecastSettings, child) {
+          final showForecast = forecastSettings.showTab;
+
+          final pages = <Widget>[
+            const CategoriesPage(),
+            const TransactionsPage(),
+            const AnalyticsPage(),
+            if (showForecast) const ForecastScreen(),
+            const SettingsPage(),
+          ];
+
+          final safeIndex = _currentPageIndex.clamp(0, pages.length - 1);
+
           return MaterialApp(
             title: 'Expense tracker',
             debugShowCheckedModeBanner: false,
@@ -105,35 +134,39 @@ class _PageContainerState extends State<PageContainer> {
             home: Scaffold(
               bottomNavigationBar: NavigationBar(
                 onDestinationSelected: (int index) {
-                  setState(() {
-                    _currentPageIndex = index;
-                  });
+                  setState(() => _currentPageIndex = index);
                 },
-                selectedIndex: _currentPageIndex,
-                destinations: const <Widget>[
-                  NavigationDestination(
+                selectedIndex: safeIndex,
+                destinations: <Widget>[
+                  const NavigationDestination(
                     selectedIcon: Icon(Icons.category),
                     icon: Icon(Icons.category_outlined),
                     label: 'Categories',
                   ),
-                  NavigationDestination(
+                  const NavigationDestination(
                     selectedIcon: Icon(Icons.format_list_bulleted),
                     icon: Icon(Icons.format_list_bulleted_outlined),
                     label: 'Transactions',
                   ),
-                  NavigationDestination(
+                  const NavigationDestination(
                     selectedIcon: Icon(Icons.bar_chart),
                     icon: Icon(Icons.bar_chart_outlined),
                     label: 'Analytics',
                   ),
-                  NavigationDestination(
+                  if (showForecast)
+                    const NavigationDestination(
+                      selectedIcon: Icon(Icons.show_chart),
+                      icon: Icon(Icons.show_chart_outlined),
+                      label: 'Forecast',
+                    ),
+                  const NavigationDestination(
                     selectedIcon: Icon(Icons.settings),
                     icon: Icon(Icons.settings_outlined),
                     label: 'Settings',
                   ),
                 ],
               ),
-              body: _pages[_currentPageIndex],
+              body: pages[safeIndex],
             ),
           );
         },

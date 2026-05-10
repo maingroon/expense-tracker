@@ -70,6 +70,13 @@ lib/
     widgets/                 # Shared button presets
 ```
 
+## Forecasting
+
+The app includes infrastructure for an offline-trained expense-forecasting module.
+Aggregation, persistence, and UI are wired up; the model artefact and feature builder
+body are produced by a separate research repository.
+See [`docs/forecasting.md`](docs/forecasting.md) for details.
+
 ## Linting
 
 ```bash
