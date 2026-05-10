@@ -40,7 +40,7 @@ Future<List<ForecastInsight>> buildInsights({
       icon: Icons.warning_amber_rounded,
       title: 'Risk of overdraft within ${balanceForecast.horizonDays} days: $pct%',
       detail: 'Projected balance may dip below zero before '
-          '${DateFormat.MMMd().format(balanceForecast.points.last.date)}.',
+          '${DateFormat('d MMM').format(balanceForecast.points.last.date)}.',
     ));
   }
 

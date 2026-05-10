@@ -15,7 +15,7 @@ class MonthNavigator extends StatelessWidget implements PreferredSizeWidget {
   /// `null` disables the next button (used to cap forward navigation).
   final VoidCallback? onNext;
 
-  static const double _height = 52;
+  static const double _height = 42;
 
   @override
   Size get preferredSize => const Size.fromHeight(_height);

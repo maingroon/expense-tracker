@@ -26,14 +26,27 @@ class ThemeProvider extends ChangeNotifier {
     }
   }
 
+  /// A subtle two-layer drop shadow that gives icons depth without the heavy
+  /// grey/black blob the previous single-shadow produced. The bottom layer is
+  /// a soft ambient shadow; the top layer is a tighter contact shadow.
   List<Shadow> getIconsShadows() {
+    final isLight = getCurrentBrightness() == Brightness.light;
+    final ambientColor = isLight
+        ? Colors.black.withValues(alpha: 0.18)
+        : Colors.black.withValues(alpha: 0.55);
+    final contactColor = isLight
+        ? Colors.black.withValues(alpha: 0.10)
+        : Colors.black.withValues(alpha: 0.30);
     return [
       Shadow(
-        blurRadius: 5,
-        color: getCurrentBrightness() == Brightness.light
-            ? Colors.grey.withValues(alpha: 0.7)
-            : Colors.black.withValues(alpha: 0.7),
-        offset: const Offset(1, 1),
+        blurRadius: 8,
+        color: ambientColor,
+        offset: const Offset(0, 2),
+      ),
+      Shadow(
+        blurRadius: 2,
+        color: contactColor,
+        offset: const Offset(0, 1),
       ),
     ];
   }

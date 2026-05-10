@@ -77,12 +77,12 @@ class _ForecastScreenState extends State<ForecastScreen> {
       );
       if (!mounted) return;
 
-      final topCatIds = _topExpenseCategoryIds(5);
+      final orderedCatIds = _expenseCategoryIdsByRecentSpend();
       final catForecasts = <({Category category, Forecast forecast})>[];
 
-      for (final catId in topCatIds) {
+      for (final catId in orderedCatIds) {
         final cat = CategoriesService.getCategoryById(catId);
-        if (cat == null) continue;
+        if (cat == null || !cat.enabled) continue;
         try {
           final f = await service.forecast(
             ForecastRequest(
@@ -141,16 +141,34 @@ class _ForecastScreenState extends State<ForecastScreen> {
     }
   }
 
-  List<String> _topExpenseCategoryIds(int n) {
+  /// Every enabled expense category, ordered by recent (last 30 days) spend
+  /// descending. Categories with no recent spend are appended at the end so
+  /// they still get a forecast attempt.
+  List<String> _expenseCategoryIdsByRecentSpend() {
     final now = DateTime.now();
     final from = now.subtract(const Duration(days: 30));
     final sums = TransactionsService.getSortedCategoriesSum(from, now);
-    final expenses = sums.where((entry) {
-      final cat = CategoriesService.getCategoryById(entry.key);
-      return cat != null && cat.type == CategoryType.expense;
-    }).toList()
-      ..sort((a, b) => a.value.abs().compareTo(b.value.abs()) * -1);
-    return expenses.take(n).map((e) => e.key).toList();
+
+    final ranked = sums
+        .where((entry) {
+          final cat = CategoriesService.getCategoryById(entry.key);
+          return cat != null &&
+              cat.enabled &&
+              cat.type == CategoryType.expense;
+        })
+        .toList()
+      ..sort((a, b) => b.value.abs().compareTo(a.value.abs()));
+
+    final ordered = ranked.map((e) => e.key).toList();
+    final seen = ordered.toSet();
+    for (final cat in CategoriesService.categories) {
+      if (cat.enabled &&
+          cat.type == CategoryType.expense &&
+          !seen.contains(cat.id)) {
+        ordered.add(cat.id);
+      }
+    }
+    return ordered;
   }
 
   Future<void> _onHorizonChanged(int horizon) async {
@@ -309,7 +327,7 @@ class _ForecastScreenState extends State<ForecastScreen> {
         if (_categoryForecasts.isNotEmpty) ...[
           const SizedBox(height: 24),
           Text(
-            'Top expense categories',
+            'Expense categories',
             style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(height: 8),

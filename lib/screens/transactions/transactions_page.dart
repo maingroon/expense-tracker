@@ -23,8 +23,12 @@ class _TransactionsPageState extends State<TransactionsPage> {
     DateTime.now().month,
   );
 
+  int _monthIndex(DateTime d) => d.year * 12 + (d.month - 1);
+
   @override
   Widget build(BuildContext context) {
+    final now = DateTime.now();
+    final canGoForward = _monthIndex(_selectedDate) < _monthIndex(now);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Transactions'),
@@ -35,11 +39,13 @@ class _TransactionsPageState extends State<TransactionsPage> {
                 .subtract(months: 1)
                 .dateTime;
           }),
-          onNext: () => setState(() {
-            _selectedDate = Jiffy.parseFromDateTime(_selectedDate)
-                .add(months: 1)
-                .dateTime;
-          }),
+          onNext: canGoForward
+              ? () => setState(() {
+                    _selectedDate = Jiffy.parseFromDateTime(_selectedDate)
+                        .add(months: 1)
+                        .dateTime;
+                  })
+              : null,
         ),
       ),
       body: TransactionsListWidget(
@@ -151,7 +157,7 @@ class _TransactionCardWidgetState extends State<TransactionCardWidget> {
           bottom: 8,
         ),
         child: Text(
-          DateFormat.yMMMd().format(widget._transaction.date),
+          DateFormat('d MMM y').format(widget._transaction.date),
         ),
       ),
     );

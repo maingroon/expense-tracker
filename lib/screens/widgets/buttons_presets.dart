@@ -19,9 +19,6 @@ class GenericOutlinedIconButton extends StatelessWidget {
     return OutlinedButton(
       onPressed: onPressed,
       style: OutlinedButton.styleFrom(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
         padding: const EdgeInsets.symmetric(
           horizontal: 5,
           vertical: 10,
@@ -68,9 +65,6 @@ class GenericOutlinedIconWithLabelButton extends StatelessWidget {
         style: const TextStyle(fontSize: 16),
       ),
       style: OutlinedButton.styleFrom(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
         padding: const EdgeInsets.symmetric(
           horizontal: 15,
           vertical: 10,

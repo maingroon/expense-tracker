@@ -33,20 +33,20 @@ class DatabaseService {
         await db.execute('''
           INSERT INTO categories (id, iconCode, colorCode, name, type, position)
           VALUES
-            ('a864fb77-c575-4fda-ab3e-20f724660243', 0xe482, 0x99319B00, 'Salary', 'income', 0),
-            ('f7ec8fc8-7fbd-4dcc-bf21-4a5a66166825', 0xe6f2, 0x990CC100, 'Freelance', 'income', 1),
-            ('48f7a130-311e-447c-84f3-c78c2c9bd5ef', 0xe13e, 0x99E91E63, 'Gifts', 'income', 2),
-            ('5eb25f89-7118-42d0-bcaf-2d4dadb7ecef', 0xe040, 0x99EAEE00, 'Investments', 'income', 3),
-            ('69d04efc-39f0-46ad-a859-202fe0609074', 0xe395, 0x99007CC2, 'Groceries', 'expense', 4),
-            ('9af72884-1b66-445a-8f2f-aed8d2707637', 0xe532, 0x99FF6F00, 'Dining', 'expense', 5),
-            ('d95d3aa9-a8ed-4b68-a4c5-3be549cc0484', 0xe1d5, 0x994700D5, 'Transport', 'expense', 6),
-            ('c38fb8c2-c92f-4188-888e-9a2549e129c0', 0xe318, 0x99D57E00, 'Housing', 'expense', 7),
-            ('190fa3fa-a29b-4873-bf66-f19cf97fca0c', 0xe50d, 0x99009D9D, 'Bills', 'expense', 8),
-            ('40231457-9c81-41d8-983d-12f094177940', 0xe305, 0x9996B000, 'Health', 'expense', 9),
-            ('c999c52e-7379-4b2f-81cd-ca13f0a130a6', 0xe39a, 0x99DC006B, 'Shopping', 'expense', 10),
-            ('3b8a9e3b-bc20-4ead-8e92-8e4ccd11fb0a', 0xe40d, 0x99DCD200, 'Entertainment', 'expense', 11),
-            ('7ddd138c-2709-4715-932c-9c821f91a871', 0xe297, 0x991A9D00, 'Travel', 'expense', 12),
-            ('4913205f-4482-4d2c-8889-999dc46a594a', 0xf0555, 0x99B9B9B9, 'Other', 'expense', 13);
+            ('a864fb77-c575-4fda-ab3e-20f724660243', 0xe482, 0xFF43A047, 'Salary', 'income', 0),
+            ('f7ec8fc8-7fbd-4dcc-bf21-4a5a66166825', 0xe6f2, 0xFF7CB342, 'Freelance', 'income', 1),
+            ('48f7a130-311e-447c-84f3-c78c2c9bd5ef', 0xe13e, 0xFFEC407A, 'Gifts', 'income', 2),
+            ('5eb25f89-7118-42d0-bcaf-2d4dadb7ecef', 0xe040, 0xFFFDD835, 'Investments', 'income', 3),
+            ('69d04efc-39f0-46ad-a859-202fe0609074', 0xe395, 0xFF1E88E5, 'Groceries', 'expense', 4),
+            ('9af72884-1b66-445a-8f2f-aed8d2707637', 0xe532, 0xFFFB8C00, 'Dining', 'expense', 5),
+            ('d95d3aa9-a8ed-4b68-a4c5-3be549cc0484', 0xe1d5, 0xFF5E35B1, 'Transport', 'expense', 6),
+            ('c38fb8c2-c92f-4188-888e-9a2549e129c0', 0xe318, 0xFFFFB300, 'Housing', 'expense', 7),
+            ('190fa3fa-a29b-4873-bf66-f19cf97fca0c', 0xe50d, 0xFF00ACC1, 'Bills', 'expense', 8),
+            ('40231457-9c81-41d8-983d-12f094177940', 0xe305, 0xFFC0CA33, 'Health', 'expense', 9),
+            ('c999c52e-7379-4b2f-81cd-ca13f0a130a6', 0xe39a, 0xFFD81B60, 'Shopping', 'expense', 10),
+            ('3b8a9e3b-bc20-4ead-8e92-8e4ccd11fb0a', 0xe40d, 0xFFAB47BC, 'Entertainment', 'expense', 11),
+            ('7ddd138c-2709-4715-932c-9c821f91a871', 0xe297, 0xFF26A69A, 'Travel', 'expense', 12),
+            ('4913205f-4482-4d2c-8889-999dc46a594a', 0xf0555, 0xFF78909C, 'Other', 'expense', 13);
         ''');
 
         await db.execute(

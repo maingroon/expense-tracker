@@ -58,9 +58,6 @@ class _SaveCategoryWidgetState extends State<SaveCategoryWidget> {
             widget.onDelete(widget.category);
           },
           style: OutlinedButton.styleFrom(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
             padding: const EdgeInsets.symmetric(
               horizontal: 20,
               vertical: 10,
@@ -78,9 +75,6 @@ class _SaveCategoryWidgetState extends State<SaveCategoryWidget> {
             widget.onArchive(widget.category);
           },
           style: OutlinedButton.styleFrom(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
             padding: const EdgeInsets.symmetric(
               horizontal: 20,
               vertical: 10,
@@ -111,9 +105,6 @@ class _SaveCategoryWidgetState extends State<SaveCategoryWidget> {
               }
             : null,
         style: FilledButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
           padding: const EdgeInsets.symmetric(
             horizontal: 20,
             vertical: 10,
@@ -159,11 +150,6 @@ class _SaveCategoryWidgetState extends State<SaveCategoryWidget> {
               decoration: InputDecoration(
                 labelText: 'Name',
                 errorText: _nameIsValid ? null : 'Name cannot be empty',
-                border: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(10),
-                  ),
-                ),
               ),
             ),
           ),
@@ -485,43 +471,33 @@ class CategoryColorDialogWidget extends StatelessWidget {
     super.key,
   });
 
-  static List<Color> availableColors = [
-    Colors.red,
-    Colors.redAccent,
-    Colors.pink,
-    Colors.pinkAccent,
-    Colors.purple,
-    Colors.purpleAccent,
-    Colors.deepPurple,
-    Colors.deepPurpleAccent,
-    Colors.indigo,
-    Colors.indigoAccent,
-    Colors.blue,
-    Colors.blueAccent,
-    Colors.blueGrey,
-    Colors.lightBlue,
-    Colors.lightBlueAccent,
-    Colors.cyan,
-    Colors.cyanAccent,
-    Colors.teal,
-    Colors.tealAccent,
-    Colors.green,
-    Colors.greenAccent,
-    Colors.lightGreen,
-    Colors.lightGreenAccent,
-    Colors.lime,
-    Colors.limeAccent,
-    Colors.yellow,
-    Colors.yellowAccent,
-    Colors.amber,
-    Colors.amberAccent,
-    Colors.orange,
-    Colors.orangeAccent,
-    Colors.deepOrange,
-    Colors.deepOrangeAccent,
-    Colors.brown,
-    Colors.grey,
-    Colors.black26,
+  // A curated palette of vivid, solid hues that read well on both light and
+  // dark surfaces. Ordered by hue so the picker forms a smooth rainbow.
+  static const List<Color> availableColors = [
+    Color(0xFFE53935), // red
+    Color(0xFFEC407A), // pink
+    Color(0xFFD81B60), // magenta
+    Color(0xFFAB47BC), // purple
+    Color(0xFF7E57C2), // light purple
+    Color(0xFF5E35B1), // deep purple
+    Color(0xFF5C6BC0), // indigo
+    Color(0xFF3F51B5), // strong indigo
+    Color(0xFF1E88E5), // blue
+    Color(0xFF039BE5), // light blue
+    Color(0xFF00ACC1), // cyan
+    Color(0xFF26A69A), // teal
+    Color(0xFF43A047), // green
+    Color(0xFF7CB342), // light green
+    Color(0xFF558B2F), // dark green
+    Color(0xFFC0CA33), // lime
+    Color(0xFFFDD835), // yellow
+    Color(0xFFFFB300), // amber
+    Color(0xFFFB8C00), // orange
+    Color(0xFFF4511E), // deep orange
+    Color(0xFF8D6E63), // brown
+    Color(0xFF6D4C41), // dark brown
+    Color(0xFF78909C), // blue grey
+    Color(0xFF546E7A), // slate
   ];
 
   final void Function(Color color) onColorSelected;
@@ -565,21 +541,54 @@ class CategoryColorDialogWidget extends StatelessWidget {
                 children: availableColors.map((color) {
                   return Padding(
                     padding: const EdgeInsets.all(5.0),
-                    child: GestureDetector(
+                    child: _ColorSwatch(
+                      color: color,
                       onTap: () {
                         onColorSelected(color);
                         Navigator.pop(context);
                       },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: color,
-                        ),
-                      ),
                     ),
                   );
                 }).toList(),
               ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ColorSwatch extends StatelessWidget {
+  const _ColorSwatch({required this.color, required this.onTap});
+
+  final Color color;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final brightness = ThemeData.estimateBrightnessForColor(color);
+    final ringColor = brightness == Brightness.dark
+        ? Colors.white.withValues(alpha: 0.35)
+        : Colors.black.withValues(alpha: 0.18);
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: color,
+          border: Border.all(color: ringColor, width: 1),
+          boxShadow: [
+            BoxShadow(
+              color: color.withValues(alpha: 0.35),
+              blurRadius: 8,
+              offset: const Offset(0, 2),
+            ),
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.08),
+              blurRadius: 2,
+              offset: const Offset(0, 1),
             ),
           ],
         ),

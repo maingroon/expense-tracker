@@ -60,7 +60,7 @@ class ForecastSummaryCard extends StatelessWidget {
             ],
             const SizedBox(height: 4),
             Text(
-              'by ${DateFormat.yMMMd().format(last.date)}',
+              'by ${DateFormat('d MMM y').format(last.date)}',
               style: theme.textTheme.bodySmall?.copyWith(
                 color: colorScheme.onSurfaceVariant,
               ),
