@@ -2,11 +2,8 @@ import 'dart:io';
 
 import 'package:expense_tracker/screens/settings/widgets/color_mode_widget.dart';
 import 'package:expense_tracker/services/data_io_service.dart';
-import 'package:expense_tracker/services/forecast_repository.dart';
-import 'package:expense_tracker/services/forecast_settings_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as p;
-import 'package:provider/provider.dart';
 
 const String _sampleDataAsset = 'assets/sample_data/sample_data.json';
 
@@ -15,9 +12,18 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final forecastSettings = context.watch<ForecastSettingsNotifier>();
-    final repo = context.read<ForecastRepository>();
     final theme = Theme.of(context);
+    final labelStyle = theme.textTheme.bodyMedium?.copyWith(fontSize: 18);
+
+    Widget settingRow(String label, Widget trailing) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(child: Text(label, style: labelStyle)),
+          trailing,
+        ],
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(title: const Text('Settings')),
@@ -28,78 +34,33 @@ class SettingsPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Color mode',
-                    style: theme.textTheme.bodyMedium?.copyWith(fontSize: 18),
-                  ),
-                  const ColorModeWidget(),
-                ],
-              ),
+              settingRow('Color mode', const ColorModeWidget()),
               const Divider(height: 32),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Show forecast tab',
-                    style: theme.textTheme.bodyMedium?.copyWith(fontSize: 18),
-                  ),
-                  Switch(
-                    value: forecastSettings.showTab,
-                    onChanged: forecastSettings.setShowTab,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: FilledButton.tonal(
-                  onPressed: () async {
-                    await repo.deleteOlderThan(Duration.zero);
-                    if (context.mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Cached forecasts cleared.')),
-                      );
-                    }
-                  },
-                  child: const Text('Clear cached forecasts'),
+              settingRow(
+                'Export to file',
+                IconButton(
+                  tooltip: 'Export to file',
+                  icon: const Icon(Icons.file_upload_outlined),
+                  onPressed: () => _exportData(context),
                 ),
               ),
               const Divider(height: 32),
-              Text(
-                'Data',
-                style: theme.textTheme.titleMedium,
+              settingRow(
+                'Import from file',
+                IconButton(
+                  tooltip: 'Import from file',
+                  icon: const Icon(Icons.file_download_outlined),
+                  onPressed: () => _importData(context),
+                ),
               ),
-              const SizedBox(height: 12),
-              Wrap(
-                spacing: 12,
-                runSpacing: 12,
-                children: [
-                  FilledButton.icon(
-                    icon: const Icon(Icons.file_upload_outlined),
-                    label: const Text('Export to file'),
-                    onPressed: () => _exportData(context),
-                  ),
-                  FilledButton.tonalIcon(
-                    icon: const Icon(Icons.file_download_outlined),
-                    label: const Text('Import from file'),
-                    onPressed: () => _importData(context),
-                  ),
-                  OutlinedButton.icon(
-                    icon: const Icon(Icons.science_outlined),
-                    label: const Text('Load sample data'),
-                    onPressed: () => _loadSampleData(context),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'Export writes a JSON snapshot of categories and transactions. '
-                'Import replaces all existing data with the file contents. '
-                'Sample data provides ~130 days of transactions to enable forecasting.',
-                style: theme.textTheme.bodySmall,
+              const Divider(height: 32),
+              settingRow(
+                'Load sample data',
+                IconButton(
+                  tooltip: 'Load sample data',
+                  icon: const Icon(Icons.science_outlined),
+                  onPressed: () => _loadSampleData(context),
+                ),
               ),
             ],
           ),

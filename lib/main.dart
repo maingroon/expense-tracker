@@ -5,7 +5,6 @@ import 'package:expense_tracker/services/aggregation_service.dart';
 import 'package:expense_tracker/services/categories_service.dart';
 import 'package:expense_tracker/services/database_service.dart';
 import 'package:expense_tracker/services/forecast_repository.dart';
-import 'package:expense_tracker/services/forecast_settings_notifier.dart';
 import 'package:expense_tracker/services/forecasting_service.dart';
 import 'package:expense_tracker/services/ridge_forecasting_service.dart';
 import 'package:expense_tracker/services/theme_provider.dart';
@@ -93,9 +92,6 @@ class _PageContainerState extends State<PageContainer> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<ThemeProvider>(create: (_) => ThemeProvider()),
-        ChangeNotifierProvider<ForecastSettingsNotifier>(
-          create: (_) => ForecastSettingsNotifier(),
-        ),
         Provider<DatabaseService>(create: (_) => DatabaseService()),
         ProxyProvider<DatabaseService, AggregationService>(
           update: (_, db, __) => AggregationService(db),
@@ -111,15 +107,13 @@ class _PageContainerState extends State<PageContainer> {
           ),
         ),
       ],
-      child: Consumer2<ThemeProvider, ForecastSettingsNotifier>(
-        builder: (context, themeProvider, forecastSettings, child) {
-          final showForecast = forecastSettings.showTab;
-
+      child: Consumer<ThemeProvider>(
+        builder: (context, themeProvider, child) {
           final pages = <Widget>[
             const CategoriesPage(),
             const TransactionsPage(),
             const AnalyticsPage(),
-            if (showForecast) const ForecastScreen(),
+            const ForecastScreen(),
             const SettingsPage(),
           ];
 
@@ -137,29 +131,28 @@ class _PageContainerState extends State<PageContainer> {
                   setState(() => _currentPageIndex = index);
                 },
                 selectedIndex: safeIndex,
-                destinations: <Widget>[
-                  const NavigationDestination(
+                destinations: const <Widget>[
+                  NavigationDestination(
                     selectedIcon: Icon(Icons.category),
                     icon: Icon(Icons.category_outlined),
                     label: 'Categories',
                   ),
-                  const NavigationDestination(
+                  NavigationDestination(
                     selectedIcon: Icon(Icons.format_list_bulleted),
                     icon: Icon(Icons.format_list_bulleted_outlined),
                     label: 'Transactions',
                   ),
-                  const NavigationDestination(
+                  NavigationDestination(
                     selectedIcon: Icon(Icons.bar_chart),
                     icon: Icon(Icons.bar_chart_outlined),
                     label: 'Analytics',
                   ),
-                  if (showForecast)
-                    const NavigationDestination(
-                      selectedIcon: Icon(Icons.show_chart),
-                      icon: Icon(Icons.show_chart_outlined),
-                      label: 'Forecast',
-                    ),
-                  const NavigationDestination(
+                  NavigationDestination(
+                    selectedIcon: Icon(Icons.show_chart),
+                    icon: Icon(Icons.show_chart_outlined),
+                    label: 'Forecast',
+                  ),
+                  NavigationDestination(
                     selectedIcon: Icon(Icons.settings),
                     icon: Icon(Icons.settings_outlined),
                     label: 'Settings',

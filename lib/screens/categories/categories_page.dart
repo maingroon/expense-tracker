@@ -3,11 +3,9 @@ import 'package:expense_tracker/models/transaction_model.dart';
 import 'package:expense_tracker/screens/categories/widgets/save_category_widget.dart';
 import 'package:expense_tracker/screens/transactions/widgets/save_transaction_widget.dart';
 import 'package:expense_tracker/services/categories_service.dart';
-import 'package:expense_tracker/services/theme_provider.dart';
 import 'package:expense_tracker/services/transactions_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_draggable_gridview/flutter_draggable_gridview.dart';
-import 'package:provider/provider.dart';
 
 class CategoriesPage extends StatefulWidget {
   const CategoriesPage({super.key});
@@ -27,10 +25,14 @@ class _CategoriesPageState extends State<CategoriesPage> {
     _actionIcon = Icon(_getInitialActionIcon());
   }
 
-  List<Category> _getCategories() {
-    return CategoriesService.categories.where((category) {
-      return category.enabled;
-    }).toList();
+  List<Category> _allEnabledCategories() {
+    return CategoriesService.categories.where((c) => c.enabled).toList();
+  }
+
+  List<Category> _categoriesOfType(CategoryType type) {
+    return CategoriesService.categories
+        .where((c) => c.enabled && c.type == type)
+        .toList();
   }
 
   void _onAddTransaction(Category category) {
@@ -90,7 +92,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
     );
   }
 
-  void _onAddCategory() {
+  void _onAddCategory(CategoryType type) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -100,8 +102,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
             icon: Icons.category,
             color: Colors.grey,
             name: '',
-            type: CategoryType.expense,
-            position: _getCategories().length,
+            type: type,
+            position: _allEnabledCategories().length,
           ),
           onDelete: (category) => {},
           onArchive: (category) {},
@@ -119,7 +121,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
   }
 
   CategoryPageEvent _getInitialPageEvent() {
-    if (_getCategories().isEmpty) {
+    if (_allEnabledCategories().isEmpty) {
       return CategoryPageEvent.editCategory;
     } else {
       return CategoryPageEvent.addTransaction;
@@ -127,7 +129,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
   }
 
   IconData _getInitialActionIcon() {
-    if (_getCategories().isEmpty ||
+    if (_allEnabledCategories().isEmpty ||
         _pageEvent == CategoryPageEvent.editCategory) {
       return Icons.save;
     } else {
@@ -135,7 +137,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
     }
   }
 
-  Card _buildCategoryCardWidget(Category category, List<Shadow> shadows) {
+  Card _buildCategoryCardWidget(Category category) {
     return Card(
       child: ConstrainedBox(
         constraints: const BoxConstraints(
@@ -147,11 +149,14 @@ class _CategoriesPageState extends State<CategoriesPage> {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Icon(
-                category.icon,
-                color: category.color,
-                size: 30,
-                shadows: shadows,
+              child: CircleAvatar(
+                radius: 22,
+                backgroundColor: category.color.withAlpha(180),
+                child: Icon(
+                  category.icon,
+                  color: Colors.white,
+                  size: 24,
+                ),
               ),
             ),
             Padding(
@@ -172,7 +177,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
     );
   }
 
-  Card _buildAddCategoryCardWidget(List<Shadow> shadows) {
+  Card _buildAddCategoryCardWidget() {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(10),
@@ -181,11 +186,14 @@ class _CategoriesPageState extends State<CategoriesPage> {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Icon(
-                Icons.add,
-                color: Colors.grey,
-                size: 30,
-                shadows: shadows,
+              child: CircleAvatar(
+                radius: 22,
+                backgroundColor: Colors.grey.withAlpha(180),
+                child: const Icon(
+                  Icons.add,
+                  color: Colors.white,
+                  size: 24,
+                ),
               ),
             ),
             const Padding(
@@ -206,9 +214,9 @@ class _CategoriesPageState extends State<CategoriesPage> {
     );
   }
 
-  List<DraggableGridItem> _buildCategoriesWidgets(List<Shadow> shadows) {
-    List<Category> categories = _getCategories();
-    List<DraggableGridItem> categoryWidgets = categories.map((category) {
+  List<DraggableGridItem> _buildCategoriesWidgets(CategoryType type) {
+    final categories = _categoriesOfType(type);
+    final categoryWidgets = categories.map((category) {
       return DraggableGridItem(
         isDraggable: _pageEvent == CategoryPageEvent.editCategory,
         child: GestureDetector(
@@ -219,7 +227,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
               _onSaveCategory(category);
             }
           },
-          child: _buildCategoryCardWidget(category, shadows),
+          child: _buildCategoryCardWidget(category),
         ),
       );
     }).toList();
@@ -228,8 +236,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
       categoryWidgets.add(
         DraggableGridItem(
           child: GestureDetector(
-            onTap: _onAddCategory,
-            child: _buildAddCategoryCardWidget(shadows),
+            onTap: () => _onAddCategory(type),
+            child: _buildAddCategoryCardWidget(),
           ),
         ),
       );
@@ -238,48 +246,87 @@ class _CategoriesPageState extends State<CategoriesPage> {
     return categoryWidgets;
   }
 
+  Future<void> _onDragCompleteWithinTab(
+    CategoryType type,
+    int beforeIndex,
+    int afterIndex,
+  ) async {
+    final tabCategories = _categoriesOfType(type);
+    if (beforeIndex >= tabCategories.length ||
+        afterIndex >= tabCategories.length) {
+      // The trailing "Add" card is non-draggable, but guard anyway.
+      return;
+    }
+    final movingCategory = tabCategories[beforeIndex];
+    final targetCategory = tabCategories[afterIndex];
+    final globalCategories = CategoriesService.categories;
+    final globalOld =
+        globalCategories.indexWhere((c) => c.id == movingCategory.id);
+    final globalNew =
+        globalCategories.indexWhere((c) => c.id == targetCategory.id);
+    if (globalOld < 0 || globalNew < 0) return;
+    await CategoriesService.reorderCategories(globalOld, globalNew);
+    if (mounted) setState(() {});
+  }
+
+  Widget _buildGrid(CategoryType type) {
+    return DraggableGridViewBuilder(
+      isOnlyLongPress: false,
+      padding: const EdgeInsets.all(5),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3,
+      ),
+      dragCompletion: (list, beforeIndex, afterIndex) =>
+          _onDragCompleteWithinTab(type, beforeIndex, afterIndex),
+      dragPlaceHolder: (list, index) {
+        return PlaceHolderWidget(
+          child: Container(
+            color: Colors.transparent,
+          ),
+        );
+      },
+      children: _buildCategoriesWidgets(type),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final shadows = context.watch<ThemeProvider>().getIconsShadows();
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Categories'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              setState(() {
-                if (_getCategories().isEmpty ||
-                    _pageEvent == CategoryPageEvent.addTransaction) {
-                  _pageEvent = CategoryPageEvent.editCategory;
-                  _actionIcon = const Icon(Icons.save);
-                } else {
-                  _pageEvent = CategoryPageEvent.addTransaction;
-                  _actionIcon = const Icon(Icons.edit);
-                }
-              });
-            },
-            icon: _actionIcon,
-          ),
-        ],
-      ),
-      body: DraggableGridViewBuilder(
-        isOnlyLongPress: false,
-        padding: const EdgeInsets.all(5),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-        ),
-        dragCompletion: (list, beforeIndex, afterIndex) async {
-          await CategoriesService.reorderCategories(beforeIndex, afterIndex);
-          if (mounted) setState(() {});
-        },
-        dragPlaceHolder: (list, index) {
-          return PlaceHolderWidget(
-            child: Container(
-              color: Colors.transparent,
+    return DefaultTabController(
+      length: 2,
+      initialIndex: 0,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Categories'),
+          actions: [
+            IconButton(
+              onPressed: () {
+                setState(() {
+                  if (_allEnabledCategories().isEmpty ||
+                      _pageEvent == CategoryPageEvent.addTransaction) {
+                    _pageEvent = CategoryPageEvent.editCategory;
+                    _actionIcon = const Icon(Icons.save);
+                  } else {
+                    _pageEvent = CategoryPageEvent.addTransaction;
+                    _actionIcon = const Icon(Icons.edit);
+                  }
+                });
+              },
+              icon: _actionIcon,
             ),
-          );
-        },
-        children: _buildCategoriesWidgets(shadows),
+          ],
+          bottom: const TabBar(
+            tabs: [
+              Tab(text: 'Expenses'),
+              Tab(text: 'Income'),
+            ],
+          ),
+        ),
+        body: TabBarView(
+          children: [
+            _buildGrid(CategoryType.expense),
+            _buildGrid(CategoryType.income),
+          ],
+        ),
       ),
     );
   }

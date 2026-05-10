@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:expense_tracker/models/category_model.dart';
 import 'package:expense_tracker/services/database_service.dart';
 import 'package:expense_tracker/services/transactions_service.dart';
@@ -9,24 +8,26 @@ class CategoriesService {
   static final DatabaseService _databaseService = DatabaseService();
 
   static List<Category> _categories = [];
+  static final Map<String, Category> _byId = {};
 
   static Future<void> init() async {
     _categories = await _databaseService.getAllCategories();
+    _rebuildIndex();
   }
 
   static List<Category> get categories => _categories;
 
-  static Category? getCategoryById(String id) {
-    return _categories.firstWhereOrNull((category) => category.id == id);
-  }
+  static Category? getCategoryById(String id) => _byId[id];
 
   static Future<void> addCategory(Category category) async {
     await _databaseService.insertCategory(category);
     _categories.add(category);
+    _byId[category.id] = category;
   }
 
   static Future<void> updateCategory(Category category) async {
     await _databaseService.updateCategory(category);
+    // List entry is the same instance so the by-id map stays valid.
   }
 
   static Future<void> updateAllCategoriesPositions() async {
@@ -44,6 +45,7 @@ class CategoriesService {
     await TransactionsService.deleteTransactionsByCategoryId(category.id);
     await _databaseService.deleteCategory(category);
     _categories.removeWhere((listCategory) => listCategory.id == category.id);
+    _byId.remove(category.id);
     await updateAllCategoriesPositions();
   }
 
@@ -57,5 +59,11 @@ class CategoriesService {
     _categories.removeAt(oldIndex);
     _categories.insert(newIndex, oldIndexCategory);
     await updateAllCategoriesPositions();
+  }
+
+  static void _rebuildIndex() {
+    _byId
+      ..clear()
+      ..addEntries(_categories.map((c) => MapEntry(c.id, c)));
   }
 }

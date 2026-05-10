@@ -3,12 +3,10 @@ import 'package:expense_tracker/models/transaction_model.dart';
 import 'package:expense_tracker/screens/transactions/widgets/save_transaction_widget.dart';
 import 'package:expense_tracker/screens/widgets/month_navigator.dart';
 import 'package:expense_tracker/services/categories_service.dart';
-import 'package:expense_tracker/services/theme_provider.dart';
 import 'package:expense_tracker/services/transactions_service.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
-import 'package:provider/provider.dart';
 
 class TransactionsPage extends StatefulWidget {
   const TransactionsPage({super.key});
@@ -23,15 +21,39 @@ class _TransactionsPageState extends State<TransactionsPage> {
     DateTime.now().month,
   );
 
+  Set<String> _selectedCategoryIds = <String>{};
+
   int _monthIndex(DateTime d) => d.year * 12 + (d.month - 1);
+
+  Future<void> _openFilterDialog() async {
+    final picked = await showDialog<Set<String>>(
+      context: context,
+      builder: (ctx) => _CategoryFilterDialog(
+        initialSelection: _selectedCategoryIds,
+      ),
+    );
+    if (picked != null) {
+      setState(() => _selectedCategoryIds = picked);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final now = DateTime.now();
     final canGoForward = _monthIndex(_selectedDate) < _monthIndex(now);
+    final filterActive = _selectedCategoryIds.isNotEmpty;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Transactions'),
+        actions: [
+          IconButton(
+            tooltip: 'Filter by category',
+            onPressed: _openFilterDialog,
+            icon: Icon(
+              filterActive ? Icons.filter_alt : Icons.filter_alt_outlined,
+            ),
+          ),
+        ],
         bottom: MonthNavigator(
           date: _selectedDate,
           onPrev: () => setState(() {
@@ -55,7 +77,106 @@ class _TransactionsPageState extends State<TransactionsPage> {
         toDate: Jiffy.parseFromDateTime(_selectedDate)
             .endOf(Unit.month)
             .dateTime,
+        selectedCategoryIds: _selectedCategoryIds,
       ),
+    );
+  }
+}
+
+class _CategoryFilterDialog extends StatefulWidget {
+  const _CategoryFilterDialog({required this.initialSelection});
+
+  final Set<String> initialSelection;
+
+  @override
+  State<_CategoryFilterDialog> createState() => _CategoryFilterDialogState();
+}
+
+class _CategoryFilterDialogState extends State<_CategoryFilterDialog> {
+  late Set<String> _selected;
+
+  @override
+  void initState() {
+    super.initState();
+    _selected = {...widget.initialSelection};
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final all = CategoriesService.categories.where((c) => c.enabled).toList();
+    final expense =
+        all.where((c) => c.type == CategoryType.expense).toList();
+    final income = all.where((c) => c.type == CategoryType.income).toList();
+
+    Widget tile(Category c) {
+      return CheckboxListTile(
+        controlAffinity: ListTileControlAffinity.leading,
+        dense: true,
+        value: _selected.contains(c.id),
+        onChanged: (v) {
+          setState(() {
+            if (v == true) {
+              _selected.add(c.id);
+            } else {
+              _selected.remove(c.id);
+            }
+          });
+        },
+        secondary: CircleAvatar(
+          radius: 16,
+          backgroundColor: c.color.withAlpha(180),
+          child: Icon(c.icon, color: Colors.white, size: 18),
+        ),
+        title: Text(c.name),
+      );
+    }
+
+    Widget header(String label) {
+      return Padding(
+        padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
+        child: Text(
+          label,
+          style: theme.textTheme.labelMedium?.copyWith(
+            color: theme.colorScheme.onSurfaceVariant,
+          ),
+        ),
+      );
+    }
+
+    return AlertDialog(
+      title: const Text('Filter by category'),
+      contentPadding: const EdgeInsets.symmetric(vertical: 8),
+      content: SizedBox(
+        width: double.maxFinite,
+        child: ListView(
+          shrinkWrap: true,
+          children: [
+            if (expense.isNotEmpty) ...[
+              header('Expenses'),
+              ...expense.map(tile),
+            ],
+            if (income.isNotEmpty) ...[
+              header('Income'),
+              ...income.map(tile),
+            ],
+          ],
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => setState(_selected.clear),
+          child: const Text('Clear'),
+        ),
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text('Cancel'),
+        ),
+        FilledButton(
+          onPressed: () => Navigator.of(context).pop(_selected),
+          child: const Text('Apply'),
+        ),
+      ],
     );
   }
 }
@@ -64,11 +185,13 @@ class TransactionsListWidget extends StatefulWidget {
   const TransactionsListWidget({
     required this.fromDate,
     required this.toDate,
+    this.selectedCategoryIds = const <String>{},
     super.key,
   });
 
   final DateTime fromDate;
   final DateTime toDate;
+  final Set<String> selectedCategoryIds;
 
   @override
   State<TransactionsListWidget> createState() => _TransactionsListWidgetState();
@@ -82,10 +205,11 @@ class _TransactionsListWidgetState extends State<TransactionsListWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final selected = widget.selectedCategoryIds;
     final transactions = TransactionsService.getTransactionsByDate(
       widget.fromDate,
       widget.toDate,
-    );
+    ).where((t) => selected.isEmpty || selected.contains(t.categoryId)).toList();
     return ListView.builder(
       itemCount: transactions.length,
       itemBuilder: (ctx, index) {
@@ -169,7 +293,6 @@ class _TransactionCardWidgetState extends State<TransactionCardWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final shadows = context.watch<ThemeProvider>().getIconsShadows();
     final Category? category =
         CategoriesService.getCategoryById(widget._transaction.categoryId);
 
@@ -218,11 +341,15 @@ class _TransactionCardWidgetState extends State<TransactionCardWidget> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 6),
-                    child: Icon(
-                      category.icon,
-                      color: category.color,
-                      shadows: shadows,
+                    padding: const EdgeInsets.only(right: 10),
+                    child: CircleAvatar(
+                      radius: 16,
+                      backgroundColor: category.color.withAlpha(180),
+                      child: Icon(
+                        category.icon,
+                        color: Colors.white,
+                        size: 18,
+                      ),
                     ),
                   ),
                   Text(

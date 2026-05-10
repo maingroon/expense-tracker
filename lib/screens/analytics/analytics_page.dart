@@ -1,11 +1,9 @@
 import 'package:expense_tracker/screens/widgets/month_navigator.dart';
 import 'package:expense_tracker/services/categories_service.dart';
-import 'package:expense_tracker/services/theme_provider.dart';
 import 'package:expense_tracker/services/transactions_service.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
-import 'package:provider/provider.dart';
 
 String _formatCents(int cents) {
   final formatted = NumberFormat('#,##0.00').format(cents.abs() / 100);
@@ -286,7 +284,6 @@ class _CategoryBreakdown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final shadows = context.watch<ThemeProvider>().getIconsShadows();
 
     final allCategoriesSum = TransactionsService.getSortedCategoriesSum(
       monthStart,
@@ -333,7 +330,6 @@ class _CategoryBreakdown extends StatelessWidget {
             cents: entry.value,
             maxCents: maxAmount,
             totalCents: total,
-            shadows: shadows,
           ),
       ],
     );
@@ -346,14 +342,12 @@ class _CategoryRow extends StatelessWidget {
     required this.cents,
     required this.maxCents,
     required this.totalCents,
-    required this.shadows,
   });
 
   final String categoryId;
   final int cents;
   final int maxCents;
   final int totalCents;
-  final List<Shadow> shadows;
 
   @override
   Widget build(BuildContext context) {
@@ -376,10 +370,14 @@ class _CategoryRow extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Icon(
-                    category.icon,
-                    color: category.color,
-                    shadows: shadows,
+                  CircleAvatar(
+                    radius: 16,
+                    backgroundColor: category.color.withAlpha(180),
+                    child: Icon(
+                      category.icon,
+                      color: Colors.white,
+                      size: 18,
+                    ),
                   ),
                   const SizedBox(width: 10),
                   Expanded(

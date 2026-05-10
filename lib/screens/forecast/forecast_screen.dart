@@ -30,7 +30,8 @@ class _ForecastScreenState extends State<ForecastScreen> {
   int _horizonDays = 30;
   _ScreenState _state = _ScreenState.loading;
   Forecast? _balanceForecast;
-  List<({Category category, Forecast forecast})> _categoryForecasts = [];
+  List<({Category category, Forecast forecast})> _expenseForecasts = [];
+  List<({Category category, Forecast forecast})> _incomeForecasts = [];
   Map<String, int> _baselinesByCatId = const {};
   List<ForecastInsight> _insights = const [];
   Object? _error;
@@ -41,7 +42,21 @@ class _ForecastScreenState extends State<ForecastScreen> {
   void initState() {
     super.initState();
     _horizonDays = SettingsService.getForecastHorizonDays();
+    TransactionsService.changes.addListener(_onTransactionsChanged);
     WidgetsBinding.instance.addPostFrameCallback((_) => _loadForecasts());
+  }
+
+  @override
+  void dispose() {
+    TransactionsService.changes.removeListener(_onTransactionsChanged);
+    super.dispose();
+  }
+
+  Future<void> _onTransactionsChanged() async {
+    if (!mounted) return;
+    final repo = context.read<ForecastRepository>();
+    await repo.deleteOlderThan(Duration.zero);
+    if (mounted) await _loadForecasts();
   }
 
   Future<void> _loadForecasts() async {
@@ -77,34 +92,28 @@ class _ForecastScreenState extends State<ForecastScreen> {
       );
       if (!mounted) return;
 
-      final orderedCatIds = _expenseCategoryIdsByRecentSpend();
-      final catForecasts = <({Category category, Forecast forecast})>[];
-
-      for (final catId in orderedCatIds) {
-        final cat = CategoriesService.getCategoryById(catId);
-        if (cat == null || !cat.enabled) continue;
-        try {
-          final f = await service.forecast(
-            ForecastRequest(
-              target: ForecastTarget.expenseByCategory,
-              categoryId: catId,
-              horizonDays: _horizonDays,
-              asOf: asOf,
-            ),
-          );
-          catForecasts.add((category: cat, forecast: f));
-        } catch (_) {
-          // Skip categories with no history.
-        }
-        if (!mounted) return;
-      }
+      final expenseForecasts = await _forecastCategoriesOfType(
+        service: service,
+        type: CategoryType.expense,
+        asOf: asOf,
+      );
+      if (!mounted) return;
+      final incomeForecasts = await _forecastCategoriesOfType(
+        service: service,
+        type: CategoryType.income,
+        asOf: asOf,
+      );
+      if (!mounted) return;
 
       final asOfMidnight = DateTime(asOf.year, asOf.month, asOf.day);
       final baselineFrom = asOfMidnight.subtract(const Duration(days: 30));
       final baselineTo = asOfMidnight.subtract(const Duration(days: 1));
       final baselines = await categoryBaselines(
         aggregation: aggregation,
-        categoryIds: catForecasts.map((c) => c.category.id).toList(),
+        categoryIds: [
+          ...expenseForecasts.map((c) => c.category.id),
+          ...incomeForecasts.map((c) => c.category.id),
+        ],
         from: baselineFrom,
         to: baselineTo,
       );
@@ -112,7 +121,7 @@ class _ForecastScreenState extends State<ForecastScreen> {
 
       final insights = await buildInsights(
         balanceForecast: balanceForecast,
-        categoryForecasts: catForecasts,
+        categoryForecasts: expenseForecasts,
         aggregation: aggregation,
         asOf: asOf,
       );
@@ -121,7 +130,8 @@ class _ForecastScreenState extends State<ForecastScreen> {
       setState(() {
         _state = _ScreenState.loaded;
         _balanceForecast = balanceForecast;
-        _categoryForecasts = catForecasts;
+        _expenseForecasts = expenseForecasts;
+        _incomeForecasts = incomeForecasts;
         _baselinesByCatId = baselines;
         _insights = insights;
       });
@@ -141,10 +151,10 @@ class _ForecastScreenState extends State<ForecastScreen> {
     }
   }
 
-  /// Every enabled expense category, ordered by recent (last 30 days) spend
-  /// descending. Categories with no recent spend are appended at the end so
+  /// Every enabled category of [type], ordered by recent (last 30 days) volume
+  /// descending. Categories with no recent activity are appended at the end so
   /// they still get a forecast attempt.
-  List<String> _expenseCategoryIdsByRecentSpend() {
+  List<String> _categoryIdsByRecentVolume(CategoryType type) {
     final now = DateTime.now();
     final from = now.subtract(const Duration(days: 30));
     final sums = TransactionsService.getSortedCategoriesSum(from, now);
@@ -152,9 +162,7 @@ class _ForecastScreenState extends State<ForecastScreen> {
     final ranked = sums
         .where((entry) {
           final cat = CategoriesService.getCategoryById(entry.key);
-          return cat != null &&
-              cat.enabled &&
-              cat.type == CategoryType.expense;
+          return cat != null && cat.enabled && cat.type == type;
         })
         .toList()
       ..sort((a, b) => b.value.abs().compareTo(a.value.abs()));
@@ -162,13 +170,40 @@ class _ForecastScreenState extends State<ForecastScreen> {
     final ordered = ranked.map((e) => e.key).toList();
     final seen = ordered.toSet();
     for (final cat in CategoriesService.categories) {
-      if (cat.enabled &&
-          cat.type == CategoryType.expense &&
-          !seen.contains(cat.id)) {
+      if (cat.enabled && cat.type == type && !seen.contains(cat.id)) {
         ordered.add(cat.id);
       }
     }
     return ordered;
+  }
+
+  Future<List<({Category category, Forecast forecast})>>
+      _forecastCategoriesOfType({
+    required ForecastingService service,
+    required CategoryType type,
+    required DateTime asOf,
+  }) async {
+    final ids = _categoryIdsByRecentVolume(type);
+    final out = <({Category category, Forecast forecast})>[];
+    for (final catId in ids) {
+      final cat = CategoriesService.getCategoryById(catId);
+      if (cat == null || !cat.enabled) continue;
+      try {
+        final f = await service.forecast(
+          ForecastRequest(
+            target: ForecastTarget.expenseByCategory,
+            categoryId: catId,
+            horizonDays: _horizonDays,
+            asOf: asOf,
+          ),
+        );
+        out.add((category: cat, forecast: f));
+      } catch (_) {
+        // Skip categories with no history.
+      }
+      if (!mounted) return out;
+    }
+    return out;
   }
 
   Future<void> _onHorizonChanged(int horizon) async {
@@ -183,16 +218,21 @@ class _ForecastScreenState extends State<ForecastScreen> {
     context.read<ForecastRepository>();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Forecast')),
+      appBar: AppBar(
+        title: const Text('Forecast'),
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(56),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 4, 16, 12),
+            child: Center(child: _buildHorizonSelector()),
+          ),
+        ),
+      ),
       body: RefreshIndicator(
         onRefresh: _loadForecasts,
         child: CustomScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
           slivers: [
-            SliverPadding(
-              padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-              sliver: SliverToBoxAdapter(child: _buildHorizonSelector()),
-            ),
             SliverPadding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               sliver: SliverToBoxAdapter(child: _buildBody()),
@@ -324,14 +364,29 @@ class _ForecastScreenState extends State<ForecastScreen> {
           const SizedBox(height: 16),
           InsightsPanel(insights: _insights),
         ],
-        if (_categoryForecasts.isNotEmpty) ...[
+        if (_expenseForecasts.isNotEmpty) ...[
           const SizedBox(height: 24),
           Text(
             'Expense categories',
             style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(height: 8),
-          ..._categoryForecasts.map(
+          ..._expenseForecasts.map(
+            (item) => CategoryForecastTile(
+              category: item.category,
+              forecast: item.forecast,
+              baselineCents: _baselinesByCatId[item.category.id],
+            ),
+          ),
+        ],
+        if (_incomeForecasts.isNotEmpty) ...[
+          const SizedBox(height: 24),
+          Text(
+            'Income categories',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          const SizedBox(height: 8),
+          ..._incomeForecasts.map(
             (item) => CategoryForecastTile(
               category: item.category,
               forecast: item.forecast,
